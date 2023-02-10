@@ -25,7 +25,6 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       }),
     onError: (error) => {
-      console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
     },
     onSuccess: (data) => {
@@ -51,12 +50,12 @@ const Login = () => {
     }
   };
   return (
-    <div className=' md:justify-between md:flex md:items-center  '>
-      <div>
-        <img src={logo} alt='' className='md:h-auto  md:float-left' />
+    <div className='flex flex-col md:flex-row justify-center items-center'>
+      <div className='md:mx-20'>
+        <img src={logo} alt='logo' className='md:h-auto' />
       </div>
 
-      <div className='md:w-1/2 w-80 bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0'>
+      <div className='md:w-1/2 w-80 bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0 md:mx-20'>
         <div className='w-full p-6 space-y-4 md:space-y-6 sm:p-8'>
           <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl'>
             Login
