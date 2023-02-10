@@ -51,13 +51,13 @@ const Login = () => {
     }
   };
   return (
-    <div className='flex flex-col md:flex-row justify-center items-center'>
-      <div className='md:mx-20'>
-        <img src={logo} alt='' className='md:h-auto w-[720px]' />
+    <div className=' md:justify-between md:flex md:items-center  '>
+      <div>
+        <img src={logo} alt='' className='md:h-auto  md:float-left' />
       </div>
 
-      <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 md:mx-20'>
-        <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
+      <div className='md:w-1/2 w-80 bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0'>
+        <div className='w-full p-6 space-y-4 md:space-y-6 sm:p-8'>
           <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl'>
             Login
           </h1>
