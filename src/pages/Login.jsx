@@ -4,6 +4,7 @@ import axios from "../api/api";
 import { useMutation } from "react-query";
 import { UserAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 // styles
 import "../style/login.css";
@@ -14,7 +15,6 @@ import Spinner from "../components/Spinner";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const { setUserData, setToken } = UserAuth();
   const navigate = useNavigate();
   const passwordRef = useRef(null);
@@ -25,8 +25,16 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       }),
     onError: (error) => {
-      console.log(error.response.data.message);
-      setErrorMessage(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
+      toast.error(`${error.response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: "light",
+      });
     },
     onSuccess: (data) => {
       setUserData(data.data.user[0]);
@@ -51,12 +59,12 @@ const Login = () => {
     }
   };
   return (
-    <div className=' md:justify-between md:flex md:items-center  '>
-      <div>
-        <img src={logo} alt='' className='md:h-auto  md:float-left' />
+    <div className='flex flex-col md:flex-row justify-center items-center'>
+      <div className='md:mx-20'>
+        <img src={logo} alt='logo' className='md:h-auto' />
       </div>
 
-      <div className='md:w-1/2 w-80 bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0'>
+      <div className='md:w-1/2 w-80 bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0 md:mx-20'>
         <div className='w-full p-6 space-y-4 md:space-y-6 sm:p-8'>
           <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl'>
             Login
@@ -65,7 +73,6 @@ const Login = () => {
             {mutation.isLoading && <Spinner />}
           </div>
           <form className='space-y-4 md:space-y-5' onSubmit={handleSubmit}>
-            <div className='text-black'>{errorMessage}</div>
             <div className=''>
               <label className=' block mb-2 text-sm mr-[80%] font-medium text-gray-900'>
                 Username
@@ -117,12 +124,28 @@ const Login = () => {
                 Forgot password?
               </a>
             </div>
-            <button className='bg-blue-600 text-white' type='submit'>
+            <button
+              className='bg-blue-600 text-white'
+              type='submit'
+              disabled={mutation.isLoading}
+            >
               Sign in
             </button>
           </form>
         </div>
       </div>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   );
 };
