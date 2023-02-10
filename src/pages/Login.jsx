@@ -4,6 +4,7 @@ import axios from "../api/api";
 import { useMutation } from "react-query";
 import { UserAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 // styles
 import "../style/login.css";
@@ -14,7 +15,6 @@ import Spinner from "../components/Spinner";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const { setUserData, setToken } = UserAuth();
   const navigate = useNavigate();
   const passwordRef = useRef(null);
@@ -25,7 +25,16 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       }),
     onError: (error) => {
-      setErrorMessage(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
+      toast.error(`${error.response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: "light",
+      });
     },
     onSuccess: (data) => {
       setUserData(data.data.user[0]);
@@ -64,7 +73,6 @@ const Login = () => {
             {mutation.isLoading && <Spinner />}
           </div>
           <form className='space-y-4 md:space-y-5' onSubmit={handleSubmit}>
-            <div className='text-black'>{errorMessage}</div>
             <div className=''>
               <label className=' block mb-2 text-sm mr-[80%] font-medium text-gray-900'>
                 Username
@@ -116,12 +124,28 @@ const Login = () => {
                 Forgot password?
               </a>
             </div>
-            <button className='bg-blue-600 text-white' type='submit'>
+            <button
+              className='bg-blue-600 text-white'
+              type='submit'
+              disabled={mutation.isLoading}
+            >
               Sign in
             </button>
           </form>
         </div>
       </div>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import reactLogo from "./assets/react.svg";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 // Pages
@@ -19,14 +20,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <div className="App">
+        <div className='App'>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path='/' element={<Login />} />
             {/* private routes */}
             <Route element={<PrivateRoute allowedRoles={[ROLES.hr_manager]} />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path='/dashboard' element={<Dashboard />} />
             </Route>
-            <Route path="/unauthorize" element={<Unauthorized />} />
+            <Route path='/unauthorize' element={<Unauthorized />} />
           </Routes>
         </div>
       </Router>
