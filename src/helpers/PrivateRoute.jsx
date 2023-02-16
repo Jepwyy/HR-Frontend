@@ -12,9 +12,9 @@ const PrivateRoute = ({ allowedRoles }) => {
   return auth?.roles?.find((role) => allowedRoles.includes(role)) ? (
     <Outlet />
   ) : auth?.token ? (
-    <Navigate to="/unauthorize" />
+    <Navigate to='/unauthorize' />
   ) : (
-    <Navigate to="/" />
+    <Navigate to='/' />
   );
 };
 

@@ -32,7 +32,7 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className="flex gap-6 ">
+      <div className='flex gap-6 '>
         <div
           className={`bg-[#0e0e0e] min-h-screen ${
             open ? "md:w-72 w-60" : "w-16"
@@ -44,12 +44,12 @@ const Sidebar = () => {
           >
             <HiMenuAlt3
               size={26}
-              className="cursor-pointer"
+              className='cursor-pointer'
               onClick={() => setOpen(!open)}
             />
           </div>
 
-          <div className="flex gap-x-4 items-center">
+          <div className='flex gap-x-4 items-center'>
             <img
               src={logo}
               className={` cursor-pointer w-40 duration-500 ${
@@ -57,7 +57,7 @@ const Sidebar = () => {
               }`}
             />
           </div>
-          <div className="mt-2 flex flex-col gap-4 relative">
+          <div className='mt-2 flex flex-col gap-4 relative'>
             {menus?.map((menu, i) => (
               <NavLink
                 to={menu?.link}
