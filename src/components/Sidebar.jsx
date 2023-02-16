@@ -12,7 +12,7 @@ import Topbar from "./Topbar";
 
 import logo from "../assets/images/logo.png";
 
-const Sidebar = () => {
+const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
     { name: "Employee List", link: "/employee-list", icon: AiOutlineUser },
@@ -28,7 +28,7 @@ const Sidebar = () => {
     { name: "Logout", link: "/", icon: RiSettings4Line },
   ];
 
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
 
   return (
     <div>
