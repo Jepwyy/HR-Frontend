@@ -32,7 +32,7 @@ const Sidebar = ({ open, setOpen }) => {
 
   return (
     <div>
-      <div className='flex gap-6 '>
+      <div className='flex gap-6'>
         <div
           className={`bg-[#0e0e0e] min-h-screen ${
             open ? "md:w-72 w-60" : "w-16"
