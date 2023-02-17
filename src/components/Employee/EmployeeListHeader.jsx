@@ -4,13 +4,13 @@ import { BiSearch } from "react-icons/bi";
 
 const EmployeeListHeader = ({ setQuery }) => {
   return (
-    <div className='flex flex-col md:flex-row justify-between md:mt-10 mb-4'>
+    <div className='flex flex-col-reverse md:flex-row justify-between md:mt-10 mb-4'>
       {/* sort */}
       <div className='flex items-end mb-2'>
-        <h1 className='mr-4 text-4xl font-bold'>Employees</h1>
+        <h1 className='hidden md:block mr-4 text-4xl font-bold'>Employees</h1>
         <select
           name='sortby'
-          className='w-40 text-center h-8 font-semibold border-black'
+          className='w-40 text-center h-8 font-semibold border-2 border-black bg-white'
         >
           <option value='...'>SORT BY</option>
         </select>
@@ -23,7 +23,7 @@ const EmployeeListHeader = ({ setQuery }) => {
         />
         <div className='relative'>
           <input
-            className='w-full text-white py-2 px-4 pr-10 border border-white bg-[#ac7238] rounded-lg shadow-sm placeholder-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500'
+            className='w-full text-white py-2 px-4 pr-10 border border-white bg-[#ac7238] rounded-lg shadow-sm placeholder-white'
             type='text'
             placeholder='Search'
             onChange={(e) => setQuery(e.target.value)}

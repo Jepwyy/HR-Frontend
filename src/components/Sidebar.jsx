@@ -21,7 +21,7 @@ const Sidebar = ({ open, setOpen }) => {
       name: "Attendance",
       link: "/attendance",
       icon: TbReportAnalytics,
-      margin: true,
+      // margin: true,
     },
     { name: "Payroll", link: "/payroll", icon: FiFolder },
     { name: "Archive", link: "/archive", icon: FiShoppingCart },
@@ -49,7 +49,7 @@ const Sidebar = ({ open, setOpen }) => {
             />
           </div>
 
-          <div className='flex gap-x-4 items-center'>
+          <div className='flex gap-x-4 items-center justify-center'>
             <img
               src={logo}
               className={` cursor-pointer w-40 duration-500 ${

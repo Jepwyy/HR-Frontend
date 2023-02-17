@@ -7,8 +7,8 @@ const EmployeeListItems = ({ item, active, toggle, id }) => {
     <tr
       className={
         active === id
-          ? "border-b-2 border-gray-500 cursor-pointer bg-gray-400"
-          : "border-b-2 border-gray-500 cursor-pointer"
+          ? "border-b-2 border-gray-500 cursor-pointer bg-[#D9D9D8]"
+          : "border-b-2 border-gray-500 cursor-pointer "
       }
       onClick={() => toggle(id)}
     >
