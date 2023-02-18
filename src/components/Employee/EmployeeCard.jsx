@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import profile from "../../assets/images/dp.jpg";
 import { AiOutlineUser } from "react-icons/ai";
 import { formatPosition, formatDepartment } from "../../utils/colParser";
 import EmployeeEditModal from "./Modal/EmployeeEditModal";
@@ -12,9 +13,9 @@ const EmployeeCard = ({ item }) => {
     <div className="py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]">
       <div className="flex justify-center items-start">
         <div className="mr-6">
-          <AiOutlineUser
-            size={140}
-            className="border-4 border-black rounded-full"
+          <img
+            className="border-4 border-black rounded-full h-32"
+            src={profile}
           />
         </div>
         <div>
