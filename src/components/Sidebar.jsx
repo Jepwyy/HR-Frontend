@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { MdOutlineDashboard } from "react-icons/md";
-import { RiSettings4Line } from "react-icons/ri";
-import { TbReportAnalytics } from "react-icons/tb";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
+import { HiUserGroup } from "react-icons/hi";
+import { AiFillSchedule } from "react-icons/ai";
+import { MdOutlineDashboard, MdArchive } from "react-icons/md";
+import { RiHealthBookFill } from "react-icons/ri";
+import { TbReportMoney } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 
 // pages
@@ -15,56 +14,43 @@ import logo from "../assets/images/logo.png";
 const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: "Dashboard", link: "/dashboard", icon: MdOutlineDashboard },
-    { name: "Employee List", link: "/employee-list", icon: AiOutlineUser },
-    { name: "Schedule", link: "/schedule", icon: FiMessageSquare },
+    { name: "Employee List", link: "/employee-list", icon: HiUserGroup },
+    { name: "Schedule", link: "/schedule", icon: AiFillSchedule },
     {
       name: "Attendance",
       link: "/attendance",
-      icon: TbReportAnalytics,
-      // margin: true,
+      icon: RiHealthBookFill,
     },
-    { name: "Payroll", link: "/payroll", icon: FiFolder },
-    { name: "Archive", link: "/archive", icon: FiShoppingCart },
-    { name: "Logout", link: "/", icon: RiSettings4Line },
+    { name: "Payroll", link: "/payroll", icon: TbReportMoney },
+    { name: "Archive", link: "/archive", icon: MdArchive },
   ];
 
   // const [open, setOpen] = useState(true);
 
   return (
     <div>
-      <div className='flex gap-6'>
+      <div className="flex gap-6">
         <div
-          className={`bg-[#0e0e0e] min-h-screen ${
+          className={`bg-sidebar bg-cover bg-repeat-y min-h-screen ${
             open ? "md:w-72 w-60" : "w-16"
           }  duration-500 text-gray-100 px-4`}
         >
-          <div
-            className={` cursor-pointer right-0 top-2 w-8 border-dark-purple
-            rounded-full `}
-          >
-            <HiMenuAlt3
-              size={26}
-              className='cursor-pointer'
-              onClick={() => setOpen(!open)}
-            />
-          </div>
-
-          <div className='flex gap-x-4 items-center justify-center'>
+          <div className="flex gap-x-4 items-center justify-center">
             <img
               src={logo}
-              className={` cursor-pointer w-40 duration-500 ${
+              className={`mt-4 cursor-pointer w-40 duration-500 ${
                 open && "rotate-[360deg]"
               }`}
             />
           </div>
-          <div className='mt-2 flex flex-col gap-4 relative'>
+          <div className="mt-3 flex flex-col gap-4 relative">
             {menus?.map((menu, i) => (
               <NavLink
                 to={menu?.link}
                 key={i}
                 className={` ${
                   menu?.margin && "mt-5"
-                }   group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md`}
+                }   group flex items-center text-sm  gap-3.5 font-medium p-2 pr-7 hover:bg-gray-800 rounded-md`}
               >
                 <div>
                   {React.createElement(menu?.icon, {
