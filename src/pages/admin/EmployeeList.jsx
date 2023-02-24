@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import EmployeeListHeader from "../../components/Employee/EmployeeListHeader";
-import EmployeeListItems from "../../components/Employee/EmployeeListItems";
-import Spinner from "../../components/Spinner";
-import { useEmployees } from "../../hooks/useEmployees";
-import EmployeeCard from "../../components/Employee/EmployeeCard";
+import React, { useState } from 'react'
+import EmployeeListHeader from '../../components/Employee/EmployeeListHeader'
+import EmployeeListItems from '../../components/Employee/EmployeeListItems'
+import Spinner from '../../components/Spinner'
+import { useEmployees } from '../../hooks/useEmployees'
+import EmployeeCard from '../../components/Employee/EmployeeCard'
 
 const EmployeeList = () => {
-  const { isLoading, error, data } = useEmployees();
-  const [query, setQuery] = useState("");
-  const [details, setDetails] = useState({});
-  const [active, setActive] = useState(false);
+  const { isLoading, error, data } = useEmployees()
+  const [query, setQuery] = useState('')
+  const [details, setDetails] = useState({})
+  const [active, setActive] = useState(false)
 
   const toggle = (i) => {
     if (open === i) {
-      return setActive(false);
+      return setActive(false)
     }
-    setActive(i);
-    setDetails(data.find((obj) => obj.id === i));
-  };
+    setActive(i)
+    setDetails(data.find((obj) => obj.id === i))
+  }
   return (
     <div className='p-4 md:p-12'>
       <EmployeeListHeader setQuery={setQuery} />
       <div className='flex flex-col lg:flex-row'>
         {/* table */}
 
-        {error && "Error"}
+        {error && 'Error'}
         <table className='border-2 border-collapse flex-1 text-center overflow-auto h-full'>
           <thead className='bg-[#010100] text-white h-16'>
             <tr>
@@ -46,10 +46,10 @@ const EmployeeList = () => {
               ?.filter((item) => {
                 return Object.keys(item).some((key) =>
                   item[key]
-                    .toString()
+                    ?.toString()
                     .toLowerCase()
                     .includes(query.toLowerCase())
-                );
+                )
               })
               .map((item, i) => (
                 <EmployeeListItems
@@ -68,7 +68,7 @@ const EmployeeList = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EmployeeList;
+export default EmployeeList
