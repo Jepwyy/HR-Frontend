@@ -17,7 +17,7 @@ import Attendance from './pages/admin/Attendance'
 import Schedule from './pages/admin/Schedule'
 import EmployeeList from './pages/admin/EmployeeList'
 import Payroll from './pages/admin/Payroll'
-
+import Error404 from './pages/Error404'
 import Unauthorized from './pages/Unauthorized'
 import PrivateRoute from './helpers/PrivateRoute'
 import PersistLogin from './helpers/PersistLogin'
@@ -34,6 +34,7 @@ function App() {
         <div className='App'>
           <Routes>
             <Route path='/' element={<Login />} />
+            <Route path='*' element={<Error404 />} />
             <Route path='/card' element={<LoginViaCard />} />
             {/* private routes */}
             <Route element={<PersistLogin />}>
