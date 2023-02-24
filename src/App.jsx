@@ -1,38 +1,40 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import reactLogo from "./assets/react.svg";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import reactLogo from './assets/react.svg'
+import 'react-toastify/dist/ReactToastify.css'
+import './App.css'
 
 //Components
-import Layout from "./shared/Layout";
+import Layout from './shared/Layout'
 
 // Pages
 
-import Login from "./pages/Login";
-import Dashboard from "./pages/admin/Dashboard";
-import Archive from "./pages/admin/Archive";
-import Attendance from "./pages/admin/Attendance";
-import Schedule from "./pages/admin/Schedule";
-import EmployeeList from "./pages/admin/EmployeeList";
-import Payroll from "./pages/admin/Payroll";
+import Login from './pages/Login'
+import Dashboard from './pages/admin/Dashboard'
+import Archive from './pages/admin/Archive'
+import Attendance from './pages/admin/Attendance'
+import Schedule from './pages/admin/Schedule'
+import EmployeeList from './pages/admin/EmployeeList'
+import Payroll from './pages/admin/Payroll'
 
-import Unauthorized from "./pages/Unauthorized";
-import PrivateRoute from "./helpers/PrivateRoute";
-import PersistLogin from "./helpers/PersistLogin";
+import Unauthorized from './pages/Unauthorized'
+import PrivateRoute from './helpers/PrivateRoute'
+import PersistLogin from './helpers/PersistLogin'
+import LoginViaCard from './pages/LoginViaCard'
 
 const ROLES = {
-  hr_manager: "hr_manager",
-};
+  hr_manager: 'hr_manager',
+}
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient()
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <div className='App'>
           <Routes>
             <Route path='/' element={<Login />} />
+            <Route path='/card' element={<LoginViaCard />} />
             {/* private routes */}
             <Route element={<PersistLogin />}>
               <Route
@@ -54,7 +56,7 @@ function App() {
         </div>
       </Router>
     </QueryClientProvider>
-  );
+  )
 }
 
-export default App;
+export default App
