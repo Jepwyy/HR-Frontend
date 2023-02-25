@@ -5,7 +5,6 @@ import { MdOutlineDashboard, MdArchive } from 'react-icons/md'
 import { RiHealthBookFill } from 'react-icons/ri'
 import { TbReportMoney } from 'react-icons/tb'
 import { NavLink } from 'react-router-dom'
-
 // pages
 import Topbar from './Topbar'
 
@@ -23,7 +22,6 @@ const Sidebar = ({ open, setOpen }) => {
     },
     { name: 'Payroll', link: '/payroll', icon: TbReportMoney },
     { name: 'Archive', link: '/archive', icon: MdArchive },
-    { name: 'Logout', link: '/card', icon: MdArchive },
   ]
 
   // const [open, setOpen] = useState(true);

@@ -14,7 +14,7 @@ const EmployeeCard = ({ item }) => {
       <div className='flex justify-center items-start'>
         <div className='mr-6'>
           <img
-            className='border-4 border-black rounded-full h-32'
+            className='border-4 border-black aspect-square rounded-full h-32'
             src={item.imgurl ? item.imgurl : profile}
           />
         </div>

@@ -3,7 +3,7 @@ import { BsBackspaceFill } from 'react-icons/bs'
 
 const EmployeeEditModal = ({ setModalEdit }) => {
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
+    <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
       <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-72 mb-1 '>
         <div className='flex justify-end px-py'>
           <BsBackspaceFill

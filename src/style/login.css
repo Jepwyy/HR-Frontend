@@ -1,9 +1,1 @@
-body {
-  background-image: linear-gradient(
-      rgb(255, 255, 255, 0),
-      rgba(232, 232, 232, 0)
-    ),
-    url("../assets/images/BG.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+
