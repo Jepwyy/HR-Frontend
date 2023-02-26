@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 
-import { ToastContainer, toast } from 'react-toastify'
-
 import LoginForm from '../components/Login/LoginForm'
 import RfidForm from '../components/Login/RfidForm'
 // styles
@@ -42,24 +40,11 @@ const Login = () => {
               RFID
             </button>
           </div>
-          <div className=''>
-            {active === 'FirstPage' && <LoginForm />}
-            {active === 'SecondPage' && <RfidForm />}
-          </div>
+
+          {active === 'FirstPage' && <LoginForm />}
+          {active === 'SecondPage' && <RfidForm />}
         </div>
       </div>
-      <ToastContainer
-        position='top-center'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
     </div>
   )
 }

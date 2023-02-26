@@ -75,17 +75,29 @@ const TimeInForm = () => {
       })
     } else {
       setMessage('Invalid RFID. Please Try Again')
+      toast.error(`${'Invalid RFID. Please Try Again'}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
     }
 
     formRef.current.reset()
   }
   return (
-    <>
+    <div className='relative'>
       <h1 className='flex justify-start text-sm font-semibold leading-tight tracking-tight text-gray-900 md:text-xl'>
         Time In
       </h1>
+      <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
+        {mutation.isLoading && <Spinner />}
+      </div>
       <div className='flex flex-col justify-center'>
-        <img className='h-72' src={TapCard} />
+        <img className='h-[19.2rem]' src={TapCard} />
         <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl border-b-4 border-black mx-16'>
           TAP YOUR CARD
         </h1>
@@ -93,20 +105,30 @@ const TimeInForm = () => {
       <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl'>
         {message}
       </h1>
+
       <form
         ref={formRef}
         className='relative space-y-4 md:space-y-5'
         onSubmit={handleSubmit}
       >
-        <div className='flex items-center justify-center'>
-          {mutation.isLoading && <Spinner />}
-        </div>
         <input type='text' ref={inputRef} className='text-white outline-none' />
         <button type='submit' className='hidden' disabled={mutation.isLoading}>
           test
         </button>
       </form>
-    </>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
+    </div>
   )
 }
 

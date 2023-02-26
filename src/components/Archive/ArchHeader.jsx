@@ -1,12 +1,11 @@
 import React from 'react'
 import { BiSearch } from 'react-icons/bi'
-
-const SchedHeader = () => {
+const ArchHeader = () => {
   return (
     <div className='flex flex-col-reverse md:flex-row justify-between md:mt-10 mb-4'>
       {/* sort */}
       <div className='flex items-end mb-2'>
-        <h1 className='hidden md:block mr-4 text-4xl font-bold'>Schedule</h1>
+        <h1 className='hidden md:block mr-4 text-4xl font-bold'>Archive</h1>
         <select
           name='sortby'
           className='w-40 text-center h-8 font-semibold border-2 border-black bg-white'
@@ -33,4 +32,4 @@ const SchedHeader = () => {
   )
 }
 
-export default SchedHeader
+export default ArchHeader

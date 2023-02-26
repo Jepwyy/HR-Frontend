@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SchedCard = () => {
+const AttendanceCard = () => {
   return (
     <div className='py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3] overflow-y-auto max-h-[400px]'>
       <div className='flex justify-between'>
@@ -63,4 +63,4 @@ const SchedCard = () => {
   )
 }
 
-export default SchedCard
+export default AttendanceCard
