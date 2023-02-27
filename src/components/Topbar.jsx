@@ -1,6 +1,7 @@
 import React from 'react'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import profile from '../assets/images/dp.jpg'
+
 const Topbar = ({ open, setOpen }) => {
   return (
     <div className='bg-[#010100] h-16 px-4 flex items-center border-b border-gray-200 justify-between text-white'>
@@ -27,25 +28,16 @@ const Topbar = ({ open, setOpen }) => {
           </div>
         </div>
         <div className='items-center absolute border border-t-0 rounded-b-lg shadow-lg  bg-white p-2 invisible group-hover:visible w-full   transition ease-in-out  group-hover:-translate-y-1  duration-500'>
-          <a
-            href='#'
-            className=' px-4  py-2 block text-black hover:text-[#ac7238]'
-          >
+          <button className=' px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
             Edit Profile
-          </a>
-          <a
-            href='#'
-            className='px-4 py-2 block text-black hover:text-[#ac7238]'
-          >
+          </button>
+          <button className='px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
             Settings
-          </a>
+          </button>
 
-          <a
-            href='#'
-            className='px-4 py-2 block text-black hover:text-[#ac7238]'
-          >
+          <button className='px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
             Logout
-          </a>
+          </button>
         </div>
       </div>
     </div>
