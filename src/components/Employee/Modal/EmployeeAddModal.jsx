@@ -4,6 +4,8 @@ import { BsBackspaceFill } from 'react-icons/bs'
 import { useMutation, useQueryClient } from 'react-query'
 import axios from '../../../api/api'
 import Spinner from '../../Spinner'
+import { ToastContainer, toast } from 'react-toastify'
+
 const EmployeeAddModal = ({ setModalAdd }) => {
   const queryClient = useQueryClient()
   const [employee, setEmployee] = useState({
@@ -41,9 +43,17 @@ const EmployeeAddModal = ({ setModalAdd }) => {
       })
     },
     onSuccess: (data) => {
-      console.log(data)
       queryClient.invalidateQueries({ queryKey: ['Employess'] })
       setModalAdd(false)
+      toast.success(`Employee created`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
     },
   })
 
@@ -86,7 +96,9 @@ const EmployeeAddModal = ({ setModalAdd }) => {
           Add Employee
         </h1>
         {/* loading component */}
-        <div>{mutation.isLoading && <Spinner />}</div>
+        <div className='flex justify-center'>
+          {mutation.isLoading && <Spinner />}
+        </div>
         <div className='flex justify-center'>
           <form
             className='flex flex-col md:flex-row px-3 md:gap-10'
@@ -261,6 +273,18 @@ const EmployeeAddModal = ({ setModalAdd }) => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   )
 }
