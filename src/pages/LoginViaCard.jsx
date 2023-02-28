@@ -7,12 +7,17 @@ import '../style/login.css'
 // images
 import logo from '../assets/images/logo.png'
 import RfidForm from '../components/Login/TimeInForm'
+import TimeInForm from '../components/Login/TimeInForm'
 
 const LoginViaCard = () => {
   return (
     <div className='flex flex-col md:flex-row justify-center bg-login bg-cover items-center  md:h-screen h-[160vh] '>
       <div className='md:mx-20 md:w-1/2'>
-        <img src={logo} alt='logo' className='md:h-auto' />
+        <img
+          src={logo}
+          alt='logo'
+          className='md:h-auto'
+        />
       </div>
 
       <div className=' md:w-1/2 w-80 bg-white rounded-lg shadow  md:mt-0  xl:p-0 md:mx-20'>

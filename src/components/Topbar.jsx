@@ -1,8 +1,34 @@
 import React from 'react'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import profile from '../assets/images/dp.jpg'
+import axios from '../api/api'
+import { useMutation } from 'react-query'
 
 const Topbar = ({ open, setOpen }) => {
+  const mutation = useMutation({
+    mutationFn: (userdetails) =>
+      axios.post('/auth/login', userdetails, {
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    onError: (error) => {
+      // setErrorMessage(error.response.data.message);
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+    onSuccess: (data) => {
+      setUserData(data.data.user[0])
+      setToken(true)
+      navigate('/dashboard')
+    },
+  })
+
   return (
     <div className='bg-[#010100] h-16 px-4 flex items-center border-b border-gray-200 justify-between text-white'>
       <div
