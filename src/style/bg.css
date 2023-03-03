@@ -1,0 +1,9 @@
+.bgy {
+  background-image: linear-gradient(
+      rgba(26, 34, 56, 0.75),
+      rgba(26, 34, 56, 0.75)
+    ),
+    url('../assets/images/BG.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

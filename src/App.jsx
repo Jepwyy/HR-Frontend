@@ -14,14 +14,16 @@ import Login from './pages/Login'
 import Dashboard from './pages/admin/Dashboard'
 import Archive from './pages/admin/Archive'
 import Attendance from './pages/admin/Attendance'
-import Schedule from './pages/admin/Schedule'
+
 import EmployeeList from './pages/admin/EmployeeList'
 import Payroll from './pages/admin/Payroll'
 import Error404 from './pages/Error404'
 import Unauthorized from './pages/Unauthorized'
 import PrivateRoute from './helpers/PrivateRoute'
 import PersistLogin from './helpers/PersistLogin'
-import LoginViaCard from './pages/LoginViaCard'
+
+import Backup from './pages/admin/Backup'
+import AuditLogs from './pages/admin/AuditLogs'
 
 const ROLES = {
   hr_manager: 'hr_manager',
@@ -35,7 +37,6 @@ function App() {
           <Routes>
             <Route path='/' element={<Login />} />
             <Route path='*' element={<Error404 />} />
-            <Route path='/card' element={<LoginViaCard />} />
             {/* private routes */}
             <Route element={<PersistLogin />}>
               <Route
@@ -45,9 +46,10 @@ function App() {
                   <Route path='/archive' element={<Archive />} />
                   <Route path='/attendance' element={<Attendance />} />
                   <Route path='/dashboard' element={<Dashboard />} />
-                  <Route path='/schedule' element={<Schedule />} />
                   <Route path='/employee-list' element={<EmployeeList />} />
                   <Route path='/payroll' element={<Payroll />} />
+                  <Route path='/audit-logs' element={<AuditLogs />} />
+                  <Route path='/backup' element={<Backup />} />
                 </Route>
               </Route>
             </Route>

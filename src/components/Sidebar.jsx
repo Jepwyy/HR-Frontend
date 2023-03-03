@@ -5,6 +5,7 @@ import { MdOutlineDashboard, MdArchive } from 'react-icons/md'
 import { RiHealthBookFill } from 'react-icons/ri'
 import { TbReportMoney } from 'react-icons/tb'
 import { NavLink } from 'react-router-dom'
+import { FcAcceptDatabase, FcOvertime } from 'react-icons/fc'
 // pages
 import Topbar from './Topbar'
 
@@ -14,7 +15,6 @@ const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: MdOutlineDashboard },
     { name: 'Employee List', link: '/employee-list', icon: HiUserGroup },
-    { name: 'Schedule', link: '/schedule', icon: AiFillSchedule },
     {
       name: 'Attendance',
       link: '/attendance',
@@ -22,6 +22,8 @@ const Sidebar = ({ open, setOpen }) => {
     },
     { name: 'Payroll', link: '/payroll', icon: TbReportMoney },
     { name: 'Archive', link: '/archive', icon: MdArchive },
+    { name: 'Audit Logs', link: '/audit-logs', icon: FcOvertime },
+    { name: 'Backup', link: '/backup', icon: FcAcceptDatabase },
   ]
 
   // const [open, setOpen] = useState(true);

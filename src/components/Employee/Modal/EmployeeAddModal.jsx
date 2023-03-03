@@ -1,12 +1,13 @@
-import React from 'react'
 import { useState } from 'react'
 import { BsBackspaceFill } from 'react-icons/bs'
 import { useMutation, useQueryClient } from 'react-query'
 import axios from '../../../api/api'
 import Spinner from '../../Spinner'
+import ScanRfidModal from './ScanRfidModal'
 import { ToastContainer, toast } from 'react-toastify'
 
 const EmployeeAddModal = ({ setModalAdd }) => {
+  const [modalScanner, setModalScanner] = useState(false)
   const queryClient = useQueryClient()
   const [employee, setEmployee] = useState({
     role: 'sales_manager',
@@ -81,8 +82,8 @@ const EmployeeAddModal = ({ setModalAdd }) => {
   }
 
   return (
-    <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
-      <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-56 mb-2 '>
+    <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
+      <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto'>
         <div className='flex justify-end px-py'>
           <BsBackspaceFill
             size={40}
@@ -177,6 +178,115 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   required
                 />
               </div>
+              <div className='mb-2'>
+                <label className='block text-gray-700 text-sm font-bold'>
+                  Dayoff
+                </label>
+                <div className='flex flex-row gap-5'>
+                  <div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff1'
+                        value='Monday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff1'
+                      >
+                        Monday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff2'
+                        value='Tuesday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff2'
+                      >
+                        Tuesday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff3'
+                        value='Wednesday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff3'
+                      >
+                        Wednesday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff4'
+                        value='Thursday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff4'
+                      >
+                        Thursday
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff5'
+                        value='Friday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff5'
+                      >
+                        Friday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff6'
+                        value='Saturday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff6'
+                      >
+                        Saturday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff7'
+                        value='Sunday'
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff7'
+                      >
+                        Sunday
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className='md:w-1/2 w-full'>
               <div className='mb-2'>
@@ -247,19 +357,53 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   required
                 />
               </div>
-              <div className='mb-5'>
+              <div className='mb-2'>
                 <label className='block text-gray-700 text-sm font-bold'>
-                  Schedule
+                  Register RFID
                 </label>
-                <select
-                  className='border-2 border-black w-full'
-                  name='scheduletype'
-                  onChange={handleChange}
-                  required
+                <button
+                  type='button'
+                  className='bg-[#ac7238] text-white rounded-md w-full'
+                  onClick={() => {
+                    setModalScanner(true)
+                  }}
                 >
-                  <option value='morning'>Morning</option>
-                  <option value='evening'>Evening</option>
-                </select>
+                  Scan
+                </button>
+              </div>
+              <div className='mb-14'>
+                <label className='block text-gray-700 text-sm font-bold'>
+                  Working Time
+                </label>
+                <div className='flex flex-row'>
+                  <select className='border-2 border-black w-2/5'>
+                    <option value=''>1 PM</option>
+                    <option value=''> PM</option>
+                    <option value=''>3 PM</option>
+                    <option value=''>4 PM</option>
+                    <option value=''>5 PM</option>
+                    <option value=''>6 PM</option>
+                    <option value=''>7 PM</option>
+                    <option value=''>8 PM</option>
+                    <option value=''>9 PM</option>
+                    <option value=''>10 PM</option>
+                    <option value=''>11 PM</option>
+                  </select>
+                  <h1 className='font-semibold  mx-2'> - </h1>
+                  <select className='border-2 border-black w-2/5'>
+                    <option value=''>11 PM</option>
+                    <option value=''>10 PM</option>
+                    <option value=''>9 PM</option>
+                    <option value=''>8 PM</option>
+                    <option value=''>7 PM</option>
+                    <option value=''>6 PM</option>
+                    <option value=''>5 PM</option>
+                    <option value=''>4 PM</option>
+                    <option value=''>3 PM</option>
+                    <option value=''>2 PM</option>
+                    <option value=''>1 PM</option>
+                  </select>
+                </div>
               </div>
               <div className='flex justify-end pb-5'>
                 <button
@@ -272,6 +416,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
             </div>
           </form>
         </div>
+        {modalScanner && <ScanRfidModal setModalScanner={setModalScanner} />}
       </div>
       <ToastContainer
         position='top-center'

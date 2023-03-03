@@ -1,10 +1,10 @@
 import React from 'react'
 import logo from '../assets/images/logo1.png'
 import { NavLink } from 'react-router-dom'
-
+import '../style/bg.css'
 const Error404 = () => {
   return (
-    <div className='h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]/75'>
+    <div className='bgy h-screen w-full flex flex-col justify-center items-center '>
       <img className='' src={logo} />
       <div className=' flex flex-col justify-center items-center'>
         <h1 className='text-9xl font-extrabold text-white tracking-widest'>
