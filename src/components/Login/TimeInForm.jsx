@@ -4,7 +4,7 @@ import axios from '../../api/api'
 import { useMutation } from 'react-query'
 import { UserAuth } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 import TapCard from '../../assets/images/TapCard.png'
 // styles
 // images
@@ -47,31 +47,27 @@ const TimeInForm = () => {
       }),
     onError: (error) => {
       setMessage(error.response.data.message)
-      toast.error(`${error.response.data.message} `, {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        progress: undefined,
-        theme: 'light',
+      Swal.fire({
+        title: 'Error',
+        text: `${error.response.data.message}`,
+        icon: 'error',
+        timer: 2000,
+        // allowOutsideClick: false,
+        showConfirmButton: false,
       })
     },
     onSuccess: (data) => {
-      console.log(data)
       if (data.status === 200) {
         setUserData(data.data.user[0])
         setToken(true)
         navigate('/employee-list')
       } else {
-        toast.success(`${data.data.message} `, {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: 'light',
+        Swal.fire({
+          title: 'Success',
+          text: `${data.data.message}`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
         })
       }
     },
@@ -137,18 +133,6 @@ const TimeInForm = () => {
           test
         </button>
       </form>
-      <ToastContainer
-        position='top-center'
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-      />
     </div>
   )
 }

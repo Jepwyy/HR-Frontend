@@ -3,11 +3,23 @@ export const formatPosition = (text) => {
     case 'sales_manager':
       return 'Sales Manager'
       break
+    case 'sales_cashier':
+      return 'Sales Cashier'
+      break
     case 'hr_manager':
       return 'HR Manager'
       break
     case 'warehouse_manager':
       return 'Warehouse Manager'
+      break
+    case 'warehouse_staff':
+      return 'Warehouse Staff'
+      break
+    case 'sales_cook':
+      return 'Cook'
+      break
+    case 'sales_barista':
+      return 'Barista'
       break
     default:
       break
