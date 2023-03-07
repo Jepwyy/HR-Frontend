@@ -5,6 +5,7 @@ import axios from '../../../api/api'
 import Spinner from '../../Spinner'
 import ScanRfidModal from './ScanRfidModal'
 import { ToastContainer, toast } from 'react-toastify'
+import { FcOk } from 'react-icons/fc'
 
 const EmployeeAddModal = ({ setModalAdd }) => {
   const [modalScanner, setModalScanner] = useState(false)
@@ -23,8 +24,64 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     address: '',
     email: '',
     contact: '',
-    rfid: '0000000000',
+    rfid: null,
+    shift_timein: '1:00',
+    shift_timeout: '23:00',
+    dayoff: [],
   })
+  const [position, setPosition] = useState([])
+
+  const handleDepartment = (e) => {
+    setEmployee({ ...employee, department: e.target.value })
+    switch (e.target.value) {
+      case 'sales':
+        setPosition([
+          {
+            display: 'BARISTA',
+            position: 'barista',
+          },
+          {
+            display: 'COOK',
+            position: 'sales_cook',
+          },
+          {
+            display: 'CASHIER',
+            position: 'sales_cashier',
+          },
+        ])
+        break
+      case 'warehouse':
+        setPosition([
+          {
+            display: 'WAREHOUSE MANAGER',
+            position: 'warehouse_manager',
+          },
+          {
+            display: 'WAREHOUSE STAFF',
+            position: 'warehouse_staff',
+          },
+        ])
+        break
+      default:
+        break
+    }
+  }
+  //handle day off checkboxes
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target
+    if (checked) {
+      setEmployee((prevState) => ({
+        ...prevState,
+        dayoff: [...prevState.dayoff, value],
+      }))
+    } else {
+      setEmployee((prevState) => ({
+        ...prevState,
+        dayoff: prevState.dayoff.filter((day) => day !== value),
+      }))
+    }
+  }
 
   const mutation = useMutation({
     mutationFn: (userdetails) =>
@@ -80,7 +137,6 @@ const EmployeeAddModal = ({ setModalAdd }) => {
 
     mutation.mutate(formData)
   }
-
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
       <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto'>
@@ -132,7 +188,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
               </div>
               <div className='mb-2'>
                 <label className='block text-gray-700 text-sm font-bold'>
-                  Fullname
+                  Full Name
                 </label>
                 <input
                   className='border-2 border-black w-full'
@@ -185,15 +241,39 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                 <div className='flex flex-row gap-5'>
                   <div>
                     <div className='flex flex-row items-center'>
+                      {/* {dayoff.map((item) => (
+                        <input
+                          className=' h-4 w-4 rounded'
+                          type='checkbox'
+                          name='dayoff1'
+                          value='Monday'
+                        />
+                      ))} */}
                       <input
                         className=' h-4 w-4 rounded'
                         type='checkbox'
                         name='dayoff1'
-                        value='Monday'
+                        value='Sunday'
+                        onChange={handleCheckboxChange}
                       />
                       <label
                         className='text-sm ml-1 font-medium text-gray-900'
                         for='dayoff1'
+                      >
+                        Sunday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff2'
+                        value='Monday'
+                        onChange={handleCheckboxChange}
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff2'
                       >
                         Monday
                       </label>
@@ -202,12 +282,13 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                       <input
                         className=' h-4 w-4 rounded'
                         type='checkbox'
-                        name='dayoff2'
+                        name='dayoff3'
                         value='Tuesday'
+                        onChange={handleCheckboxChange}
                       />
                       <label
                         className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff2'
+                        for='dayoff3'
                       >
                         Tuesday
                       </label>
@@ -216,28 +297,15 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                       <input
                         className=' h-4 w-4 rounded'
                         type='checkbox'
-                        name='dayoff3'
-                        value='Wednesday'
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff3'
-                      >
-                        Wednesday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
                         name='dayoff4'
-                        value='Thursday'
+                        value='Wednesday'
+                        onChange={handleCheckboxChange}
                       />
                       <label
                         className='text-sm ml-1 font-medium text-gray-900'
                         for='dayoff4'
                       >
-                        Thursday
+                        Wednesday
                       </label>
                     </div>
                   </div>
@@ -247,11 +315,27 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                         className=' h-4 w-4 rounded'
                         type='checkbox'
                         name='dayoff5'
-                        value='Friday'
+                        value='Thursday'
+                        onChange={handleCheckboxChange}
                       />
                       <label
                         className='text-sm ml-1 font-medium text-gray-900'
                         for='dayoff5'
+                      >
+                        Thursday
+                      </label>
+                    </div>
+                    <div className='flex flex-row items-center'>
+                      <input
+                        className=' h-4 w-4 rounded'
+                        type='checkbox'
+                        name='dayoff6'
+                        value='Friday'
+                        onChange={handleCheckboxChange}
+                      />
+                      <label
+                        className='text-sm ml-1 font-medium text-gray-900'
+                        for='dayoff6'
                       >
                         Friday
                       </label>
@@ -260,28 +344,15 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                       <input
                         className=' h-4 w-4 rounded'
                         type='checkbox'
-                        name='dayoff6'
-                        value='Saturday'
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff6'
-                      >
-                        Saturday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
                         name='dayoff7'
-                        value='Sunday'
+                        value='Saturday'
+                        onChange={handleCheckboxChange}
                       />
                       <label
                         className='text-sm ml-1 font-medium text-gray-900'
                         for='dayoff7'
                       >
-                        Sunday
+                        Saturday
                       </label>
                     </div>
                   </div>
@@ -308,13 +379,12 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                 <select
                   className='border-2 border-black w-full'
                   name='department'
-                  onChange={handleChange}
+                  onChange={handleDepartment}
                   required
                 >
-                  <option value='hr'>HR</option>
                   <option value='sales'>SALES</option>
                   <option value='warehouse'>WAREHOUSE</option>
-                  <option value='po'>PURCHASING</option>
+                  {/* <option value='po'>PURCHASING</option> */}
                 </select>
               </div>
               <div className='mb-2'>
@@ -327,10 +397,14 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   onChange={handleChange}
                   required
                 >
-                  <option value='hr_manager'>te</option>
-                  <option value='sales_artista'>ete</option>
-                  <option value='sales_something'>te</option>
-                  <option value='sales_lang'>et</option>
+                  {position.map((item, i) => (
+                    <option
+                      key={i}
+                      value={item.position}
+                    >
+                      {item.display}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className='mb-2'>
@@ -347,19 +421,22 @@ const EmployeeAddModal = ({ setModalAdd }) => {
               </div>
               <div className='mb-2'>
                 <label className='block text-gray-700 text-sm font-bold'>
-                  Rate per our
+                  Rate per hour
                 </label>
                 <input
                   className='border-2 border-black w-full'
-                  type='text'
+                  type='number'
                   name='rateperhour'
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Register RFID
+                <label className='flex items-center text-gray-700 text-sm font-bold mb-1'>
+                  Register RFID{' '}
+                  <span className='mx-2'>
+                    {employee.rfid && <FcOk size={20} />}
+                  </span>
                 </label>
                 <button
                   type='button'
@@ -376,33 +453,25 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   Working Time
                 </label>
                 <div className='flex flex-row'>
-                  <select className='border-2 border-black w-2/5'>
-                    <option value=''>1 PM</option>
-                    <option value=''> PM</option>
-                    <option value=''>3 PM</option>
-                    <option value=''>4 PM</option>
-                    <option value=''>5 PM</option>
-                    <option value=''>6 PM</option>
-                    <option value=''>7 PM</option>
-                    <option value=''>8 PM</option>
-                    <option value=''>9 PM</option>
-                    <option value=''>10 PM</option>
-                    <option value=''>11 PM</option>
-                  </select>
+                  <input
+                    type='time'
+                    name='shift_timein'
+                    className='border-2 border-black w-2/5'
+                    min='1:00'
+                    max='23:00'
+                    required
+                    onChange={handleChange}
+                  />
                   <h1 className='font-semibold  mx-2'> - </h1>
-                  <select className='border-2 border-black w-2/5'>
-                    <option value=''>11 PM</option>
-                    <option value=''>10 PM</option>
-                    <option value=''>9 PM</option>
-                    <option value=''>8 PM</option>
-                    <option value=''>7 PM</option>
-                    <option value=''>6 PM</option>
-                    <option value=''>5 PM</option>
-                    <option value=''>4 PM</option>
-                    <option value=''>3 PM</option>
-                    <option value=''>2 PM</option>
-                    <option value=''>1 PM</option>
-                  </select>
+                  <input
+                    type='time'
+                    className='border-2 border-black w-2/5'
+                    name='shift_timeout'
+                    min={employee.shift_timein}
+                    max='23:00'
+                    required
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className='flex justify-end pb-5'>
@@ -416,7 +485,13 @@ const EmployeeAddModal = ({ setModalAdd }) => {
             </div>
           </form>
         </div>
-        {modalScanner && <ScanRfidModal setModalScanner={setModalScanner} />}
+        {modalScanner && (
+          <ScanRfidModal
+            setModalScanner={setModalScanner}
+            employee={employee}
+            setEmployee={setEmployee}
+          />
+        )}
       </div>
       <ToastContainer
         position='top-center'
