@@ -10,6 +10,8 @@ const EmployeeList = () => {
   const [query, setQuery] = useState('')
   const [details, setDetails] = useState({})
   const [active, setActive] = useState(false)
+  const [sort, setSort] = useState('id')
+  const [order, setOrder] = useState(true)
 
   const toggle = (i) => {
     if (open === i) {
@@ -18,9 +20,14 @@ const EmployeeList = () => {
     setActive(i)
     setDetails(data.find((obj) => obj.id === i))
   }
+
   return (
     <div className='p-4 md:p-12'>
-      <EmployeeListHeader setQuery={setQuery} />
+      <EmployeeListHeader
+        setSort={setSort}
+        setOrder={setOrder}
+        setQuery={setQuery}
+      />
       <div className='flex flex-col lg:flex-row'>
         {/* table */}
 
@@ -44,7 +51,26 @@ const EmployeeList = () => {
                 </tr>
               )}
               {data
-                ?.filter((item) => {
+                ?.sort((a, b) => {
+                  if (order) {
+                    if (a[sort] < b[sort]) {
+                      return -1
+                    }
+                    if (a[sort] > b[sort]) {
+                      return 1
+                    }
+                    return 0
+                  } else {
+                    if (a[sort] < b[sort]) {
+                      return 1
+                    }
+                    if (a[sort] > b[sort]) {
+                      return -1
+                    }
+                    return 0
+                  }
+                })
+                .filter((item) => {
                   return Object.keys(item).some((key) =>
                     item[key]
                       ?.toString()
@@ -52,6 +78,7 @@ const EmployeeList = () => {
                       .includes(query.toLowerCase())
                   )
                 })
+                .filter((item) => item.department !== 'hr')
                 .map((item, i) => (
                   <EmployeeListItems
                     key={i}

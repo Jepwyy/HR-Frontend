@@ -14,7 +14,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     role: 'sales_manager',
     username: '',
     password: '',
-    department: 'hr',
+    department: 'sales',
     scheduletype: 'morning',
     rateperhour: '',
     status: 'active',
@@ -29,13 +29,39 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     shift_timeout: '23:00',
     dayoff: [],
   })
-  const [position, setPosition] = useState([])
-
+  const [position, setPosition] = useState([
+    {
+      display: 'MANAGER',
+      position: 'sales_manager',
+    },
+    {
+      display: 'BARISTA',
+      position: 'barista',
+    },
+    {
+      display: 'COOK',
+      position: 'sales_cook',
+    },
+    {
+      display: 'CASHIER',
+      position: 'sales_cashier',
+    },
+  ])
+  const addDays = (e) => {
+    setDays([...days, e.target.value])
+  }
+  const removeDay = (id) => {
+    setDays((item) => item !== id)
+  }
   const handleDepartment = (e) => {
     setEmployee({ ...employee, department: e.target.value })
     switch (e.target.value) {
       case 'sales':
         setPosition([
+          {
+            display: 'MANAGER',
+            position: 'sales_manager',
+          },
           {
             display: 'BARISTA',
             position: 'barista',
