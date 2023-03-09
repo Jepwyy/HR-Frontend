@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import profile from '../../assets/images/dp.jpg'
-import { AiOutlineUser } from 'react-icons/ai'
+// import { AiOutlineUser } from 'react-icons/ai'
 import { formatPosition, formatDepartment } from '../../utils/colParser'
 import EmployeeEditModal from './Modal/EmployeeEditModal'
 import EmployeeSchedModal from './Modal/EmployeeSchedModal'
@@ -12,13 +12,13 @@ const EmployeeCard = ({ item }) => {
   ) : (
     <div className='py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'>
       <div className='flex justify-center items-start'>
-        <div className='mr-6'>
+        <div className='flex-none mr-5'>
           <img
-            className='border-4 border-black aspect-square rounded-full h-32'
+            className='border-4 border-black rounded-full aspect-square h-36 w-36'
             src={item.imgurl ? item.imgurl : profile}
           />
         </div>
-        <div>
+        <div className='flex-1'>
           <h2 className='font-bold text-4xl mb-2'>{item.fullname}</h2>
           <div className='flex'>
             <div className='mr-10'>
@@ -72,7 +72,12 @@ const EmployeeCard = ({ item }) => {
         </button>
       </div>
       {modalEdit && <EmployeeEditModal setModalEdit={setModalEdit} />}
-      {modalSched && <EmployeeSchedModal setModalSched={setModalSched} />}
+      {modalSched && (
+        <EmployeeSchedModal
+          item={item}
+          setModalSched={setModalSched}
+        />
+      )}
     </div>
   )
 }
