@@ -5,7 +5,7 @@ import { MdOutlineDashboard, MdArchive } from 'react-icons/md'
 import { RiHealthBookFill } from 'react-icons/ri'
 import { TbReportMoney } from 'react-icons/tb'
 import { NavLink } from 'react-router-dom'
-import { FcAcceptDatabase, FcOvertime } from 'react-icons/fc'
+import { FcAcceptDatabase, FcOvertime, FcLeave } from 'react-icons/fc'
 // pages
 import Topbar from './Topbar'
 
@@ -15,6 +15,7 @@ const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: MdOutlineDashboard },
     { name: 'Employee List', link: '/employee-list', icon: HiUserGroup },
+    { name: 'Employee Leave', link: '/employee-leave', icon: FcLeave },
     {
       name: 'Attendance',
       link: '/attendance',

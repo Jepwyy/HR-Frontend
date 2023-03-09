@@ -13,18 +13,36 @@ const AttendanceCard = () => {
           <option value='...'>THIS MONTH</option>
         </select>
       </div>
-      <div className=' overflow-x-auto'>
-        <h1>Name: Abdol Jabol</h1>
+      <h1>Name: Abdol Jabol</h1>
+      <div className=' overflow-y-auto'>
         <table className='w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto max-h-[500px]'>
-          <thead className='text-xs text-gray-50 uppercase bg-[#010100]'>
-            <tr>
-              <th className='p-2 md:p-4'>DAY</th>
-              <th className='p-2 md:p-4'>DATE</th>
-              <th className='p-2 md:p-4'>TIME IN</th>
-              <th className='p-2 md:p-4'>TIME OUT</th>
+          <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
+            <tr className='py-10'>
+              <th className='p-4 md:p-4'>DAY</th>
+              <th className='p-4 md:p-4'>DATE</th>
+              <th className='p-4 md:p-4'>TIME IN</th>
+              <th className='p-4 md:p-4'>TIME OUT</th>
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
+            </tr>
+            <tr>
+              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
+            </tr>
+            <tr>
+              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
+            </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
               <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>

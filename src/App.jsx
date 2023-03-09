@@ -14,7 +14,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/admin/Dashboard'
 import Archive from './pages/admin/Archive'
 import Attendance from './pages/admin/Attendance'
-
+import EmployeeLeave from './pages/admin/EmployeeLeave'
 import EmployeeList from './pages/admin/EmployeeList'
 import Payroll from './pages/admin/Payroll'
 import Error404 from './pages/Error404'
@@ -46,6 +46,7 @@ function App() {
                   <Route path='/archive' element={<Archive />} />
                   <Route path='/attendance' element={<Attendance />} />
                   <Route path='/dashboard' element={<Dashboard />} />
+                  <Route path='/employee-leave' element={<EmployeeLeave />} />
                   <Route path='/employee-list' element={<EmployeeList />} />
                   <Route path='/payroll' element={<Payroll />} />
                   <Route path='/audit-logs' element={<AuditLogs />} />

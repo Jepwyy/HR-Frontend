@@ -32,9 +32,9 @@ const EmployeeList = () => {
         {/* table */}
 
         {error && 'Error'}
-        <div className='h-96 overflow-y-auto flex-1'>
-          <table className='border-2 border-collapse text-center w-full'>
-            <thead className='bg-[#010100] text-white h-16'>
+        <div className='h-96 overflow-y-auto flex-1 '>
+          <table className='border-2 border-collapse text-center w-full  '>
+            <thead className='bg-[#010100] text-white h-16 sticky top-0'>
               <tr>
                 <td className='p-2 md:p-4'>ID</td>
                 <td className='p-2 md:p-4'>Name</td>

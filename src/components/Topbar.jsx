@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import profile from '../assets/images/dp.jpg'
 import axios from '../api/api'
@@ -33,6 +34,20 @@ const Topbar = ({ open, setOpen }) => {
       navigate('/')
     },
   })
+  const logout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#919294',
+      confirmButtonText: 'Logout',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate()
+      }
+    })
+  }
 
   return (
     <>
@@ -63,13 +78,9 @@ const Topbar = ({ open, setOpen }) => {
             <button className=' px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
               Edit Profile
             </button>
-            <button className='px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
-              Settings
-            </button>
-
             <button
               className='px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'
-              onClick={() => mutation.mutate()}
+              onClick={logout}
             >
               Logout
             </button>
