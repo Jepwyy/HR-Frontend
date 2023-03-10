@@ -6,10 +6,20 @@ import Spinner from '../../Spinner'
 import ScanRfidModal from './ScanRfidModal'
 import { ToastContainer, toast } from 'react-toastify'
 import { FcOk } from 'react-icons/fc'
+import { IoMdAddCircleOutline } from 'react-icons/io'
+import { BsFillXCircleFill } from 'react-icons/bs'
+import { formatLocalTime } from '../../../utils/formatTime'
 
 const EmployeeAddModal = ({ setModalAdd }) => {
   const [modalScanner, setModalScanner] = useState(false)
   const queryClient = useQueryClient()
+  //schedule states
+  const [scheduleDay, setScheduleDay] = useState('Sunday')
+  const [timein, setTimein] = useState('')
+  const [timeout, setTimeout] = useState('')
+
+  //employee states
+  const [scheduleList, setScheduleList] = useState([])
   const [employee, setEmployee] = useState({
     role: 'sales_manager',
     username: '',
@@ -24,11 +34,10 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     address: '',
     email: '',
     contact: '',
-    rfid: null,
-    shift_timein: '1:00',
-    shift_timeout: '23:00',
-    dayoff: [],
+    rfid: 0,
+    schedule: scheduleList,
   })
+
   const [position, setPosition] = useState([
     {
       display: 'MANAGER',
@@ -47,12 +56,17 @@ const EmployeeAddModal = ({ setModalAdd }) => {
       position: 'sales_cashier',
     },
   ])
-  const addDays = (e) => {
-    setDays([...days, e.target.value])
-  }
-  const removeDay = (id) => {
-    setDays((item) => item !== id)
-  }
+
+  const daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ]
+
   const handleDepartment = (e) => {
     setEmployee({ ...employee, department: e.target.value })
     switch (e.target.value) {
@@ -92,21 +106,66 @@ const EmployeeAddModal = ({ setModalAdd }) => {
         break
     }
   }
-  //handle day off checkboxes
+  //handle add schedule
 
-  const handleCheckboxChange = (event) => {
-    const { value, checked } = event.target
-    if (checked) {
-      setEmployee((prevState) => ({
-        ...prevState,
-        dayoff: [...prevState.dayoff, value],
-      }))
+  const addSchedule = () => {
+    if (timein === '' || timeout === '') {
+      toast.error('Time range is required.', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
     } else {
-      setEmployee((prevState) => ({
-        ...prevState,
-        dayoff: prevState.dayoff.filter((day) => day !== value),
-      }))
+      if (!employee.schedule.length) {
+        const newScheduleItem = {
+          day: scheduleDay,
+          shift_timein: timein,
+          shift_timeout: timeout,
+        }
+        setEmployee((prev) => {
+          return {
+            ...prev,
+            ...prev.schedule,
+            schedule: [...prev.schedule, newScheduleItem],
+          }
+        })
+      } else {
+        if (employee.schedule.some((item) => item.day === scheduleDay)) {
+          toast.error(`You already added ${scheduleDay}`, {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            progress: undefined,
+            theme: 'light',
+          })
+        } else {
+          const newScheduleItem = {
+            day: scheduleDay,
+            shift_timein: timein,
+            shift_timeout: timeout,
+          }
+          setEmployee((prev) => {
+            return {
+              ...prev,
+              ...prev.schedule,
+              schedule: [...prev.schedule, newScheduleItem],
+            }
+          })
+        }
+      }
     }
+  }
+
+  const removeSchedule = (day) => {
+    setEmployee((prev) => ({
+      schedule: prev.schedule.filter((item) => item.day !== day),
+    }))
   }
 
   const mutation = useMutation({
@@ -127,7 +186,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
       })
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['Employess'] })
+      queryClient.invalidateQueries({ queryKey: ['Employees'] })
       setModalAdd(false)
       toast.success(`Employee created`, {
         position: 'top-center',
@@ -155,7 +214,6 @@ const EmployeeAddModal = ({ setModalAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    //form data
     const formData = new FormData()
     const stringtifyEmployee = JSON.stringify(employee)
     formData.append('file', file)
@@ -163,6 +221,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
 
     mutation.mutate(formData)
   }
+  console.log(employee)
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
       <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto'>
@@ -183,331 +242,244 @@ const EmployeeAddModal = ({ setModalAdd }) => {
           {mutation.isLoading && <Spinner />}
         </div>
         <div className='flex justify-center'>
-          <form
-            className='flex flex-col md:flex-row px-3 md:gap-10'
-            onSubmit={handleSubmit}
-          >
-            <div className='  md:w-1/2 w-full'>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Username
-                </label>
-                <input
-                  className='border-2 border-black w-full '
-                  name='username'
-                  type='text'
-                  onChange={handleChange}
-                  required
-                />
+          <form onSubmit={handleSubmit}>
+            <div className='flex flex-col md:flex-row px-3 md:gap-10'>
+              <div className='  md:w-1/2 w-full'>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Username
+                  </label>
+                  <input
+                    className='border-2 border-black w-full '
+                    name='username'
+                    type='text'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Password
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='password'
+                    name='password'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Full Name
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='text'
+                    name='fullname'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Birthdate
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='date'
+                    name='birthdate'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Email Address
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='email'
+                    name='email'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Address
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='text'
+                    name='address'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Password
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='password'
-                  name='password'
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Full Name
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='text'
-                  name='fullname'
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Birthdate
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='date'
-                  name='birthdate'
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Email Address
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='email'
-                  name='email'
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Address
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='text'
-                  name='address'
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Dayoff
-                </label>
-                <div className='flex flex-row gap-5'>
-                  <div>
-                    <div className='flex flex-row items-center'>
-                      {/* {dayoff.map((item) => (
-                        <input
-                          className=' h-4 w-4 rounded'
-                          type='checkbox'
-                          name='dayoff1'
-                          value='Monday'
-                        />
-                      ))} */}
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff1'
-                        value='Sunday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff1'
+              <div className='md:w-1/2 w-full'>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Profile Photo
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='file'
+                    accept='image/*'
+                    onChange={handleFile}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Department
+                  </label>
+                  <select
+                    className='border-2 border-black w-full'
+                    name='department'
+                    onChange={handleDepartment}
+                    required
+                  >
+                    <option value='sales'>SALES</option>
+                    <option value='warehouse'>WAREHOUSE</option>
+                    {/* <option value='po'>PURCHASING</option> */}
+                  </select>
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Position
+                  </label>
+                  <select
+                    className='border-2 border-black w-full'
+                    name='role'
+                    onChange={handleChange}
+                    required
+                  >
+                    {position.map((item, i) => (
+                      <option
+                        key={i}
+                        value={item.position}
                       >
-                        Sunday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff2'
-                        value='Monday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff2'
-                      >
-                        Monday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff3'
-                        value='Tuesday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff3'
-                      >
-                        Tuesday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff4'
-                        value='Wednesday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff4'
-                      >
-                        Wednesday
-                      </label>
-                    </div>
-                  </div>
-                  <div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff5'
-                        value='Thursday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff5'
-                      >
-                        Thursday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff6'
-                        value='Friday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff6'
-                      >
-                        Friday
-                      </label>
-                    </div>
-                    <div className='flex flex-row items-center'>
-                      <input
-                        className=' h-4 w-4 rounded'
-                        type='checkbox'
-                        name='dayoff7'
-                        value='Saturday'
-                        onChange={handleCheckboxChange}
-                      />
-                      <label
-                        className='text-sm ml-1 font-medium text-gray-900'
-                        for='dayoff7'
-                      >
-                        Saturday
-                      </label>
-                    </div>
-                  </div>
+                        {item.display}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Contact No.
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='text'
+                    name='contact'
+                    onChange={handleChange}
+                    pattern='^09\d{9}$'
+                    title='Enter a valid PH mobile number'
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Rate per hour
+                  </label>
+                  <input
+                    className='border-2 border-black w-full'
+                    type='number'
+                    name='rateperhour'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className='mb-2'>
+                  <label className='flex items-center text-gray-700 text-sm font-bold mb-1'>
+                    Register RFID{' '}
+                    <span className='mx-2'>
+                      {employee.rfid && <FcOk size={20} />}
+                    </span>
+                  </label>
+                  <button
+                    type='button'
+                    className='bg-[#ac7238] text-white rounded-md w-full'
+                    onClick={() => {
+                      setModalScanner(true)
+                    }}
+                  >
+                    Scan
+                  </button>
                 </div>
               </div>
             </div>
-            <div className='md:w-1/2 w-full'>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Profile Photo
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='file'
-                  accept='image/*'
-                  onChange={handleFile}
-                  required
-                />
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Department
-                </label>
+            <div className='px-3 flex justify-center w-full items-center flex-col'>
+              <div>WORK SCHEDULE</div>
+              <div className='flex items-center'>
                 <select
-                  className='border-2 border-black w-full'
-                  name='department'
-                  onChange={handleDepartment}
-                  required
+                  className='mr-2'
+                  name='day'
+                  onChange={(e) => setScheduleDay(e.target.value)}
                 >
-                  <option value='sales'>SALES</option>
-                  <option value='warehouse'>WAREHOUSE</option>
-                  {/* <option value='po'>PURCHASING</option> */}
-                </select>
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Position
-                </label>
-                <select
-                  className='border-2 border-black w-full'
-                  name='role'
-                  onChange={handleChange}
-                  required
-                >
-                  {position.map((item, i) => (
+                  {daysOfWeek.map((item, i) => (
                     <option
                       key={i}
-                      value={item.position}
+                      value={item}
+                      className='text-center'
                     >
-                      {item.display}
+                      {item}
                     </option>
                   ))}
                 </select>
-              </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Contact No.
-                </label>
                 <input
-                  className='border-2 border-black w-full'
-                  type='text'
-                  name='contact'
-                  onChange={handleChange}
-                  required
+                  type='time'
+                  name='shift_timein'
+                  className='mx-2 border border-gray-900'
+                  onChange={(e) => setTimein(e.target.value)}
+                />
+                <div className='font-bold'> - </div>
+                <input
+                  type='time'
+                  name='shift_timeout'
+                  className='mx-2 border border-gray-900'
+                  onChange={(e) => setTimeout(e.target.value)}
+                />
+                <IoMdAddCircleOutline
+                  size={25}
+                  className='cursor-pointer'
+                  onClick={addSchedule}
                 />
               </div>
-              <div className='mb-2'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Rate per hour
-                </label>
-                <input
-                  className='border-2 border-black w-full'
-                  type='number'
-                  name='rateperhour'
-                  onChange={handleChange}
-                  required
-                />
+              <div className='my-4'>
+                <table>
+                  {employee.schedule.map((item, i) => (
+                    <tr key={i}>
+                      <td className='px-4 py-1 font-semibold'>{item.day}</td>
+                      <td className='px-4 py-1 '>
+                        {formatLocalTime(item.shift_timein)}
+                      </td>
+                      <td>-</td>
+                      <td className='px-4 py-1'>
+                        {formatLocalTime(item.shift_timeout)}
+                      </td>
+                      <td className='flex h-full py-1'>
+                        <span className='cursor-pointer '>
+                          <BsFillXCircleFill
+                            size={23}
+                            onClick={() => removeSchedule(item.day)}
+                          />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </table>
               </div>
-              <div className='mb-2'>
-                <label className='flex items-center text-gray-700 text-sm font-bold mb-1'>
-                  Register RFID{' '}
-                  <span className='mx-2'>
-                    {employee.rfid && <FcOk size={20} />}
-                  </span>
-                </label>
-                <button
-                  type='button'
-                  className='bg-[#ac7238] text-white rounded-md w-full'
-                  onClick={() => {
-                    setModalScanner(true)
-                  }}
-                >
-                  Scan
-                </button>
-              </div>
-              <div className='mb-14'>
-                <label className='block text-gray-700 text-sm font-bold'>
-                  Working Time
-                </label>
-                <div className='flex flex-row'>
-                  <input
-                    type='time'
-                    name='shift_timein'
-                    className='border-2 border-black w-2/5'
-                    min='1:00'
-                    max='23:00'
-                    required
-                    onChange={handleChange}
-                  />
-                  <h1 className='font-semibold  mx-2'> - </h1>
-                  <input
-                    type='time'
-                    className='border-2 border-black w-2/5'
-                    name='shift_timeout'
-                    min={employee.shift_timein}
-                    max='23:00'
-                    required
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div className='flex justify-end pb-5'>
-                <button
-                  type='submit'
-                  className='px-6 py-2 bg-[#ac7238] text-white rounded-xl'
-                >
-                  Add
-                </button>
-              </div>
+            </div>
+            <div className='flex justify-end pb-5 px-3'>
+              <button
+                type='submit'
+                className='px-6 py-2 bg-[#ac7238] text-white rounded-xl'
+              >
+                Add
+              </button>
             </div>
           </form>
         </div>

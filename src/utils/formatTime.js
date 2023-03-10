@@ -13,3 +13,13 @@ export function formatTime(timeString) {
   })
   return formattedTime
 }
+
+export function formatLocalTime(timeString) {
+  const date = new Date(`2000-01-01T${timeString}`)
+  const formattedTime = date.toLocaleTimeString([], {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  })
+  return formattedTime
+}
