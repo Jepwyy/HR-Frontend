@@ -93,7 +93,10 @@ const EmployeeList = () => {
         </div>
         {/* card */}
         <div className='flex-1'>
-          <EmployeeCard item={details} />
+          <EmployeeCard
+            item={details}
+            setDetails={setDetails}
+          />
         </div>
       </div>
     </div>
