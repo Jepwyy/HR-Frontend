@@ -464,6 +464,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                         <span className='cursor-pointer '>
                           <BsFillXCircleFill
                             size={23}
+                            color='#ac7238'
                             onClick={() => removeSchedule(item.day)}
                           />
                         </span>

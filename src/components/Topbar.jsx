@@ -40,7 +40,7 @@ const Topbar = ({ open, setOpen }) => {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#919294',
+      cancelButtonColor: '#010100',
       confirmButtonText: 'Logout',
     }).then((result) => {
       if (result.isConfirmed) {
