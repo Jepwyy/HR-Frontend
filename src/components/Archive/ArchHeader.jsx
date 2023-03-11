@@ -1,6 +1,6 @@
 import React from 'react'
 import { BiSearch } from 'react-icons/bi'
-const ArchHeader = () => {
+const ArchHeader = ({ setQuery }) => {
   return (
     <div className='flex flex-col-reverse md:flex-row justify-between md:mt-10 mb-4'>
       {/* sort */}

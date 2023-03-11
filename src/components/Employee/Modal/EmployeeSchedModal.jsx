@@ -79,7 +79,10 @@ const EmployeeSchedModal = ({ item, setModalSched }) => {
                       {schedule?.filter((data) => data.day === item).length ? (
                         ''
                       ) : (
-                        <BsFillXCircleFill size={30} />
+                        <BsFillXCircleFill
+                          size={30}
+                          color='#ac7238'
+                        />
                       )}
                     </span>
                   </td>
