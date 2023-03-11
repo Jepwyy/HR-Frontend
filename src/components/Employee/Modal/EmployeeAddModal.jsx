@@ -19,7 +19,6 @@ const EmployeeAddModal = ({ setModalAdd }) => {
   const [timeout, setTimeout] = useState('')
 
   //employee states
-  const [scheduleList, setScheduleList] = useState([])
   const [employee, setEmployee] = useState({
     role: 'sales_manager',
     username: '',
@@ -35,7 +34,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     email: '',
     contact: '',
     rfid: 0,
-    schedule: scheduleList,
+    schedule: [],
   })
 
   const [position, setPosition] = useState([
@@ -221,7 +220,6 @@ const EmployeeAddModal = ({ setModalAdd }) => {
 
     mutation.mutate(formData)
   }
-  console.log(employee)
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
       <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto'>
@@ -396,7 +394,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   <label className='flex items-center text-gray-700 text-sm font-bold mb-1'>
                     Register RFID{' '}
                     <span className='mx-2'>
-                      {employee.rfid && <FcOk size={20} />}
+                      {employee.rfid === 0 ? <></> : <FcOk size={20} />}
                     </span>
                   </label>
                   <button
