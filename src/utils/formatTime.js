@@ -23,3 +23,8 @@ export function formatLocalTime(timeString) {
   })
   return formattedTime
 }
+
+export function formatBirthdate(dateString) {
+  const formattedDate = dateString.substring(0, 10)
+  return formattedDate
+}

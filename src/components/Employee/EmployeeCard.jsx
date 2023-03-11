@@ -122,7 +122,13 @@ const EmployeeCard = ({ item, setDetails }) => {
           Archive
         </button>
       </div>
-      {modalEdit && <EmployeeEditModal setModalEdit={setModalEdit} />}
+      {modalEdit && (
+        <EmployeeEditModal
+          item={item}
+          setDetails={setDetails}
+          setModalEdit={setModalEdit}
+        />
+      )}
       {modalSched && (
         <EmployeeSchedModal
           item={item}
