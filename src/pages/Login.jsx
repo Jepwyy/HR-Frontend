@@ -16,7 +16,7 @@ const Login = () => {
         <img src={logo} alt='logo' className='md:h-auto' />
       </div>
 
-      <div className=' md:w-1/2 w-96 bg-white rounded-lg shadow  md:mt-0 xl:p-0 md:mx-24 mb-3'>
+      <div className='relative md:w-1/2 w-96 bg-white rounded-lg shadow  md:mt-0 xl:p-0 md:mx-24 mb-3'>
         <div className=' w-full p-6 space-y-2 md:space-y-4 sm:p-8 '>
           <div className=''>
             <button

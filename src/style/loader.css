@@ -1,0 +1,33 @@
+.dots {
+  width: 80px;
+  height: 14.4px;
+  background: radial-gradient(circle closest-side, #1d0e0b 90%, #0000) 0% 50%,
+    radial-gradient(circle closest-side, #774023 90%, #0000) 25% 50%,
+    radial-gradient(circle closest-side, #d88c51 90%, #0000) 50% 50%,
+    radial-gradient(circle closest-side, #d8c8a0 90%, #0000) 75% 50%;
+  background-size: calc((100% / 4) - 6px) 100%; /* adjusted background-size and added space between each dot */
+  background-repeat: no-repeat;
+  animation: dots-zcf63l 1s infinite linear;
+}
+
+@keyframes dots-zcf63l {
+  25% {
+    background-size: calc((100% / 4) - 10px) 0%, calc((100% / 4) - 6px) 100%,
+      calc((100% / 4) - 6px) 100%, calc((100% / 4) - 6px) 100%; /* adjusted background-size */
+  }
+
+  50% {
+    background-size: calc((100% / 4) - 6px) 100%, calc((100% / 4) - 6px) 0%,
+      calc((100% / 4) - 6px) 100%, calc((100% / 4) - 6px) 100%; /* adjusted background-size */
+  }
+
+  75% {
+    background-size: calc((100% / 4) - 6px) 100%, calc((100% / 4) - 6px) 100%,
+      calc((100% / 4) - 6px) 0%, calc((100% / 4) - 6px) 100%; /* adjusted background-size */
+  }
+
+  100% {
+    background-size: calc((100% / 4) - 6px) 100%, calc((100% / 4) - 6px) 100%,
+      calc((100% / 4) - 6px) 100%, calc((100% / 4) - 6px) 0%; /* adjusted background-size */
+  }
+}

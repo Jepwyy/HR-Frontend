@@ -9,7 +9,7 @@ import TapCard from '../../assets/images/TapCard.png'
 // styles
 // images
 
-import Spinner from '../Spinner'
+import Spinner from '../LogoLoader'
 
 const LoginRfid = () => {
   const [message, setMessage] = useState('')
@@ -89,15 +89,13 @@ const LoginRfid = () => {
   }
   return (
     <div>
-      <div className='relative md:min-h-[27.7rem] min-h-[27.2rem]'>
-        <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
-          {mutation.isLoading && <Spinner />}
-        </div>
+      <div className=' '>
+        {mutation.isLoading && <Spinner />}
+        {/* <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
+          
+        </div> */}
         <div className='flex flex-col justify-center pt-7'>
-          <img
-            className='h-[19.2rem]'
-            src={TapCard}
-          />
+          <img className='h-[19.2rem]' src={TapCard} />
           <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl border-b-4 border-black mx-16'>
             TAP YOUR CARD
           </h1>
@@ -105,7 +103,7 @@ const LoginRfid = () => {
 
         <form
           ref={formRef}
-          className='relative space-y-4 md:space-y-5'
+          className='relative space-y-4 md:space-y-5 md:pb-[1.4rem] pb-[2.0rem]'
           onSubmit={handleSubmit}
         >
           <input

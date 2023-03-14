@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify'
 // images
 
 import icon from '../../assets/images/login.png'
-import Spinner from '../../components/Spinner'
+import Spinner from '../LogoLoader'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -64,11 +64,11 @@ const LoginForm = () => {
       <div className='flex justify-center'>
         <img className='h-40' src={icon} />
       </div>
-
-      <form className='relative space-y-4 md:space-y-5' onSubmit={handleSubmit}>
-        <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
-          {mutation.isLoading && <Spinner />}
-        </div>
+      {mutation.isLoading && <Spinner />}
+      <form className=' space-y-4 md:space-y-5' onSubmit={handleSubmit}>
+        {/* <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
+          
+        </div> */}
         <div className=''>
           <label className=' block mb-2 text-sm mr-[80%] font-medium text-gray-900'>
             Username
