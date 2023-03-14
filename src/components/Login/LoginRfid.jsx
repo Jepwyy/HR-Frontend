@@ -42,7 +42,7 @@ const LoginRfid = () => {
 
   const mutation = useMutation({
     mutationFn: (userdetails) =>
-      axios.post('/auth/card', userdetails, {
+      axios.post('/auth/admin-card', userdetails, {
         headers: { 'Content-Type': 'application/json' },
       }),
     onError: (error) => {
@@ -57,19 +57,9 @@ const LoginRfid = () => {
       })
     },
     onSuccess: (data) => {
-      if (data.status === 200) {
-        setUserData(data.data.user[0])
-        setToken(true)
-        navigate('/employee-list')
-      } else {
-        Swal.fire({
-          title: 'Success',
-          text: `${data.data.message}`,
-          icon: 'success',
-          timer: 2000,
-          showConfirmButton: false,
-        })
-      }
+      setUserData(data.data.user[0])
+      setToken(true)
+      navigate('/employee-list')
     },
   })
 
@@ -104,7 +94,10 @@ const LoginRfid = () => {
           {mutation.isLoading && <Spinner />}
         </div>
         <div className='flex flex-col justify-center pt-7'>
-          <img className='h-[19.2rem]' src={TapCard} />
+          <img
+            className='h-[19.2rem]'
+            src={TapCard}
+          />
           <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl border-b-4 border-black mx-16'>
             TAP YOUR CARD
           </h1>
