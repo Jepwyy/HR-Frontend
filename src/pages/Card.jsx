@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import 'animate.css'
-import LoginForm from '../components/Login/LoginForm'
-import LoginRfid from '../components/Login/LoginRfid'
-// styles
+import TimeInForm from '../components/Login/TimeInForm'
+import TimeOutForm from '../components/Login/TimeOutForm'
 import '../style/login.css'
 // images
 import logo from '../assets/images/logo.png'
-
-const Login = () => {
-  const [active, setActive] = useState('SecondPage')
-
+const Card = () => {
+  const [page, setPage] = useState('FirstPage')
   return (
     <div className='flex flex-col md:flex-row justify-center bg-login bg-cover items-center md:h-screen  h-auto '>
       <div className='-mt-24 md:mx-20 md:w-1/2 animate__heartBeat'>
@@ -18,35 +15,35 @@ const Login = () => {
 
       <div className=' md:w-1/2 w-96 bg-white rounded-lg shadow  md:mt-0 xl:p-0 md:mx-24 mb-3'>
         <div className=' w-full p-6 space-y-2 md:space-y-4 sm:p-8 '>
-          <div className=''>
+          <div className='flex justify-end'>
             <button
               className={
-                active === 'SecondPage'
+                page === 'FirstPage'
                   ? 'bg-gray-600 text-gray-50 font-bold py-2 px-4 rounded-l'
                   : 'bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l'
               }
-              onClick={() => setActive('SecondPage')}
+              onClick={() => setPage('FirstPage')}
             >
-              RFID
+              Time In
             </button>
             <button
               className={
-                active === 'FirstPage'
+                page === 'SecondPage'
                   ? 'bg-gray-600 text-gray-50 font-bold py-2 px-4 rounded-r'
                   : 'bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r'
               }
-              onClick={() => setActive('FirstPage')}
+              onClick={() => setPage('SecondPage')}
             >
-              FORM
+              Time Out
             </button>
           </div>
 
-          {active === 'FirstPage' && <LoginForm />}
-          {active === 'SecondPage' && <LoginRfid />}
+          {page === 'FirstPage' && <TimeInForm />}
+          {page === 'SecondPage' && <TimeOutForm />}
         </div>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Card

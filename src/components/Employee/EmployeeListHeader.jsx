@@ -4,6 +4,7 @@ import { BiSearch } from 'react-icons/bi'
 import { TiArrowUnsorted } from 'react-icons/ti'
 
 import EmployeeAddModal from './Modal/EmployeeAddModal'
+import { AnimatePresence } from 'framer-motion'
 const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
   const [modalAdd, setModalAdd] = useState(false)
 
@@ -30,10 +31,7 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
           <option value='fullname'>NAME</option>
         </select>
         <span className='ml-4 py-1 pt cursor-pointer'>
-          <TiArrowUnsorted
-            size={28}
-            onClick={handleOrder}
-          />
+          <TiArrowUnsorted size={28} onClick={handleOrder} />
         </span>
       </div>
       {/* search */}
@@ -58,7 +56,9 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
           />
         </div>
       </div>
-      {modalAdd && <EmployeeAddModal setModalAdd={setModalAdd} />}
+      <AnimatePresence>
+        {modalAdd && <EmployeeAddModal setModalAdd={setModalAdd} />}
+      </AnimatePresence>
     </div>
   )
 }

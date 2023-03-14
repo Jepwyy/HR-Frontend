@@ -9,7 +9,7 @@ import { FcOk } from 'react-icons/fc'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { BsFillXCircleFill } from 'react-icons/bs'
 import { formatLocalTime } from '../../../utils/formatTime'
-
+import { motion } from 'framer-motion'
 const EmployeeAddModal = ({ setModalAdd }) => {
   const [modalScanner, setModalScanner] = useState(false)
   const queryClient = useQueryClient()
@@ -222,8 +222,13 @@ const EmployeeAddModal = ({ setModalAdd }) => {
   }
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
-      <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto'>
-        <div className='flex justify-end px-py'>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto animate__fadeInUp'
+      >
+        <div className='flex justify-end px-py '>
           <BsBackspaceFill
             size={40}
             className='cursor-pointer'
@@ -355,10 +360,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                     required
                   >
                     {position.map((item, i) => (
-                      <option
-                        key={i}
-                        value={item.position}
-                      >
+                      <option key={i} value={item.position}>
                         {item.display}
                       </option>
                     ))}
@@ -418,11 +420,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((item, i) => (
-                    <option
-                      key={i}
-                      value={item}
-                      className='text-center'
-                    >
+                    <option key={i} value={item} className='text-center'>
                       {item}
                     </option>
                   ))}
@@ -489,7 +487,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
             setEmployee={setEmployee}
           />
         )}
-      </div>
+      </motion.div>
       <ToastContainer
         position='top-center'
         autoClose={5000}

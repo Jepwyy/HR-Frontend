@@ -9,7 +9,7 @@ import './App.css'
 import Layout from './shared/Layout'
 
 // Pages
-
+import Card from './pages/Card'
 import Login from './pages/Login'
 import Dashboard from './pages/admin/Dashboard'
 import Archive from './pages/admin/Archive'
@@ -36,6 +36,7 @@ function App() {
         <div className='App'>
           <Routes>
             <Route path='/' element={<Login />} />
+            <Route path='/card' element={<Card />} />
             <Route path='*' element={<Error404 />} />
             {/* private routes */}
             <Route element={<PersistLogin />}>
