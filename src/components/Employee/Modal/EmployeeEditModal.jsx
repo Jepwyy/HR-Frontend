@@ -58,7 +58,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
           contact: data.contact,
           rfid: data.rfid,
           imgurl: data.imgurl,
-          schedule: data.schedule,
+          schedule: data.schedule || [],
         })
       } catch (error) {
         console.log(error)
