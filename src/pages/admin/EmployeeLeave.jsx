@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BiSearch } from 'react-icons/bi'
 import OnLeave from '../../components/EmployeeLeave/OnLeave'
 import LeaveRequest from '../../components/EmployeeLeave/LeaveRequest'
+import LeaveForm from '../../components/EmployeeLeave/LeaveForm'
 const EmployeeLeave = () => {
   const [active, setActive] = useState('FirstPage')
   return (
@@ -70,6 +71,7 @@ const EmployeeLeave = () => {
         <div className='w-full bg-[#F3F3F3] mt-2 py-5 px-3 h-full'>
           {active === 'FirstPage' && <OnLeave />}
           {active === 'SecondPage' && <LeaveRequest />}
+          {active === 'ThirdPage' && <LeaveForm />}
         </div>
       </div>
     </div>

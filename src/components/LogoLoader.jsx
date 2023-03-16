@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../assets/images/loaderr.png'
+import logo from '../assets/images/loaderr.svg'
 import '../style/loader.css'
 const LogoLoader = () => {
   return (
@@ -9,7 +9,7 @@ const LogoLoader = () => {
           <img className='mb-2 h-28 ' src={logo} />
         </div>
 
-        <div class='dots'></div>
+        <div class='dots ml-[12px]'></div>
       </div>
     </div>
   )

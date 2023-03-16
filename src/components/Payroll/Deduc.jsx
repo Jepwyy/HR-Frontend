@@ -3,7 +3,7 @@ import React from 'react'
 const Deduc = () => {
   return (
     <div>
-      <h1 className='mb-3 text-lg font-bold'>Deductions</h1>
+      <h1 className='mb-3 text-lg font-bold uppercase'>Deductions</h1>
       <div className='ml-5'>
         <div className='mb-3'>
           <label className='block text-gray-700 text-lg font-bold'>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import EmployeeListHeader from '../../components/Employee/EmployeeListHeader'
 import EmployeeListItems from '../../components/Employee/EmployeeListItems'
-import Spinner from '../../components/Spinner'
+import Spinner from '../../components/AdminLoader'
 import { useEmployees } from '../../hooks/useEmployees'
 import EmployeeCard from '../../components/Employee/EmployeeCard'
 
@@ -93,10 +93,7 @@ const EmployeeList = () => {
         </div>
         {/* card */}
         <div className='flex-1'>
-          <EmployeeCard
-            item={details}
-            setDetails={setDetails}
-          />
+          <EmployeeCard item={details} setDetails={setDetails} />
         </div>
       </div>
     </div>

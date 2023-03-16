@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import EmployeeListItems from '../../components/Employee/EmployeeListItems'
-import Spinner from '../../components/Spinner'
+import Spinner from '../../components/AdminLoader'
 import { useEmployees } from '../../hooks/useEmployees'
 import AttendanceCard from '../../components/Attendance/AttendanceCard'
 import AttendanceHeader from '../../components/Attendance/AttendanceHeader'

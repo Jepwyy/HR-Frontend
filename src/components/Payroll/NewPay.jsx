@@ -5,10 +5,10 @@ const NewPay = () => {
 
   return (
     <div>
-      <h1 className='mb-3 text-lg font-bold'>NewPay</h1>
+      <h1 className='mb-3 text-lg font-bold uppercase'>NewPay</h1>
       <div className='ml-5'>
         <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold'>
+          <label className='block text-gray-700 text-lg font-bold '>
             Employee :
           </label>
           <select
@@ -21,7 +21,7 @@ const NewPay = () => {
           </select>
         </div>
         <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold'>
+          <label className='block text-gray-700 text-lg font-bold '>
             Pay Date :
           </label>
           <input
@@ -33,7 +33,7 @@ const NewPay = () => {
           />
         </div>
         <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold'>
+          <label className='block text-gray-700 text-lg font-bold '>
             Ending Date :
           </label>
           <input
@@ -44,7 +44,7 @@ const NewPay = () => {
           />
         </div>
         <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold'>
+          <label className='block text-gray-700 text-lg font-bold '>
             Starting Date :
           </label>
           <input

@@ -15,7 +15,7 @@ const Layout = () => {
         <div className='flex flex-col flex-1 w-full'>
           <Topbar open={open} setOpen={setOpen} />
         </div>
-        <div className='flex-1 p-0 min-h-0 bg-white h-full w-full overflow-auto'>
+        <div className='flex-1 p-0 min-h-0 bg-white h-full w-full overflow-auto relative'>
           <Outlet />
         </div>
       </div>
