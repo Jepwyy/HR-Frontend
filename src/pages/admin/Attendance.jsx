@@ -21,7 +21,7 @@ const Attendance = () => {
   return (
     <div className='p-4 md:p-12'>
       <AttendanceHeader setQuery={setQuery} />
-      <div className='flex flex-col lg:flex-row'>
+      <div className='flex flex-col lg:flex-row md:mb-0 mb-40'>
         {/* table */}
 
         {error && 'Error'}

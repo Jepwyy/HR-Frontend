@@ -63,8 +63,8 @@ const Payroll = () => {
         </div>
 
         {/* TABLE */}
-        <div className='bg-gray-100 md:w-3/5 w-full'>
-          <div className='overflow-x-auto max-h-[425px] border-2 border-[#010100]'>
+        <div className=' md:w-3/5 w-full h-full md:mb-0 mb-40'>
+          <div className='bg-gray-100 scroll-smooth overflow-x-auto max-h-[425px] border-2 border-[#010100]'>
             <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
               <thead className='text-xs text-gray-50 border border-[#010100] bg-[#010100] uppercase'>
                 <tr>
@@ -250,17 +250,25 @@ const Payroll = () => {
                 <tr className='bg-[#ac7238] sticky bottom-0  border-4 border-[#010100]'>
                   <td
                     colSpan={3}
-                    className='p-2 md:p-4  border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'
+                    className='p-2 md:p-3  border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'
                   >
                     Net Pay :
                   </td>
 
-                  <td className='p-2 md:p-4 border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'>
+                  <td className='p-2 md:p-3 border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'>
                     ₱ 5,415
                   </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div className='mt-5 flex justify-end gap-5 pr-7'>
+            <button className='rounded-full bg-[#ac7238] py-2 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '>
+              Payroll History
+            </button>
+            <button className='rounded-full bg-[#ac7238] py-2 px-6  font-sans md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '>
+              Submit Payroll
+            </button>
           </div>
         </div>
       </div>

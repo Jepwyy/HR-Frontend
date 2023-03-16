@@ -2,7 +2,7 @@ import React from 'react'
 import Swal from 'sweetalert2'
 const respond = () => {
   Swal.fire({
-    title: 'Do you want to save the changes?',
+    title: 'Respond Leave Request?',
     showDenyButton: true,
     showCancelButton: true,
     confirmButtonColor: '#ac7238',
@@ -51,7 +51,7 @@ const LeaveRequest = () => {
               <td className='p-2 md:p-3 border border-[#010100] text-center'>
                 <button
                   onClick={respond}
-                  className='rounded-full bg-[#ac7238] py-1 px-6  font-sans text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none'
+                  className='rounded-full bg-[#ac7238] py-1 px-6  font-sans text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
                 >
                   Respond
                 </button>
