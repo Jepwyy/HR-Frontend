@@ -188,7 +188,8 @@ const LeaveForm = () => {
             </div>
             <div className='mb-2'>
               <label className=' text-gray-900 text-base font-semibold mr-1'>
-                Supporting Documents :
+                Supporting Documents(
+                <span className='font-normal'>Image Only</span>) :
               </label>
               <input
                 className='border-2 border-black h-6 w-3/12 text-xs'
@@ -201,13 +202,13 @@ const LeaveForm = () => {
           <div className='py-6 px-11 flex justify-end gap-4 border-t-2 border-black'>
             <button
               type='reset'
-              className='rounded-full bg-gray-900 py-1 px-6  font-sans text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-gray-900/40 '
+              className='rounded-full bg-gray-900 py-1 px-6  font-sans text-sm font-semibold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-gray-900/40 '
             >
               Reset
             </button>
             <button
               type='submit'
-              className='rounded-full bg-[#ac7238] py-1 px-6  font-sans text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+              className='rounded-full bg-[#ac7238] py-1 px-6  font-sans text-sm font-semibold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
             >
               Submit
             </button>

@@ -5,7 +5,7 @@ import { useMutation } from 'react-query'
 import { UserAuth } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
-
+import { motion } from 'framer-motion'
 // styles
 
 // images
@@ -60,9 +60,15 @@ const LoginForm = () => {
     }
   }
   return (
-    <div className='md:mx-5'>
+    <motion.div
+      initial={{ x: -20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 20, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className='md:mx-5'
+    >
       <div className='flex justify-center'>
-        <img className='h-40' src={icon} />
+        <img className='h-[161px]' src={icon} />
       </div>
       {mutation.isLoading && <Spinner />}
       <form className=' space-y-4 md:space-y-5' onSubmit={handleSubmit}>
@@ -140,7 +146,7 @@ const LoginForm = () => {
         pauseOnHover
         theme='light'
       />
-    </div>
+    </motion.div>
   )
 }
 

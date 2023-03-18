@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import profile from '../assets/images/dp.jpg'
@@ -7,10 +7,15 @@ import { useMutation } from 'react-query'
 import { ToastContainer, toast } from 'react-toastify'
 import { UserAuth } from '../context/authContext'
 import { useNavigate } from 'react-router-dom'
-
+import { motion } from 'framer-motion'
 const Topbar = ({ open, setOpen }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const { setUserData, setToken } = UserAuth()
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen)
+  }
+
   const mutation = useMutation({
     mutationFn: () =>
       axios.delete('/auth/logout', {
@@ -62,29 +67,40 @@ const Topbar = ({ open, setOpen }) => {
             onClick={() => setOpen(!open)}
           />
         </div>
-        <div className='relative group z-10'>
-          <div className='flex items-center cursor-pointer text-sm text-blue bg-[#181818] group-hover:bg-white group-hover:text-black group-hover:border-grey-light rounded-t-lg py-2 group-hover:py-3 px-4   transition ease-in-out delay-75 group-hover:-translate-y-1  duration-300'>
+        <div className='relative z-10'>
+          <button
+            onClick={toggleDropdown}
+            className='flex items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818] py-3 px-4'
+          >
             <img
               className='h-10 mr-2 rounded-full aspect-square shadow-gray-500 shadow '
               src={profile}
             />
 
-            <div>
+            <div className='hidden md:inline'>
               <h1 className='font-semibold'>Kenneth Collado</h1>
               <p className='leading-3 font-meduim text-xs'>Manager</p>
             </div>
-          </div>
-          <div className='items-center absolute border border-t-0 rounded-b-lg shadow-lg  bg-white p-2 invisible group-hover:visible w-full   transition ease-in-out  group-hover:-translate-y-1  duration-500'>
-            <button className=' px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
-              Edit Profile
-            </button>
-            <button
-              className='px-4 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'
-              onClick={logout}
+          </button>
+          {isOpen && (
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className='items-center absolute border border-t-0 rounded-b-lg shadow-lg  bg-white p-2 md:w-[11.7rem] w-[5.1rem] '
             >
-              Logout
-            </button>
-          </div>
+              <button className=' px-0 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
+                Edit Profile
+              </button>
+              <button
+                className='px-0 py-2 block bg-white w-[100%] font-semibold text-start text-black hover:text-[#ac7238]'
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </motion.div>
+          )}
         </div>
       </div>
       <ToastContainer

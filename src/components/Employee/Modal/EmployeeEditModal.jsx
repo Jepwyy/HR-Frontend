@@ -199,8 +199,8 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
 
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
-      <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto'>
-        <div className='flex justify-end px-py'>
+      <div className='bg-white p-2 rounded md:w-[40rem] w-96 md:my-auto mt-auto mb-2 overflow-y-auto'>
+        <div className='flex justify-end '>
           <BsBackspaceFill
             size={40}
             className='cursor-pointer'
@@ -381,11 +381,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((days, i) => (
-                    <option
-                      key={i}
-                      value={days}
-                      className='text-center'
-                    >
+                    <option key={i} value={days} className='text-center'>
                       {days}
                     </option>
                   ))}

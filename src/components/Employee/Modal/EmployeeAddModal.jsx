@@ -221,12 +221,17 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     mutation.mutate(formData)
   }
   return (
-    <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
+    <motion.div
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'
+    >
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className='bg-white p-2 rounded md:w-[40rem] w-96 md:mt-0 mt-auto mb-2 overflow-y-auto animate__fadeInUp'
+        className='bg-white p-2 rounded md:w-[40rem] w-96 md:my-auto mt-auto mb-2 overflow-y-auto animate__fadeInUp'
       >
         <div className='flex justify-end px-py '>
           <BsBackspaceFill
@@ -500,7 +505,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
         pauseOnHover
         theme='light'
       />
-    </div>
+    </motion.div>
   )
 }
 

@@ -6,6 +6,7 @@ import { UserAuth } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import TapCard from '../../assets/images/TapCard.png'
+import { motion } from 'framer-motion'
 // styles
 // images
 
@@ -88,7 +89,12 @@ const LoginRfid = () => {
     formRef.current.reset()
   }
   return (
-    <div>
+    <motion.div
+      initial={{ x: 20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -20, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className=' '>
         {mutation.isLoading && <Spinner />}
         {/* <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
@@ -120,7 +126,7 @@ const LoginRfid = () => {
           </button>
         </form>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

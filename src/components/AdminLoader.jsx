@@ -9,7 +9,7 @@ const AdminLoader = () => {
           <img className=' h-36 ' src={logo} />
         </div>
 
-        <div class=''>
+        <div className=''>
           <img
             className='mb-2 h-20 w-40 object-cover object-center '
             src={loader}

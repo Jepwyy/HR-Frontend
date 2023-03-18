@@ -1,22 +1,35 @@
 import React, { useState } from 'react'
-import 'animate.css'
+
 import LoginForm from '../components/Login/LoginForm'
 import LoginRfid from '../components/Login/LoginRfid'
 // styles
 import '../style/login.css'
 // images
 import logo from '../assets/images/logo.png'
+import { motion } from 'framer-motion'
 
 const Login = () => {
   const [active, setActive] = useState('SecondPage')
 
   return (
     <div className='flex flex-col md:flex-row justify-center bg-login bg-cover items-center md:h-screen  h-auto '>
-      <div className='-mt-24 md:mx-20 md:w-1/2 animate__heartBeat'>
+      <motion.div
+        initial={{ x: -30, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: 30, opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className='-mt-24 md:mx-20 md:w-1/2 '
+      >
         <img src={logo} alt='logo' className='md:h-auto' />
-      </div>
+      </motion.div>
 
-      <div className='relative md:w-1/2 w-96 bg-white rounded-lg shadow  md:mt-0 xl:p-0 md:mx-24 mb-3'>
+      <motion.div
+        initial={{ x: 30, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -30, opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        className='relative md:w-1/2 w-96 bg-white rounded-lg shadow  md:mt-0 xl:p-0 md:mx-24 mb-3'
+      >
         <div className=' w-full p-6 space-y-2 md:space-y-4 sm:p-8 '>
           <div className=''>
             <button
@@ -42,9 +55,10 @@ const Login = () => {
           </div>
 
           {active === 'FirstPage' && <LoginForm />}
+
           {active === 'SecondPage' && <LoginRfid />}
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import { HiUserGroup } from 'react-icons/hi'
 import { AiFillSchedule } from 'react-icons/ai'
 import { MdOutlineDashboard, MdArchive } from 'react-icons/md'
@@ -37,14 +38,18 @@ const Sidebar = ({ open, setOpen }) => {
             open ? 'md:w-72 w-60' : 'w-16'
           }  duration-500 text-gray-100 px-4`}
         >
-          <div className='flex gap-x-4 items-center justify-center'>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+            className='flex gap-x-4 items-center justify-center'
+          >
             <img
               src={logo}
               className={`mt-4 cursor-pointer w-40 duration-500 ${
                 open && 'rotate-[360deg]'
               }`}
             />
-          </div>
+          </motion.div>
           <div className='mt-3 flex flex-col gap-4 relative'>
             {menus?.map((menu, i) => (
               <NavLink
