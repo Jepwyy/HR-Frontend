@@ -9,7 +9,7 @@ import TapCard from '../../assets/images/TapCard.png'
 // styles
 // images
 
-import Spinner from '../LogoLoader'
+import Spinner from '../InfiniteLoader'
 
 const LoginRfid = () => {
   const [message, setMessage] = useState('')

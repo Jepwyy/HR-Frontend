@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify'
 // images
 
 import icon from '../../assets/images/login.png'
-import Spinner from '../AdminLoader'
+import Spinner from '../InfiniteLoader'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')

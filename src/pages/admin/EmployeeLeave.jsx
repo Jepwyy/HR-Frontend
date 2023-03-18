@@ -6,7 +6,7 @@ import LeaveForm from '../../components/EmployeeLeave/LeaveForm'
 const EmployeeLeave = () => {
   const [active, setActive] = useState('FirstPage')
   return (
-    <div className='p-4 md:p-12'>
+    <div className='p-4 md:p-10'>
       <div className='flex flex-col md:flex-row justify-between md:mt-10 mb-4'>
         {/* sort */}
         <div className='flex md:flex-row flex-col md:items-end items-start mb-2'>
