@@ -4,9 +4,6 @@ const LeaveForm = () => {
   return (
     <div className='h-[310px] mb-6'>
       <form>
-        <h1 className='font-semibold text-xl  text-black'>
-          Employee's Leave Request From
-        </h1>
         <div className='mb-3 flex justify-end'>
           <label className='inline text-gray-700 text-lg font-bold mr-1 mb-1'>
             Date Now :

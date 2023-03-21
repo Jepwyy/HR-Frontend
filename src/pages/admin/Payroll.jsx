@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import Add from '../../components/Payroll/Add'
 import Deduc from '../../components/Payroll/Deduc'
 import NewPay from '../../components/Payroll/NewPay'
+import PayslipModal from '../../components/Payroll/Modal/PayslipModal'
 const Payroll = () => {
+  const [modalPayslip, setModalPayslip] = useState(false)
   const [active, setActive] = useState('FirstPage')
   return (
     <div className='p-4 md:p-10'>
@@ -70,7 +72,7 @@ const Payroll = () => {
                 <tr>
                   <th className='p-2 md:p-4 '>EARNINGS</th>
                   <th className='p-2 md:p-4'>UNIT</th>
-                  <th className='p-2 md:p-4'>PATE</th>
+                  <th className='p-2 md:p-4'>RATE</th>
                   <th className='p-2 md:p-4'>TOTAL</th>
                 </tr>
               </thead>
@@ -121,7 +123,7 @@ const Payroll = () => {
                       id='forAdd'
                       name='forAdd'
                       value=''
-                    ></input>
+                    />
                     <span className='text-xs text-gray-50 uppercase font-bold'>
                       Additions
                     </span>
@@ -138,7 +140,7 @@ const Payroll = () => {
                       id='forAdvance'
                       name='forAdvance'
                       value=''
-                    ></input>
+                    />
                     <span>Advance</span>
                   </td>
 
@@ -155,7 +157,7 @@ const Payroll = () => {
                       id='forBonus'
                       name='forBonus'
                       value=''
-                    ></input>
+                    />
                     <span>Bonus</span>
                   </td>
 
@@ -173,7 +175,7 @@ const Payroll = () => {
                       id='forDeduc'
                       name='forDeduc'
                       value=''
-                    ></input>
+                    />
                     <span className='text-xs text-gray-50 uppercase font-bold'>
                       Deductions
                     </span>
@@ -190,7 +192,7 @@ const Payroll = () => {
                       id='forSss'
                       name='forSss'
                       value=''
-                    ></input>
+                    />
                     <span>SSS</span>
                   </td>
 
@@ -207,7 +209,7 @@ const Payroll = () => {
                       id='forPhilhealth'
                       name='forPhilhealth'
                       value=''
-                    ></input>
+                    />
                     <span>PhilHealth</span>
                   </td>
 
@@ -224,7 +226,7 @@ const Payroll = () => {
                       id='forPagibig'
                       name='forPagibig'
                       value=''
-                    ></input>
+                    />
                     <span>Pagibig</span>
                   </td>
 
@@ -241,21 +243,21 @@ const Payroll = () => {
                       id='forRadvance'
                       name='forRadvance'
                       value=''
-                    ></input>
+                    />
                     <span>Recent Advance</span>
                   </td>
 
                   <td className='p-2 md:p-4 border border-[#010100]'>500</td>
                 </tr>
-                <tr className='bg-[#ac7238] sticky bottom-0  border-4 border-[#010100]'>
+                <tr className='bg-[#ac7238] sticky -bottom-[1px]  border-4 border-[#010100]'>
                   <td
                     colSpan={3}
-                    className='p-2 md:p-3  border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'
+                    className='p-2 md:p-4  border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'
                   >
                     Net Pay :
                   </td>
 
-                  <td className='p-2 md:p-3 border-y-[2px] border-x border-[#010100]  text-gray-50 uppercase font-bold'>
+                  <td className='p-2 md:p-4 border-y-[2px] border-x border-[#010100]  text-gray-50 font-bold'>
                     ₱ 5,415
                   </td>
                 </tr>
@@ -266,12 +268,18 @@ const Payroll = () => {
             <button className='rounded-full bg-[#ac7238] py-2 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '>
               Payroll History
             </button>
-            <button className='rounded-full bg-[#ac7238] py-2 px-6  font-sans md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '>
+            <button
+              onClick={() => {
+                setModalPayslip(true)
+              }}
+              className='rounded-full bg-[#ac7238] py-2 px-6  font-sans md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+            >
               Submit Payroll
             </button>
           </div>
         </div>
       </div>
+      {modalPayslip && <PayslipModal setModalPayslip={setModalPayslip} />}
     </div>
   )
 }

@@ -34,23 +34,23 @@ const NewPay = () => {
         </div>
         <div className='mb-3'>
           <label className='block text-gray-700 text-lg font-bold '>
-            Ending Date :
-          </label>
-          <input
-            className='border-2 border-black w-3/6'
-            type='date'
-            name='endingdate'
-            required
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold '>
             Starting Date :
           </label>
           <input
             className='border-2 border-black w-3/6'
             type='date'
             name='startingdate'
+            required
+          />
+        </div>
+        <div className='mb-3'>
+          <label className='block text-gray-700 text-lg font-bold '>
+            Ending Date :
+          </label>
+          <input
+            className='border-2 border-black w-3/6'
+            type='date'
+            name='endingdate'
             required
           />
         </div>
