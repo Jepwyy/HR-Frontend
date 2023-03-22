@@ -26,7 +26,7 @@ const AuditLogs = () => {
         </div>
       </div>
       <div className='overflow-x-auto max-h-[425px] border-4 border-[#010100] mb-4'>
-        <table className='w-full text-sm text-left text-[#010100]  overflow-y-auto overflow-x-auto max-h-[500px]'>
+        <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100]  overflow-y-auto overflow-x-auto max-h-[500px]'>
           <thead className='text-xs text-gray-50 uppercase border-2 border-[#010100] bg-[#010100] sticky -top-[0.10rem]'>
             <tr>
               <th className='p-2 md:p-4'>EMPLOYEE</th>

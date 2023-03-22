@@ -1,14 +1,22 @@
-import React from 'react'
-
+import React, { useRef } from 'react'
+import { useReactToPrint } from 'react-to-print'
 const PayslipModal = ({ setModalPayslip }) => {
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  })
+
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
-      <div className='bg-white p-2 rounded md:w-3/5 w-96 md:mt-0 mt-56 mb-2 '>
-        <div className='flex flex-col justify-center px-5 py-7'>
+      <div className='bg-white p-2 rounded md:w-3/5 w-96 md:my-auto my-auto '>
+        <div
+          className='flex flex-col justify-center px-5 py-7'
+          ref={componentRef}
+        >
           <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-black md:text-4xl uppercase'>
             Payslip
           </h1>
-          <h1 className='flex justify-center text-base font-bold leading-tight tracking-tight text-black md:text-3xl uppercase'>
+          <h1 className='flex mb-10 justify-center text-base font-bold leading-tight tracking-tight text-black md:text-3xl uppercase'>
             Pandayo <span className='text-[#ac7238] ml-2'>Coffee</span>
           </h1>
           <div className='flex justify-between mt-2'>
@@ -141,16 +149,22 @@ const PayslipModal = ({ setModalPayslip }) => {
               </tr>
             </tbody>
           </table>
-          <div className='mt-5 flex justify-end'>
-            <button
-              onClick={() => {
-                setModalPayslip(false)
-              }}
-              className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
-            >
-              Done
-            </button>
-          </div>
+        </div>
+        <div className='my-5 px-5 flex justify-end gap-5'>
+          <button
+            onClick={handlePrint}
+            className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+          >
+            Export
+          </button>
+          <button
+            onClick={() => {
+              setModalPayslip(false)
+            }}
+            className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+          >
+            Done
+          </button>
         </div>
       </div>
     </div>

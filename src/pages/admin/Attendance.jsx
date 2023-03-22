@@ -26,7 +26,7 @@ const Attendance = () => {
 
         {error && 'Error'}
         <div className='h-[25rem] overflow-y-auto flex-1'>
-          <table className='border-2 border-collapse flex-1 text-center overflow-auto w-full'>
+          <table className=' border-2 border-collapse flex-1 text-center overflow-auto w-full'>
             <thead className='bg-[#010100] text-white sticky top-0'>
               <tr>
                 <td className='p-2 md:p-4'>ID</td>

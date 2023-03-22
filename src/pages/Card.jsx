@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import 'animate.css'
+
 import TimeInForm from '../components/Login/TimeInForm'
 import TimeOutForm from '../components/Login/TimeOutForm'
 import '../style/login.css'
@@ -9,7 +9,7 @@ const Card = () => {
   const [page, setPage] = useState('FirstPage')
   return (
     <div className='flex flex-col md:flex-row justify-center bg-login bg-cover items-center md:h-screen  h-auto '>
-      <div className='-mt-24 md:mx-20 md:w-1/2 animate__heartBeat'>
+      <div className='-mt-24 md:mx-20 md:w-1/2 '>
         <img src={logo} alt='logo' className='md:h-auto' />
       </div>
 

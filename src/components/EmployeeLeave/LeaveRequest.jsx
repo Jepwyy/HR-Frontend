@@ -24,7 +24,7 @@ const LeaveRequest = () => {
         Employee's Leave Request
       </h1>
       <div className='overflow-x-auto max-h-[269px] border-4 border-[#010100] mb-1'>
-        <table className='w-full text-sm text-left text-[#010100]  overflow-y-auto '>
+        <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100]  overflow-y-auto '>
           <thead className='text-xs text-gray-50 uppercase border-2 border-[#010100] bg-[#010100] sticky -top-[0.10rem]'>
             <tr>
               <th className='p-2 md:p-[17px]'>ID</th>

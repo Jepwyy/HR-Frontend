@@ -3,9 +3,36 @@ import Add from '../../components/Payroll/Add'
 import Deduc from '../../components/Payroll/Deduc'
 import NewPay from '../../components/Payroll/NewPay'
 import PayslipModal from '../../components/Payroll/Modal/PayslipModal'
+import PayrollHistoryModal from '../../components/Payroll/Modal/PayrollHistoryModal'
 const Payroll = () => {
   const [modalPayslip, setModalPayslip] = useState(false)
+  const [modalHistory, setModalHistory] = useState(false)
   const [active, setActive] = useState('FirstPage')
+
+  const [addCheckbox, setAddCheckbox] = useState(true)
+  const [checkboxBonus, setCheckboxBonus] = useState(true)
+  const [checkboxAdvance, setCheckboxAdvance] = useState(true)
+
+  const [deducCheckbox, setDeducCheckbox] = useState(true)
+  const [checkboxSss, setCheckboxSss] = useState(true)
+  const [checkboxPh, setCheckboxPh] = useState(true)
+  const [checkboxPi, setCheckboxPi] = useState(true)
+  const [checkboxRa, setCheckboxRa] = useState(true)
+
+  const handleAddCheckboxChange = () => {
+    setAddCheckbox(!addCheckbox)
+    setCheckboxAdvance(!addCheckbox)
+    setCheckboxBonus(!addCheckbox)
+  }
+
+  const handleDeducCheckboxChange = () => {
+    setDeducCheckbox(!deducCheckbox)
+    setCheckboxSss(!deducCheckbox)
+    setCheckboxPh(!deducCheckbox)
+    setCheckboxPi(!deducCheckbox)
+    setCheckboxRa(!deducCheckbox)
+  }
+
   return (
     <div className='p-4 md:p-10'>
       <div className='flex flex-col md:flex-row justify-between md:mt-10 mb-4'>
@@ -39,7 +66,7 @@ const Payroll = () => {
             <button
               className={
                 active === 'SecondPage'
-                  ? 'bg-[#ac7238] text-gray-50 font-bold py-2 px-4 rounded-r'
+                  ? 'bg-[#ac7238] text-gray-50 font-bold py-2 px-4 '
                   : 'bg-gray-300 text-gray-800 font-bold py-2 px-4 '
               }
               onClick={() => setActive('SecondPage')}
@@ -118,11 +145,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100] bg-black text-center'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded focus:ring-0'
                       type='checkbox'
                       id='forAdd'
                       name='forAdd'
                       value=''
+                      checked={addCheckbox}
+                      onChange={handleAddCheckboxChange}
                     />
                     <span className='text-xs text-gray-50 uppercase font-bold'>
                       Additions
@@ -135,11 +164,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100]'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left  mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forAdvance'
                       name='forAdvance'
                       value=''
+                      checked={checkboxAdvance}
+                      onChange={() => setCheckboxAdvance(!checkboxAdvance)}
                     />
                     <span>Advance</span>
                   </td>
@@ -152,11 +183,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100]'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forBonus'
                       name='forBonus'
                       value=''
+                      checked={checkboxBonus}
+                      onChange={() => setCheckboxBonus(!checkboxBonus)}
                     />
                     <span>Bonus</span>
                   </td>
@@ -170,11 +203,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100] bg-black text-center'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forDeduc'
                       name='forDeduc'
                       value=''
+                      checked={deducCheckbox}
+                      onChange={handleDeducCheckboxChange}
                     />
                     <span className='text-xs text-gray-50 uppercase font-bold'>
                       Deductions
@@ -187,11 +222,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100]'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forSss'
                       name='forSss'
                       value=''
+                      checked={checkboxSss}
+                      onChange={() => setCheckboxSss(!checkboxSss)}
                     />
                     <span>SSS</span>
                   </td>
@@ -204,11 +241,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100]'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forPhilhealth'
                       name='forPhilhealth'
                       value=''
+                      checked={checkboxPh}
+                      onChange={() => setCheckboxPh(!checkboxPh)}
                     />
                     <span>PhilHealth</span>
                   </td>
@@ -221,11 +260,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100]'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forPagibig'
                       name='forPagibig'
                       value=''
+                      checked={checkboxPi}
+                      onChange={() => setCheckboxPi(!checkboxPi)}
                     />
                     <span>Pagibig</span>
                   </td>
@@ -238,11 +279,13 @@ const Payroll = () => {
                     className='p-2 md:p-4 border border-[#010100]'
                   >
                     <input
-                      className='float-left mr-2 w-4 h-4 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
                       type='checkbox'
                       id='forRadvance'
                       name='forRadvance'
                       value=''
+                      checked={checkboxRa}
+                      onChange={() => setCheckboxRa(!checkboxRa)}
                     />
                     <span>Recent Advance</span>
                   </td>
@@ -265,7 +308,12 @@ const Payroll = () => {
             </table>
           </div>
           <div className='mt-5 flex justify-end gap-5 pr-7'>
-            <button className='rounded-full bg-[#ac7238] py-2 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '>
+            <button
+              onClick={() => {
+                setModalHistory(true)
+              }}
+              className='rounded-full bg-[#ac7238] py-2 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+            >
               Payroll History
             </button>
             <button
@@ -280,6 +328,9 @@ const Payroll = () => {
         </div>
       </div>
       {modalPayslip && <PayslipModal setModalPayslip={setModalPayslip} />}
+      {modalHistory && (
+        <PayrollHistoryModal setModalHistory={setModalHistory} />
+      )}
     </div>
   )
 }

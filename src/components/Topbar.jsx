@@ -68,7 +68,8 @@ const Topbar = ({ open, setOpen }) => {
           />
         </div>
         <div className='relative z-10'>
-          <button
+          <motion.button
+            whileTap={{ scale: 0.8 }}
             onClick={toggleDropdown}
             className='flex items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818] py-3 px-4'
           >
@@ -81,7 +82,7 @@ const Topbar = ({ open, setOpen }) => {
               <h1 className='font-semibold'>Kenneth Collado</h1>
               <p className='leading-3 font-meduim text-xs'>Manager</p>
             </div>
-          </button>
+          </motion.button>
           {isOpen && (
             <motion.div
               initial={{ y: 20, opacity: 0 }}

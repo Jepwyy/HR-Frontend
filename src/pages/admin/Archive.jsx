@@ -12,7 +12,7 @@ const Archive = () => {
       <ArchHeader setQuery={setQuery} />
       {isLoading && <Spinner />}
       <div className='overflow-x-auto max-h-[400px]'>
-        <table className='w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
+        <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
           <thead className='text-xs text-gray-50 uppercase bg-[#010100] sticky -top-[0.10rem]'>
             <tr>
               <th className='p-2 md:p-4'>ID</th>
