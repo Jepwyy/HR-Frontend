@@ -15,6 +15,7 @@ const TimeInForm = () => {
   const [message, setMessage] = useState('')
   const formRef = useRef(null)
   const inputRef = useRef(null)
+  const [rfid, setRFID] = useState(null)
   const { setUserData, setToken } = UserAuth()
   const navigate = useNavigate()
   const passwordRef = useRef(null)
@@ -46,30 +47,64 @@ const TimeInForm = () => {
         headers: { 'Content-Type': 'application/json' },
       }),
     onError: (error) => {
-      setMessage(error.response.data.message)
-      Swal.fire({
-        title: 'Error',
-        text: `${error.response.data.message}`,
-        icon: 'error',
-        timer: 2000,
-        // allowOutsideClick: false,
-        showConfirmButton: false,
-      })
-    },
-    onSuccess: (data) => {
-      if (data.status === 200) {
-        setUserData(data.data.user[0])
-        setToken(true)
-        navigate('/employee-list')
+      let timerInterval
+      if (error.response.status === 403) {
+        Swal.fire({
+          title: 'Attention',
+          html: `Are you sure you want to log out before the end of your scheduled shift? 
+          Tap the card again if you want to continue. <br /> <b class='text-2xl'>10</b>`,
+          icon: 'warning',
+          allowOutsideClick: false,
+          focusConfirm: true,
+          allowEscapeKey: false,
+          timer: 10000,
+          showConfirmButton: true,
+          didOpen: () => {
+            // Swal.showLoading()
+            let timer = 9
+            const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+              b.textContent = timer--
+            }, 1000)
+          },
+          willClose: () => {
+            clearInterval(timerInterval)
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.isConfirmed) {
+            mutation.mutate({ rfid: rfid, isConfirmed: true })
+            inputRef.current.focus()
+          }
+          if (result.dismiss === Swal.DismissReason.timer) {
+            Swal.fire({
+              title: 'Logout Cancelled',
+              showConfirmButton: false,
+              icon: 'info',
+              timer: 2000,
+            })
+            inputRef.current.focus()
+          }
+        })
       } else {
         Swal.fire({
-          title: 'Success',
-          text: `${data.data.message}`,
-          icon: 'success',
+          title: 'Error',
+          text: `${error.response.data.message}`,
+          icon: 'error',
           timer: 2000,
+          // allowOutsideClick: false,
           showConfirmButton: false,
         })
       }
+    },
+    onSuccess: (data) => {
+      Swal.fire({
+        title: 'Success',
+        text: `${data.data.message}`,
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+      })
     },
   })
 
@@ -124,6 +159,7 @@ const TimeInForm = () => {
           type='text'
           ref={inputRef}
           className='text-white outline-none'
+          onChange={(e) => setRFID(e.target.value)}
         />
         <button
           type='submit'
