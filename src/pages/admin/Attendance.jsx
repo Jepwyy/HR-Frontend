@@ -25,7 +25,7 @@ const Attendance = () => {
         {/* table */}
 
         {error && 'Error'}
-        <div className='h-[25rem] overflow-y-auto flex-1'>
+        <div className='h-[25rem] overflow-y-auto flex-1 border-2 border-t-black border-b-gray-300'>
           <table className=' border-2 border-collapse flex-1 text-center overflow-auto w-full'>
             <thead className='bg-[#010100] text-white sticky top-0'>
               <tr>

@@ -66,14 +66,14 @@ const Payroll = () => {
             <button
               className={
                 active === 'SecondPage'
-                  ? 'bg-[#ac7238] text-gray-50 font-bold py-2 px-4 '
-                  : 'bg-gray-300 text-gray-800 font-bold py-2 px-4 '
+                  ? 'bg-[#ac7238] text-gray-50 font-bold py-2 px-4 rounded-r'
+                  : 'bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r'
               }
               onClick={() => setActive('SecondPage')}
             >
               Additions
             </button>
-            <button
+            {/* <button
               className={
                 active === 'ThirdPage'
                   ? 'bg-[#ac7238] text-gray-50 font-bold py-2 px-4 rounded-r'
@@ -82,12 +82,12 @@ const Payroll = () => {
               onClick={() => setActive('ThirdPage')}
             >
               Deductions
-            </button>
+            </button> */}
           </div>
           <div className='w-full  bg-[#F3F3F3] mt-2 py-5 px-3 h-full'>
             {active === 'FirstPage' && <NewPay />}
             {active === 'SecondPage' && <Add />}
-            {active === 'ThirdPage' && <Deduc />}
+            {/* {active === 'ThirdPage' && <Deduc />} */}
           </div>
         </div>
 

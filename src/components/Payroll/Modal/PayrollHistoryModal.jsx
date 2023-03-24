@@ -36,7 +36,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
               <tbody>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -62,7 +62,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -88,7 +88,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -114,7 +114,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -140,7 +140,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -166,7 +166,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -192,7 +192,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>
@@ -218,7 +218,7 @@ const PayrollHistoryModal = ({ setModalHistory }) => {
                 </tr>
                 <tr>
                   <td className='p-2 md:p-3 border border-[#010100]'>
-                    Abdul Jabol
+                    John Mark Familgan
                   </td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Sales</td>
                   <td className='p-2 md:p-3 border border-[#010100]'>Cook</td>

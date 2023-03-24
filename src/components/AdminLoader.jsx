@@ -3,7 +3,7 @@ import logo from '../assets/images/mainlogo1.png'
 import loader from '../assets/images/Bars.svg'
 const AdminLoader = () => {
   return (
-    <div className='absolute z-20 inset-0 bg-white bg-opacity-75  flex items-center justify-center py-2 overflow-y-auto'>
+    <div className='absolute z-[1] inset-0 bg-white bg-opacity-75  flex items-center justify-center py-2 overflow-y-auto'>
       <div className='flex flex-col justify-center items-center'>
         <div className='animate-bounce'>
           <img className=' h-36 ' src={logo} />

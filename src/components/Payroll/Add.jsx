@@ -5,19 +5,7 @@ const Add = () => {
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>Additions</h1>
       <div className='ml-5'>
-        <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold'>
-            Employee :
-          </label>
-          <select
-            className='border-2 border-black w-3/6'
-            name='employee'
-            required
-          >
-            <option value=''>Abdol Jabol</option>
-            <option value=''>Abdol SalSalani</option>
-          </select>
-        </div>
+        \
         <div className='mb-3'>
           <label className='block text-gray-700 text-lg font-bold'>
             Bonus :

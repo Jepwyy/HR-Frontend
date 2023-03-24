@@ -1,8 +1,37 @@
 import React from 'react'
+import { useQuery } from 'react-query'
+import axios from '../../api/api'
+import { motion } from 'framer-motion'
+const AttendanceCard = ({ item }) => {
+  const {
+    data: users,
+    isLoading,
+    isError,
+  } = useQuery('users', () => axios.get('/users/logs').then((res) => res.data))
 
-const AttendanceCard = () => {
-  return (
-    <div className='py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3] overflow-y-auto max-h-[400px]'>
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading logs</div>
+  }
+
+  const selectedUser = users.find(
+    (user) => user.id === (!item.id ? 1 : item.id)
+  )
+  const selectedUserLogs = selectedUser.logs
+
+  return Object.keys(item).length === 0 ? (
+    <></>
+  ) : (
+    <motion.div
+      initial={{ x: 30, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 30, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className='py-10 px-5 h-full flex flex-col  bg-[#F3F3F3] overflow-y-auto max-h-[400px]'
+    >
       <div className='flex justify-between'>
         <h1 className='font-bold text-2xl'>LOGS</h1>
         <select
@@ -13,9 +42,10 @@ const AttendanceCard = () => {
           <option value='...'>THIS MONTH</option>
         </select>
       </div>
-      <h1>Name: Abdol Jabol</h1>
-      <div className=' overflow-y-auto'>
-        <table className='w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto max-h-[500px]'>
+
+      <h1 className='font-bold'>Name: {item.fullname}</h1>
+      <div className=' overflow-y-auto border-2 border-black'>
+        <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
           <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
             <tr className='py-10'>
               <th className='p-4 md:p-4'>DAY</th>
@@ -25,59 +55,28 @@ const AttendanceCard = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>adasdasd</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>asdasdasd</td>
-            </tr>
+            {selectedUserLogs.map((log) => (
+              <tr key={log.id}>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {new Date(log.log_date).toLocaleString('en-US', {
+                    weekday: 'long',
+                  })}
+                </td>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {new Date(log.log_date).toLocaleDateString()}
+                </td>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {new Date(log.time_in).toLocaleTimeString()}
+                </td>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {new Date(log.time_out).toLocaleTimeString()}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      <div></div>
-    </div>
+    </motion.div>
   )
 }
 

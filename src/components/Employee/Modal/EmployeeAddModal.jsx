@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BsBackspaceFill } from 'react-icons/bs'
 import { useMutation, useQueryClient } from 'react-query'
 import axios from '../../../api/api'
-import Spinner from '../../Spinner'
+import Spinner from '../../InfiniteLoader'
 import ScanRfidModal from './ScanRfidModal'
 import { ToastContainer, toast } from 'react-toastify'
 import { FcOk } from 'react-icons/fc'
@@ -231,7 +231,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className='bg-white p-2 rounded md:w-[40rem] w-96 md:my-auto mt-auto mb-2 overflow-y-auto animate__fadeInUp'
+        className='bg-white relative p-2 rounded md:w-[50%] w-96 md:my-auto mt-auto mb-2 overflow-y-auto animate__fadeInUp'
       >
         <div className='flex justify-end px-py '>
           <BsBackspaceFill
@@ -252,7 +252,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
         <div className='flex justify-center'>
           <form onSubmit={handleSubmit}>
             <div className='flex flex-col md:flex-row px-3 md:gap-10'>
-              <div className='  md:w-1/2 w-full'>
+              <div className=' px-3 w-full'>
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
                     Username
@@ -326,7 +326,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   />
                 </div>
               </div>
-              <div className='md:w-1/2 w-full'>
+              <div className=' w-full px-3'>
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
                     Profile Photo
@@ -416,7 +416,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                 </div>
               </div>
             </div>
-            <div className='px-3 flex justify-center w-full items-center flex-col'>
+            <div className='px-4 flex justify-center w-full items-center flex-col'>
               <div>WORK SCHEDULE</div>
               <div className='flex items-center'>
                 <select
@@ -475,7 +475,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                 </table>
               </div>
             </div>
-            <div className='flex justify-end pb-5 px-3'>
+            <div className='flex justify-center pb-5 px-6'>
               <button
                 type='submit'
                 className='px-6 py-2 bg-[#ac7238] text-white rounded-xl'

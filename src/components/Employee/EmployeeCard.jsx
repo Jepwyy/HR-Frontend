@@ -8,7 +8,7 @@ import axios from '../../api/api'
 import { formatPosition, formatDepartment } from '../../utils/colParser'
 import EmployeeEditModal from './Modal/EmployeeEditModal'
 import EmployeeSchedModal from './Modal/EmployeeSchedModal'
-
+import { motion } from 'framer-motion'
 const EmployeeCard = ({ item, setDetails }) => {
   const queryClient = useQueryClient()
   const [modalEdit, setModalEdit] = useState(false)
@@ -58,7 +58,13 @@ const EmployeeCard = ({ item, setDetails }) => {
   return Object.keys(item).length === 0 ? (
     <></>
   ) : (
-    <div className='py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'>
+    <motion.div
+      initial={{ x: 30, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 30, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className='py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'
+    >
       <div className='flex justify-center items-start'>
         <div className='flex-none mr-5'>
           <img
@@ -130,10 +136,7 @@ const EmployeeCard = ({ item, setDetails }) => {
         />
       )}
       {modalSched && (
-        <EmployeeSchedModal
-          item={item}
-          setModalSched={setModalSched}
-        />
+        <EmployeeSchedModal item={item} setModalSched={setModalSched} />
       )}
       <ToastContainer
         position='top-center'
@@ -147,7 +150,7 @@ const EmployeeCard = ({ item, setDetails }) => {
         pauseOnHover
         theme='light'
       />
-    </div>
+    </motion.div>
   )
 }
 

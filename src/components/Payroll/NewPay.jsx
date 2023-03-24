@@ -16,8 +16,8 @@ const NewPay = () => {
             name='employee'
             required
           >
-            <option value=''>Abdol Jabol</option>
-            <option value=''>Abdol SalSalani</option>
+            <option value=''>John Mark Familgan</option>
+            <option value=''>Kenneth Collado</option>
           </select>
         </div>
         <div className='mb-3'>

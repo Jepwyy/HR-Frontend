@@ -38,130 +38,80 @@ const AuditLogs = () => {
           <tbody>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
             </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
             </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
             </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
             </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
             </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
             </tr>
             <tr>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol
+                John Mark Familgan
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>
-                Abdul Jabol Added an Employee.
+                John Mark Familgan Added an Employee.
+              </td>
+              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
+              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
+            </tr>
+            <tr>
+              <td className='p-2 md:p-4 border border-[#010100]'>
+                John Mark Familgan
+              </td>
+              <td className='p-2 md:p-4 border border-[#010100]'>
+                John Mark Familgan Added an Employee.
               </td>
               <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
               <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>

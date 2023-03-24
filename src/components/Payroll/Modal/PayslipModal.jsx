@@ -35,10 +35,10 @@ const PayslipModal = ({ setModalPayslip }) => {
             Employee information
           </h1>
           <div className='grid grid-cols-2'>
-            <h1 className='place-self-start'>Adbul Jabol</h1>
+            <h1 className='place-self-start'>John Mark Familgan</h1>
             <h1 className='place-self-end'>09123123123</h1>
             <h1 className='place-self-start'>Manresa, Quezon City</h1>
-            <h1 className='place-self-end'>abduljabol@gmail.com</h1>
+            <h1 className='place-self-end'>familganpogi123@gmail.com</h1>
           </div>
           <table className='mt-4 border-separate border-spacing-0 w-full text-sm text-left text-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
             <thead className='text-xs text-gray-50 border border-[#010100] bg-[#010100] uppercase'>

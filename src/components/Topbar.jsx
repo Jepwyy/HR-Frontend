@@ -71,7 +71,7 @@ const Topbar = ({ open, setOpen }) => {
           <motion.button
             whileTap={{ scale: 0.8 }}
             onClick={toggleDropdown}
-            className='flex items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818] py-3 px-4'
+            className=' flex z-auto items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818] py-3 px-4'
           >
             <img
               className='h-10 mr-2 rounded-full aspect-square shadow-gray-500 shadow '
