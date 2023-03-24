@@ -9,15 +9,15 @@ const Payroll = () => {
   const [modalHistory, setModalHistory] = useState(false)
   const [active, setActive] = useState('FirstPage')
 
-  const [addCheckbox, setAddCheckbox] = useState(true)
-  const [checkboxBonus, setCheckboxBonus] = useState(true)
-  const [checkboxAdvance, setCheckboxAdvance] = useState(true)
+  const [addCheckbox, setAddCheckbox] = useState(false)
+  const [checkboxBonus, setCheckboxBonus] = useState(false)
+  const [checkboxAdvance, setCheckboxAdvance] = useState(false)
 
-  const [deducCheckbox, setDeducCheckbox] = useState(true)
-  const [checkboxSss, setCheckboxSss] = useState(true)
-  const [checkboxPh, setCheckboxPh] = useState(true)
-  const [checkboxPi, setCheckboxPi] = useState(true)
-  const [checkboxRa, setCheckboxRa] = useState(true)
+  const [deducCheckbox, setDeducCheckbox] = useState(false)
+  const [checkboxSss, setCheckboxSss] = useState(false)
+  const [checkboxPh, setCheckboxPh] = useState(false)
+  const [checkboxPi, setCheckboxPi] = useState(false)
+  const [checkboxRa, setCheckboxRa] = useState(false)
 
   const handleAddCheckboxChange = () => {
     setAddCheckbox(!addCheckbox)
