@@ -3,12 +3,13 @@ import Swal from 'sweetalert2'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import profile from '../assets/images/dp.jpg'
 import axios from '../api/api'
+import { UserAuth } from '../context/authContext'
 import { useMutation } from 'react-query'
 import { ToastContainer, toast } from 'react-toastify'
-import { UserAuth } from '../context/authContext'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 const Topbar = ({ open, setOpen }) => {
+  const { token, userData } = UserAuth()
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const { setUserData, setToken } = UserAuth()
@@ -53,7 +54,7 @@ const Topbar = ({ open, setOpen }) => {
       }
     })
   }
-
+  console.log(userData.fullname)
   return (
     <>
       <div className='bg-[#010100] h-16 px-4 flex items-center border-b border-gray-200 justify-between text-white'>
@@ -79,8 +80,10 @@ const Topbar = ({ open, setOpen }) => {
             />
 
             <div className='hidden md:inline'>
-              <h1 className='font-semibold'>Kenneth Collado</h1>
-              <p className='leading-3 font-meduim text-xs'>Manager</p>
+              <h1 className='font-semibold'>{userData.fullname}</h1>
+              <p className='leading-3 font-meduim text-xs uppercase'>
+                {userData.role}
+              </p>
             </div>
           </motion.button>
           {isOpen && (

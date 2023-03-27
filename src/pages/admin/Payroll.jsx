@@ -33,6 +33,36 @@ const Payroll = () => {
     setCheckboxRa(!deducCheckbox)
   }
 
+  const [object, setObject] = useState({
+    employeeName: '',
+    employeeId: '',
+    payDate: '',
+    startingDate: '',
+    endingDate: '',
+    hoursWorked: {
+      unit: 0,
+      rate: 0,
+      total: 0,
+    },
+    overTime: {
+      unit: 0,
+      rate: 0,
+      total: 0,
+    },
+    perCupCommision: {
+      unit: 0,
+      rate: 5,
+      total: 0,
+    },
+    grossPay: 0,
+    advance: 0,
+    bonus: 0,
+    sss: 0,
+    philhealth: 0,
+    pagibig: 0,
+    recentAdvance: 0,
+  })
+
   return (
     <div className='p-4 md:p-10'>
       <div className='flex flex-col md:flex-row justify-between md:mt-10 mb-4'>
@@ -41,6 +71,7 @@ const Payroll = () => {
           <h1 className='text-2xl md:block mr-4 md:text-4xl font-bold'>
             Payroll
           </h1>
+
           <select
             name='sortby'
             className='w-40 text-center h-8 font-semibold border-2 border-black bg-white'

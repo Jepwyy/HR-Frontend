@@ -5,7 +5,6 @@ const Add = () => {
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>Additions</h1>
       <div className='ml-5'>
-        \
         <div className='mb-3'>
           <label className='block text-gray-700 text-lg font-bold'>
             Bonus :

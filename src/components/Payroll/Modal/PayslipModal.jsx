@@ -149,7 +149,47 @@ const PayslipModal = ({ setModalPayslip }) => {
               </tr>
             </tbody>
           </table>
+          <div className='mt-8 pt-3 border-t-2  border-black'>
+            <h1 className='font-bold text-center text-2xl mb-3 uppercase'>
+              Logs
+            </h1>
+            <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
+              <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
+                <tr className='py-10'>
+                  <th className='text-center'>DAY</th>
+                  <th className='text-center'>DATE</th>
+                  <th className='text-center'>TIME IN</th>
+                  <th className='text-center'>TIME OUT</th>
+                  <th className='text-center'>TOTAL TIME</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className='px-2 border border-[#010100]'>sadasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                </tr>
+                <tr>
+                  <td className='px-2 border border-[#010100]'>sadasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                </tr>
+                <tr>
+                  <td className='px-2 border border-[#010100]'>sadasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                  <td className='px-2 border border-[#010100]'>asdasd</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+
         <div className='my-5 px-5 flex justify-end gap-5'>
           <button
             onClick={handlePrint}
