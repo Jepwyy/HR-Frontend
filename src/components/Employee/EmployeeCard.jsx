@@ -1,9 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import {
+  exportComponentAsJPEG,
+  exportComponentAsPDF,
+  exportComponentAsPNG,
+} from 'react-component-export-image'
 import { useMutation, useQueryClient } from 'react-query'
 import { toast, ToastContainer } from 'react-toastify'
 import Swal from 'sweetalert2'
 import profile from '../../assets/images/dp.jpg'
 import axios from '../../api/api'
+//icons
+import { MdEmail } from 'react-icons/md'
+import { IoLocation } from 'react-icons/io5'
+import { FaBirthdayCake } from 'react-icons/fa'
+import { BsTelephoneFill } from 'react-icons/bs'
+import { TiArrowForward } from 'react-icons/ti'
 // import { AiOutlineUser } from 'react-icons/ai'
 import { formatPosition, formatDepartment } from '../../utils/colParser'
 import EmployeeEditModal from './Modal/EmployeeEditModal'
@@ -55,6 +66,7 @@ const EmployeeCard = ({ item, setDetails }) => {
       }
     })
   }
+  const componentRef = useRef()
   return Object.keys(item).length === 0 ? (
     <></>
   ) : (
@@ -63,48 +75,55 @@ const EmployeeCard = ({ item, setDetails }) => {
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 30, opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className='py-10 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'
+      className='py-5 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'
     >
-      <div className='flex justify-center items-start'>
-        <div className='flex-none mr-5'>
-          <img
-            className='border-4 border-black rounded-full aspect-square h-36 w-36'
-            src={item.imgurl ? item.imgurl : profile}
-          />
+      <div className='flex justify-end mb-2'>
+        <button
+          onClick={() => exportComponentAsPNG(componentRef)}
+          className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+        >
+          <TiArrowForward size={23} /> Export ID
+        </button>
+      </div>
+      <div
+        ref={componentRef}
+        className='flex justify-center items-center bg-idbg bg-no-repeat bg-cover h-96 w-full px-5'
+      >
+        <div className='w-[60%]'>
+          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2 mt-20 '>
+            <MdEmail size='20' color='black' /> {item.email}
+          </h1>
+          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
+            <IoLocation size='20' color='black' /> {item.address}
+          </h1>
+          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
+            <FaBirthdayCake size='20' color='black' />{' '}
+            {new Date(item.birthdate).toLocaleDateString()}
+          </h1>
+          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
+            <BsTelephoneFill size='20' color='black' /> {item.contact}
+          </h1>
+          <h1 className='mr-2 bg-[#ac7238] font-semibold text-white text-center uppercase'>
+            {formatDepartment(item.department)}
+          </h1>
         </div>
-        <div className='flex-1'>
-          <h2 className='font-bold text-4xl mb-2'>{item.fullname}</h2>
-          <div className='flex'>
-            <div className='mr-10'>
-              <div className='font-semibold'>
-                Position:{' '}
-                <span className='font-normal'>{formatPosition(item.role)}</span>
-              </div>
-              <div className='font-semibold'>
-                Email: <span className='font-normal'>{item.email}</span>
-              </div>
-              <div className='font-semibold'>
-                Address: <span className='font-normal'>{item.address}</span>
-              </div>
-            </div>
-            <div className="className='ml-6'">
-              <div className='font-semibold'>
-                Department:{' '}
-                <span className='font-normal'>
-                  {formatDepartment(item.department)}
-                </span>
-              </div>
-              {/* iinstallan ko ng date formatter kapag nasa payroll na tayo */}
-              <div className='font-semibold'>Birth Date: </div>
-              <div className='font-semibold'>
-                Contact: <span className='font-normal'>{item.contact}</span>
-              </div>
-            </div>
+        <div className='w-[40%]  flex flex-col '>
+          <div className='flex justify-center items-start'>
+            <img
+              className='border-4 border-black rounded-full aspect-square h-44 w-44 mb-4 '
+              src={item.imgurl ? item.imgurl : profile}
+            />
           </div>
+          <h2 className='font-bold text-2xl mb-2 text-center'>
+            {item.fullname}
+          </h2>
+          <span className='font-semibold text-center'>
+            {formatPosition(item.role)}
+          </span>
         </div>
       </div>
       {/* buttons */}
-      <div className='flex justify-center text-white mt-40'>
+      <div className='flex justify-center text-white mt-5'>
         <button
           className='mx-2 bg-[#ac7238] h-10 px-5 rounded-full font-semibold'
           onClick={() => {

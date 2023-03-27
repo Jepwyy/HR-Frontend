@@ -22,7 +22,7 @@ const EmployeeList = () => {
   }
 
   return (
-    <div className='p-4 md:p-12'>
+    <div className='p-4 md:p-8'>
       <EmployeeListHeader
         setSort={setSort}
         setOrder={setOrder}
@@ -32,7 +32,7 @@ const EmployeeList = () => {
         {/* table */}
 
         {error && 'Error'}
-        <div className='h-[29.4rem] overflow-y-auto flex-1 border-2 border-t-black border-b-gray-200'>
+        <div className='h-[33.1rem] overflow-y-auto flex-1 border-2 border-t-black border-b-gray-200'>
           <table className='border-y-2 border-collapse text-center w-full  '>
             <thead className='bg-[#010100] text-white h-16 sticky -top-1'>
               <tr>

@@ -2,6 +2,8 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
 import { motion } from 'framer-motion'
+//icons
+import { TiArrowForward } from 'react-icons/ti'
 const AttendanceCard = ({ item }) => {
   const {
     data: users,
@@ -46,7 +48,7 @@ const AttendanceCard = ({ item }) => {
         </div>
 
         <h1 className='font-bold'>Name: {item.fullname}</h1>
-        <div className=' overflow-y-auto h-[321px] max-h-[321px] '>
+        <div className=' overflow-y-auto h-[269px] '>
           <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
             <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
               <tr className='py-10'>
@@ -82,9 +84,9 @@ const AttendanceCard = ({ item }) => {
             </tbody>
           </table>
         </div>
-        <div>
-          <button className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '>
-            Export
+        <div className='mt-2 '>
+          <button className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'>
+            <TiArrowForward size={23} /> Export
           </button>
         </div>
       </div>

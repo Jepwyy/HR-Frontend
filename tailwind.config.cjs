@@ -7,6 +7,7 @@ module.exports = {
       backgroundImage: {
         login: "url('./assets/images/BG.jpg')",
         sidebar: "url('./assets/images/BG-1.jpg')",
+        idbg: "url('./assets/images/idbg1.png')",
       },
     },
   },
