@@ -3,7 +3,7 @@ import { BsBackspaceFill } from 'react-icons/bs'
 import { formatTime, formatLocalTime } from '../../../utils/formatTime'
 import { FcOk } from 'react-icons/fc'
 import { BsFillXCircleFill } from 'react-icons/bs'
-
+import { motion } from 'framer-motion'
 const EmployeeSchedModal = ({ item, setModalSched }) => {
   const schedule = item.schedule
   const employeeData = item
@@ -32,7 +32,13 @@ const EmployeeSchedModal = ({ item, setModalSched }) => {
   console.log(sortedDays)
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
-      <div className='bg-white p-2 rounded md:w-[45rem]  w-96 '>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -20, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className='bg-white p-2 rounded md:w-[45rem]  w-96 '
+      >
         <div className='flex justify-end px-py'>
           <BsBackspaceFill
             size={40}
@@ -106,7 +112,7 @@ const EmployeeSchedModal = ({ item, setModalSched }) => {
             </tbody>
           </table>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

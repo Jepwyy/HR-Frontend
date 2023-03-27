@@ -16,6 +16,7 @@ const LoginRfid = () => {
   const [message, setMessage] = useState('')
   const formRef = useRef(null)
   const inputRef = useRef(null)
+  
   const { setUserData, setToken } = UserAuth()
   const navigate = useNavigate()
   const passwordRef = useRef(null)

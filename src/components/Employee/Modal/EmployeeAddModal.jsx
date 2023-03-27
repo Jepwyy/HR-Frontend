@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BsBackspaceFill } from 'react-icons/bs'
 import { useMutation, useQueryClient } from 'react-query'
 import axios from '../../../api/api'
-import Spinner from '../../InfiniteLoader'
+import Spinner from '../../LogoLoader'
 import ScanRfidModal from './ScanRfidModal'
 import { ToastContainer, toast } from 'react-toastify'
 import { FcOk } from 'react-icons/fc'
@@ -365,7 +365,10 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                     required
                   >
                     {position.map((item, i) => (
-                      <option key={i} value={item.position}>
+                      <option
+                        key={i}
+                        value={item.position}
+                      >
                         {item.display}
                       </option>
                     ))}
@@ -425,7 +428,11 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((item, i) => (
-                    <option key={i} value={item} className='text-center'>
+                    <option
+                      key={i}
+                      value={item}
+                      className='text-center'
+                    >
                       {item}
                     </option>
                   ))}
