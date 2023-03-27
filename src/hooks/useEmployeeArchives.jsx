@@ -8,9 +8,6 @@ export const useEmployeeArchives = () => {
       const response = await axios.get('/users/archive')
       return response.data
     },
-    // make this default on app.js later
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
   })
   return { isLoading, error, data }
 }
