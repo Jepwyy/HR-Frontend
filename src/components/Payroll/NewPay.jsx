@@ -1,8 +1,32 @@
 import React, { useState } from 'react'
-
+import { UsePayroll } from '../../context/payrollContext'
+import axios from '../../api/api'
+import { useQuery } from 'react-query'
 const NewPay = () => {
-  const [date, setDate] = useState(new Date())
+  const {
+    data: employees,
+    isLoading,
+    isError,
+  } = useQuery('EmployeesPayroll', () =>
+    axios.get('/users/get-employees').then((res) => res.data)
+  )
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading logs</div>
+  }
+
+  const { payrollObject, setPayrollObject } = UsePayroll()
+  console.log(payrollObject)
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setPayrollObject((prev) => {
+      return { ...prev, [name]: value }
+    })
+  }
   return (
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>NewPay</h1>
@@ -13,11 +37,16 @@ const NewPay = () => {
           </label>
           <select
             className='border-2 border-black w-3/6'
-            name='employee'
+            name='employeeId'
             required
+            onChange={handleChange}
           >
-            <option value=''>John Mark Familgan</option>
-            <option value=''>Kenneth Collado</option>
+            <option value=''>--Select Employee--</option>
+            {employees.map((item, i) => (
+              <option key={i} value={item.id}>
+                {item.fullname}
+              </option>
+            ))}
           </select>
         </div>
         <div className='mb-3'>
@@ -27,9 +56,10 @@ const NewPay = () => {
           <input
             className='border-2 border-black w-3/6'
             type='date'
-            name='paydate'
-            defaultValue={date.toLocaleDateString('en-CA')}
+            name='payDate'
+            defaultValue={payrollObject.payDate}
             required
+            onChange={handleChange}
           />
         </div>
         <div className='mb-3'>
@@ -39,8 +69,11 @@ const NewPay = () => {
           <input
             className='border-2 border-black w-3/6'
             type='date'
-            name='startingdate'
+            name='startingDate'
             required
+            onChange={handleChange}
+            min={employees}
+            defaultValue={payrollObject.startingDate}
           />
         </div>
         <div className='mb-3'>
@@ -50,8 +83,10 @@ const NewPay = () => {
           <input
             className='border-2 border-black w-3/6'
             type='date'
-            name='endingdate'
+            name='endingDate'
             required
+            onChange={handleChange}
+            defaultValue={payrollObject.endingDate}
           />
         </div>
       </div>

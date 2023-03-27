@@ -4,7 +4,12 @@ import Deduc from '../../components/Payroll/Deduc'
 import NewPay from '../../components/Payroll/NewPay'
 import PayslipModal from '../../components/Payroll/Modal/PayslipModal'
 import PayrollHistoryModal from '../../components/Payroll/Modal/PayrollHistoryModal'
+import { UsePayroll } from '../../context/payrollContext'
+import { useQueryClient } from 'react-query'
+import Swal from 'sweetalert2'
+
 const Payroll = () => {
+  const { payrollObject, setPayrollObject } = UsePayroll()
   const [modalPayslip, setModalPayslip] = useState(false)
   const [modalHistory, setModalHistory] = useState(false)
   const [active, setActive] = useState('FirstPage')
@@ -18,6 +23,8 @@ const Payroll = () => {
   const [checkboxPh, setCheckboxPh] = useState(false)
   const [checkboxPi, setCheckboxPi] = useState(false)
   const [checkboxRa, setCheckboxRa] = useState(false)
+
+  const queryClient = useQueryClient()
 
   const handleAddCheckboxChange = () => {
     setAddCheckbox(!addCheckbox)
@@ -33,35 +40,12 @@ const Payroll = () => {
     setCheckboxRa(!deducCheckbox)
   }
 
-  const [object, setObject] = useState({
-    employeeName: '',
-    employeeId: '',
-    payDate: '',
-    startingDate: '',
-    endingDate: '',
-    hoursWorked: {
-      unit: 0,
-      rate: 0,
-      total: 0,
-    },
-    overTime: {
-      unit: 0,
-      rate: 0,
-      total: 0,
-    },
-    perCupCommision: {
-      unit: 0,
-      rate: 5,
-      total: 0,
-    },
-    grossPay: 0,
-    advance: 0,
-    bonus: 0,
-    sss: 0,
-    philhealth: 0,
-    pagibig: 0,
-    recentAdvance: 0,
-  })
+  const handleSubmit = () => {
+    if (!payrollObject.employeeId)
+      return Swal.fire('Error?', 'Please select an Employee.', 'error')
+    queryClient.invalidateQueries({ queryKey: 'SingleLog' })
+    setModalPayslip(true)
+  }
 
   return (
     <div className='p-4 md:p-10'>
@@ -206,7 +190,9 @@ const Payroll = () => {
                     <span>Advance</span>
                   </td>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>1000</td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.advance}
+                  </td>
                 </tr>
                 <tr>
                   <td
@@ -225,7 +211,9 @@ const Payroll = () => {
                     <span>Bonus</span>
                   </td>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>1000</td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.bonus}
+                  </td>
                 </tr>
                 {/* Deductions */}
                 <tr>
@@ -348,9 +336,7 @@ const Payroll = () => {
               Payroll History
             </button>
             <button
-              onClick={() => {
-                setModalPayslip(true)
-              }}
+              onClick={handleSubmit}
               className='rounded-full bg-[#ac7238] py-2 px-6  font-sans md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
             >
               Submit Payroll

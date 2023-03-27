@@ -1,6 +1,15 @@
 import React from 'react'
+import { UsePayroll } from '../../context/payrollContext'
 
 const Add = () => {
+  const { payrollObject, setPayrollObject } = UsePayroll()
+  console.log(payrollObject)
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setPayrollObject((prev) => {
+      return { ...prev, [name]: value }
+    })
+  }
   return (
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>Additions</h1>
@@ -12,10 +21,12 @@ const Add = () => {
           <input
             className='border-2 border-black w-3/6'
             type='number'
-            name='department'
+            name='bonus'
             min='1'
             max='100'
             required
+            onChange={handleChange}
+            defaultValue={payrollObject.bonus}
           />
         </div>
         <div className='mb-3'>
@@ -27,8 +38,10 @@ const Add = () => {
             type='number'
             min='1'
             max='100'
-            name='department'
+            name='advance'
             required
+            onChange={handleChange}
+            defaultValue={payrollObject.advance}
           />
         </div>
       </div>
