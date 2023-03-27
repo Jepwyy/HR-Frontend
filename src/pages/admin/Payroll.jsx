@@ -7,6 +7,7 @@ import PayrollHistoryModal from '../../components/Payroll/Modal/PayrollHistoryMo
 import { UsePayroll } from '../../context/payrollContext'
 import { useQueryClient } from 'react-query'
 import Swal from 'sweetalert2'
+import { formatPrice } from '../../utils/priceFormatter'
 
 const Payroll = () => {
   const { payrollObject, setPayrollObject } = UsePayroll()
@@ -123,25 +124,43 @@ const Payroll = () => {
                   <td className='p-2 md:p-4 border border-[#010100]'>
                     Hours Worked
                   </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>48</td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>50</td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>2,400</td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.hoursWorked.unit}
+                  </td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.hoursWorked.rate}
+                  </td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {formatPrice(payrollObject.hoursWorked.total)}
+                  </td>
                 </tr>
                 <tr>
                   <td className='p-2 md:p-4 border border-[#010100]'>
                     Overtime
                   </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>20</td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>50</td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>1,000</td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.overTime.unit}
+                  </td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.overTime.rate}
+                  </td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {formatPrice(payrollObject.overTime.total)}
+                  </td>
                 </tr>
                 <tr>
                   <td className='p-2 md:p-4 border border-[#010100]'>
                     Per Cup Commision
                   </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>100</td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>5</td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>500</td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.perCupCommision.unit}
+                  </td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {payrollObject.perCupCommision.rate}
+                  </td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {formatPrice(payrollObject.perCupCommision.total)}
+                  </td>
                 </tr>
                 <tr>
                   <td
@@ -151,7 +170,9 @@ const Payroll = () => {
                     Gross Pay :
                   </td>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>3900</td>
+                  <td className='p-2 md:p-4 border border-[#010100]'>
+                    {formatPrice(payrollObject.grosspay)}
+                  </td>
                 </tr>
                 {/* Addition */}
                 <tr>

@@ -20,9 +20,9 @@ export const PayrollContextProvider = ({ children }) => {
       total: 0,
     },
     perCupCommision: {
-      unit: 0,
+      unit: 100,
       rate: 5,
-      total: 0,
+      total: 500,
     },
     grossPay: 0,
     advance: 0,

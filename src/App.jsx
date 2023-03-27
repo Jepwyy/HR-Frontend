@@ -29,26 +29,57 @@ const ROLES = {
   hr_manager: 'hr_manager',
 }
 function App() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: 'always',
+      },
+    },
+  })
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <div className='App'>
           <Routes>
-            <Route path='/' element={<Login />} />
-            <Route path='/card' element={<Card />} />
-            <Route path='*' element={<Error404 />} />
+            <Route
+              path='/'
+              element={<Login />}
+            />
+            <Route
+              path='/card'
+              element={<Card />}
+            />
+            <Route
+              path='*'
+              element={<Error404 />}
+            />
             {/* private routes */}
             <Route element={<PersistLogin />}>
               <Route
                 element={<PrivateRoute allowedRoles={[ROLES.hr_manager]} />}
               >
                 <Route element={<Layout />}>
-                  <Route path='/archive' element={<Archive />} />
-                  <Route path='/attendance' element={<Attendance />} />
-                  <Route path='/dashboard' element={<Dashboard />} />
-                  <Route path='/employee-leave' element={<EmployeeLeave />} />
-                  <Route path='/employee-list' element={<EmployeeList />} />
+                  <Route
+                    path='/archive'
+                    element={<Archive />}
+                  />
+                  <Route
+                    path='/attendance'
+                    element={<Attendance />}
+                  />
+                  <Route
+                    path='/dashboard'
+                    element={<Dashboard />}
+                  />
+                  <Route
+                    path='/employee-leave'
+                    element={<EmployeeLeave />}
+                  />
+                  <Route
+                    path='/employee-list'
+                    element={<EmployeeList />}
+                  />
                   <Route
                     path='/payroll'
                     element={
@@ -57,13 +88,22 @@ function App() {
                       </PayrollContextProvider>
                     }
                   />
-                  <Route path='/audit-logs' element={<AuditLogs />} />
-                  <Route path='/backup' element={<Backup />} />
+                  <Route
+                    path='/audit-logs'
+                    element={<AuditLogs />}
+                  />
+                  <Route
+                    path='/backup'
+                    element={<Backup />}
+                  />
                 </Route>
               </Route>
             </Route>
 
-            <Route path='/unauthorize' element={<Unauthorized />} />
+            <Route
+              path='/unauthorize'
+              element={<Unauthorized />}
+            />
           </Routes>
         </div>
       </Router>

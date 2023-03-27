@@ -8,9 +8,6 @@ export const useEmployees = () => {
       const response = await axios.get('/users/get')
       return response.data
     },
-    // make this default on app.js later
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
   })
   return { isLoading, error, data }
 }
@@ -22,9 +19,6 @@ export const useSingleEmployee = (id) => {
       const response = await axios.get(`/users/get/${id}`)
       return response.data
     },
-    // make this default on app.js later
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
   })
   return { isLoading, error, data }
 }
