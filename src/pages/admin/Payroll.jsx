@@ -47,7 +47,7 @@ const Payroll = () => {
     queryClient.invalidateQueries({ queryKey: 'SingleLog' })
     setModalPayslip(true)
   }
-
+  console.log(payrollObject)
   return (
     <div className='p-4 md:p-10'>
       <div className='flex flex-col md:flex-row justify-between md:mt-10 mb-4'>
@@ -145,7 +145,11 @@ const Payroll = () => {
                     {payrollObject.overTime.rate}
                   </td>
                   <td className='p-2 md:p-4 border border-[#010100]'>
-                    {formatPrice(payrollObject.overTime.total)}
+                    {formatPrice(
+                      payrollObject.overTime.total
+                        ? payrollObject.overTime.total
+                        : 0
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -159,7 +163,11 @@ const Payroll = () => {
                     {payrollObject.perCupCommision.rate}
                   </td>
                   <td className='p-2 md:p-4 border border-[#010100]'>
-                    {formatPrice(payrollObject.perCupCommision.total)}
+                    {formatPrice(
+                      payrollObject.perCupCommision.total
+                        ? payrollObject.perCupCommision.total
+                        : 0
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -171,7 +179,9 @@ const Payroll = () => {
                   </td>
 
                   <td className='p-2 md:p-4 border border-[#010100]'>
-                    {formatPrice(payrollObject.grosspay)}
+                    {formatPrice(
+                      payrollObject.grosspay ? payrollObject.grosspay : 0
+                    )}
                   </td>
                 </tr>
                 {/* Addition */}
