@@ -14,14 +14,6 @@ const NewPay = () => {
     return employees.data
   })
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (isError) {
-    return <div>Error loading logs</div>
-  }
-
   const { payrollObject, setPayrollObject } = UsePayroll()
 
   const handleChange = (e) => {
@@ -48,6 +40,7 @@ const NewPay = () => {
     }, 0)
 
     const totalF = totalCost - totalOvertime * employees.rateperhour
+    const grospayF = totalF + 500 + employees.rateperhour * 1.5 * totalOvertime
 
     setPayrollObject({
       ...payrollObject,
@@ -62,7 +55,8 @@ const NewPay = () => {
         rate: employees.rateperhour,
         total: employees.rateperhour * 1.5 * totalOvertime,
       },
-      grosspay: totalF + 500 + employees.rateperhour * 1.5 * totalOvertime,
+      grosspay: grospayF,
+      netPay: grospayF,
     })
   }
 
@@ -86,6 +80,13 @@ const NewPay = () => {
     })
   }
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error loading logs</div>
+  }
   return (
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>NewPay</h1>
@@ -98,6 +99,9 @@ const NewPay = () => {
             className='border-2 border-black w-3/6'
             name='employeeId'
             required
+            defaultValue={
+              payrollObject.employeeId ? payrollObject.employeeId : ''
+            }
             onChange={handleEmployee}
           >
             <option value=''>--Select Employee--</option>

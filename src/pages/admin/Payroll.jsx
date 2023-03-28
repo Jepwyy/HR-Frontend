@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Add from '../../components/Payroll/Add'
 import Deduc from '../../components/Payroll/Deduc'
 import NewPay from '../../components/Payroll/NewPay'
@@ -8,6 +8,7 @@ import { UsePayroll } from '../../context/payrollContext'
 import { useQueryClient } from 'react-query'
 import Swal from 'sweetalert2'
 import { formatPrice } from '../../utils/priceFormatter'
+import { useDebounce } from '../../hooks/useDebounce'
 
 const Payroll = () => {
   const { payrollObject, setPayrollObject } = UsePayroll()
@@ -47,7 +48,6 @@ const Payroll = () => {
     queryClient.invalidateQueries({ queryKey: 'SingleLog' })
     setModalPayslip(true)
   }
-  console.log(payrollObject)
   return (
     <div className='p-4 md:p-10'>
       <div className='flex flex-col md:flex-row justify-between md:mt-10 mb-4'>
@@ -216,7 +216,7 @@ const Payroll = () => {
                       name='forAdvance'
                       value=''
                       checked={checkboxAdvance}
-                      onChange={() => setCheckboxAdvance(!checkboxAdvance)}
+                      onChange={handleAdvanceValues}
                     />
                     <span>Advance</span>
                   </td>
@@ -237,7 +237,7 @@ const Payroll = () => {
                       name='forBonus'
                       value=''
                       checked={checkboxBonus}
-                      onChange={() => setCheckboxBonus(!checkboxBonus)}
+                      onChange={() => setCheckboxBonus((prev) => !prev)}
                     />
                     <span>Bonus</span>
                   </td>
@@ -351,7 +351,7 @@ const Payroll = () => {
                   </td>
 
                   <td className='p-2 md:p-4 border-y-[2px] border-x border-[#010100]  text-gray-50 font-bold'>
-                    ₱ 5,415
+                    {formatPrice(payrollObject.netPay)}
                   </td>
                 </tr>
               </tbody>
