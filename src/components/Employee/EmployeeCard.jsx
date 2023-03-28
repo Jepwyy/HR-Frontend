@@ -94,17 +94,32 @@ const EmployeeCard = ({ item, setDetails }) => {
       >
         <div className='w-[60%]'>
           <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2 mt-20 '>
-            <MdEmail size='20' color='black' /> {item.email}
+            <MdEmail
+              size='20'
+              color='black'
+            />{' '}
+            {item.email}
           </h1>
           <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
-            <IoLocation size='20' color='black' /> {item.address}
+            <IoLocation
+              size='20'
+              color='black'
+            />{' '}
+            {item.address}
           </h1>
           <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
-            <FaBirthdayCake size='20' color='black' />{' '}
+            <FaBirthdayCake
+              size='20'
+              color='black'
+            />{' '}
             {new Date(item.birthdate).toLocaleDateString()}
           </h1>
           <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
-            <BsTelephoneFill size='20' color='black' /> {item.contact}
+            <BsTelephoneFill
+              size='20'
+              color='black'
+            />{' '}
+            {item.contact}
           </h1>
           <h1 className='mr-2 bg-[#ac7238] font-semibold text-white text-center uppercase'>
             {formatDepartment(item.department)}
@@ -158,7 +173,10 @@ const EmployeeCard = ({ item, setDetails }) => {
         />
       )}
       {modalSched && (
-        <EmployeeSchedModal item={item} setModalSched={setModalSched} />
+        <EmployeeSchedModal
+          item={item}
+          setModalSched={setModalSched}
+        />
       )}
       <ToastContainer
         position='top-center'

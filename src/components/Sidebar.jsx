@@ -15,10 +15,10 @@ import logo from '../assets/images/logo.png'
 const Sidebar = ({ open, setOpen }) => {
   const menus = [
     { name: 'Dashboard', link: '/dashboard', icon: MdOutlineDashboard },
-    { name: 'Employee List', link: '/employee-list', icon: HiUserGroup },
-    { name: 'Employee Leave', link: '/employee-leave', icon: FcLeave },
+    { name: "Employees' List", link: '/employee-list', icon: HiUserGroup },
+    { name: "Employees' Leave", link: '/employee-leave', icon: FcLeave },
     {
-      name: 'Attendance',
+      name: 'Attendance Monitoring',
       link: '/attendance',
       icon: RiHealthBookFill,
     },
