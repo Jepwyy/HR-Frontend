@@ -3,7 +3,6 @@ import { UsePayroll } from '../../context/payrollContext'
 
 const Add = () => {
   const { payrollObject, setPayrollObject } = UsePayroll()
-  console.log(payrollObject)
   const handleChange = (e) => {
     const { name, value } = e.target
     setPayrollObject((prev) => {
