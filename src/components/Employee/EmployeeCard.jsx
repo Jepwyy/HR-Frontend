@@ -77,7 +77,10 @@ const EmployeeCard = ({ item, setDetails }) => {
       transition={{ duration: 0.5 }}
       className='py-5 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'
     >
-      <div className='flex justify-end mb-2'>
+      <div className='flex mb-2 justify-between'>
+        <button className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'>
+          Suspend
+        </button>
         <button
           onClick={() => exportComponentAsPNG(componentRef)}
           className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'

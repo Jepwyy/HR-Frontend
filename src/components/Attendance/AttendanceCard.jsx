@@ -51,7 +51,7 @@ const AttendanceCard = ({ item }) => {
         <div className=' overflow-y-auto h-[269px] '>
           <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
             <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
-              <tr className='py-10'>
+              <tr className='py-10 text-center'>
                 <th className='p-4 md:p-4'>DAY</th>
                 <th className='p-4 md:p-4'>DATE</th>
                 <th className='p-4 md:p-4'>TIME IN</th>
@@ -61,7 +61,7 @@ const AttendanceCard = ({ item }) => {
             </thead>
             <tbody>
               {selectedUserLogs.map((log) => (
-                <tr key={log.id}>
+                <tr className='text-center' key={log.id}>
                   <td className='p-2 md:p-4 border border-[#010100]'>
                     {new Date(log.log_date).toLocaleString('en-US', {
                       weekday: 'long',

@@ -16,7 +16,7 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
     setOrder((prev) => !prev)
   }
   return (
-    <div className='flex flex-col-reverse md:flex-row justify-between md:mt-10 mb-4'>
+    <div className='flex flex-col-reverse md:flex-row justify-between md:mt-5 mb-3'>
       {/* sort */}
       <div className='flex items-end mb-2 '>
         <h1 className='hidden md:block mr-4 text-4xl font-bold'>Employees</h1>
