@@ -1,7 +1,7 @@
 import React from 'react'
 import { UsePayroll } from '../../context/payrollContext'
 
-const Add = () => {
+const Add = ({ advancePayRef }) => {
   const { payrollObject, setPayrollObject } = UsePayroll()
   const handleChange = (e) => {
     const { name, value } = e.target

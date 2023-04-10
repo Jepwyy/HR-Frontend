@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { UsePayroll } from '../../context/payrollContext'
 import axios from '../../api/api'
 import { useQuery } from 'react-query'
@@ -14,7 +14,17 @@ const NewPay = () => {
     return employees.data
   })
 
-  const { payrollObject, setPayrollObject } = UsePayroll()
+  const {
+    payrollObject,
+    setPayrollObject,
+    advancePayRef,
+    bonusPayRef,
+    deducValues,
+  } = UsePayroll()
+
+  const totalDeduct = deducValues.reduce((acc, cur) => {
+    return acc + parseInt(cur)
+  }, 0)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -23,42 +33,69 @@ const NewPay = () => {
     })
   }
 
-  const handleEmployee = async (e) => {
-    const data = await axios.get(`/users/logs/${e.target.value}`)
-    const employees = data.data[0]
+  const handleEmployee = async (id, startdate = '', enddate = '') => {
+    let data
 
-    const totalCost = employees.logs.reduce((acc, cur) => {
+    if (startdate && enddate) {
+      data = await axios.get(
+        `/users/logs/${id}?startdate=${startdate}&enddate=${enddate}`
+      )
+    }
+
+    const employees = data?.data[0]
+
+    const totalCost = employees?.logs.reduce((acc, cur) => {
       return acc + parseInt(cur.total_cost)
     }, 0)
 
-    const totalHours = employees.logs.reduce((acc, cur) => {
+    const totalHours = employees?.logs.reduce((acc, cur) => {
       return acc + parseInt(cur.totalhours)
     }, 0)
 
-    const totalOvertime = employees.logs.reduce((acc, cur) => {
+    const totalOvertime = employees?.logs.reduce((acc, cur) => {
       return acc + parseInt(cur.overtime)
     }, 0)
 
-    const totalF = totalCost - totalOvertime * employees.rateperhour
-    const grospayF = totalF + 500 + employees.rateperhour * 1.5 * totalOvertime
+    const totalF = totalCost - totalOvertime * employees?.rateperhour
+    const grospayF = totalF + employees?.rateperhour * 1.5 * totalOvertime
+    const netpayF =
+      parseInt(grospayF) +
+      (advancePayRef.current?.checked
+        ? parseFloat(payrollObject.advance ? payrollObject.advance : 0)
+        : 0) +
+      (bonusPayRef.current?.checked
+        ? parseFloat(payrollObject.bonus ? payrollObject.bonus : 0)
+        : 0) +
+      -totalDeduct
 
     setPayrollObject({
       ...payrollObject,
-      employeeId: e.target.value,
       hoursWorked: {
         unit: totalHours - totalOvertime,
-        rate: employees.rateperhour,
-        total: totalF,
+        rate: employees?.rateperhour,
+        total: totalF ? totalF : 0,
       },
       overTime: {
         unit: totalOvertime,
-        rate: employees.rateperhour,
-        total: employees.rateperhour * 1.5 * totalOvertime,
+        rate: employees?.rateperhour,
+        total: employees?.rateperhour * 1.5 * totalOvertime,
       },
-      grosspay: grospayF,
-      netPay: grospayF,
+      grossPay: grospayF,
+      netPay: netpayF ? netpayF : 0,
     })
   }
+
+  useEffect(() => {
+    handleEmployee(
+      payrollObject.employeeId,
+      payrollObject.startingDate,
+      payrollObject.endingDate
+    )
+  }, [
+    payrollObject.employeeId,
+    payrollObject.startingDate,
+    payrollObject.endingDate,
+  ])
 
   const handleEndDate = (e) => {
     if (!payrollObject.startingDate) {
@@ -102,7 +139,7 @@ const NewPay = () => {
             defaultValue={
               payrollObject.employeeId ? payrollObject.employeeId : ''
             }
-            onChange={handleEmployee}
+            onChange={handleChange}
           >
             <option value=''>--Select Employee--</option>
             {employees.map((item, i) => (

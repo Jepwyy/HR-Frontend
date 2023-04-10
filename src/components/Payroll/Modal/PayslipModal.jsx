@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { useReactToPrint } from 'react-to-print'
 import { UsePayroll } from '../../../context/payrollContext'
 import axios from '../../../api/api'
+import { formatPrice } from '../../../utils/priceFormatter'
 const PayslipModal = ({ setModalPayslip }) => {
   const { payrollObject, setPayrollObject } = UsePayroll()
   const componentRef = useRef()
@@ -15,7 +16,9 @@ const PayslipModal = ({ setModalPayslip }) => {
     isError,
   } = useQuery('SingleLog', () =>
     axios
-      .get(`/users/logs/${payrollObject.employeeId}`)
+      .get(
+        `/users/logs/${payrollObject.employeeId}?startdate=${payrollObject.startingDate}&enddate=${payrollObject.endingDate}`
+      )
       .then((res) => res.data[0])
   )
   if (isLoading) {
@@ -55,10 +58,10 @@ const PayslipModal = ({ setModalPayslip }) => {
             Employee information
           </h1>
           <div className='grid grid-cols-2'>
-            <h1 className='place-self-start'>{employees.fullname}</h1>
-            <h1 className='place-self-end'>{employees.contact}</h1>
-            <h1 className='place-self-start'>{employees.address}</h1>
-            <h1 className='place-self-end'>{employees.email}</h1>
+            <h1 className='place-self-start'>{employees?.fullname}</h1>
+            <h1 className='place-self-end'>{employees?.contact}</h1>
+            <h1 className='place-self-start'>{employees?.address}</h1>
+            <h1 className='place-self-end'>{employees?.email}</h1>
           </div>
           <table className='mt-4 border-separate border-spacing-0 w-full text-sm text-left text-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
             <thead className='text-xs text-gray-50 border border-[#010100] bg-[#010100] uppercase'>
@@ -72,21 +75,35 @@ const PayslipModal = ({ setModalPayslip }) => {
             <tbody>
               <tr>
                 <td className='px-2 md:px-4 font-bold'>Hours Worked</td>
-                <td className='px-2 md:px-4'>48</td>
-                <td className='px-2 md:px-4'>50</td>
-                <td className='px-2 md:px-4'>2,400</td>
+                <td className='px-2 md:px-4'>
+                  {payrollObject.hoursWorked.unit}
+                </td>
+                <td className='px-2 md:px-4'>
+                  {payrollObject.hoursWorked.rate}
+                </td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(payrollObject.hoursWorked.total)}
+                </td>
               </tr>
               <tr>
                 <td className='px-2 md:px-4 font-bold'>Overtime</td>
-                <td className='px-2 md:px-4'>20</td>
-                <td className='px-2 md:px-4'>50</td>
-                <td className='px-2 md:px-4'>1,000</td>
+                <td className='px-2 md:px-4'>{payrollObject.overTime.unit}</td>
+                <td className='px-2 md:px-4'>{payrollObject.overTime.rate}</td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(payrollObject.overTime.total)}
+                </td>
               </tr>
               <tr>
                 <td className='px-2 md:px-4 font-bold'>Per Cup Commission</td>
-                <td className='px-2 md:px-4'>100</td>
-                <td className='px-2 md:px-4'>5</td>
-                <td className='px-2 md:px-4'>500</td>
+                <td className='px-2 md:px-4'>
+                  {payrollObject.perCupCommision.unit}
+                </td>
+                <td className='px-2 md:px-4'>
+                  {payrollObject.perCupCommision.rate}
+                </td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(payrollObject.perCupCommision.total)}
+                </td>
               </tr>
               <tr>
                 <td
@@ -96,7 +113,9 @@ const PayslipModal = ({ setModalPayslip }) => {
                   Gross Pay :
                 </td>
 
-                <td className='p-2 md:p-4'>{payrollObject.grossPay}</td>
+                <td className='p-2 md:p-4'>
+                  {formatPrice(payrollObject.grossPay)}
+                </td>
               </tr>
               {/* Addition */}
               <tr>
@@ -117,7 +136,9 @@ const PayslipModal = ({ setModalPayslip }) => {
                   <span>Advance</span>
                 </td>
 
-                <td className='px-2 md:px-4'>{payrollObject.advance}</td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(payrollObject.advance)}
+                </td>
               </tr>
               <tr>
                 <td
@@ -127,7 +148,9 @@ const PayslipModal = ({ setModalPayslip }) => {
                   <span>Bonus</span>
                 </td>
 
-                <td className='px-2 md:px-4'>{payrollObject.bonus}</td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(payrollObject.bonus)}
+                </td>
               </tr>
 
               {/* Deductions */}
@@ -190,7 +213,7 @@ const PayslipModal = ({ setModalPayslip }) => {
                 </td>
 
                 <td className='px-2 md:px-4 font-bold'>
-                  {payrollObject.netPay}
+                  {formatPrice(payrollObject.netPay)}
                 </td>
               </tr>
             </tbody>

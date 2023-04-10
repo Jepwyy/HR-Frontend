@@ -1,45 +1,85 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Add from '../../components/Payroll/Add'
-import Deduc from '../../components/Payroll/Deduc'
 import NewPay from '../../components/Payroll/NewPay'
 import PayslipModal from '../../components/Payroll/Modal/PayslipModal'
 import PayrollHistoryModal from '../../components/Payroll/Modal/PayrollHistoryModal'
 import { UsePayroll } from '../../context/payrollContext'
+import { useDebounce } from '../../hooks/useDebounce'
 import { useQueryClient } from 'react-query'
 import Swal from 'sweetalert2'
 import { formatPrice } from '../../utils/priceFormatter'
-import { useDebounce } from '../../hooks/useDebounce'
 
 const Payroll = () => {
-  const { payrollObject, setPayrollObject } = UsePayroll()
+  const {
+    payrollObject,
+    setPayrollObject,
+    advancePayRef,
+    bonusPayRef,
+    deducValues,
+    setDeducValues,
+  } = UsePayroll()
+  const queryClient = useQueryClient()
   const [modalPayslip, setModalPayslip] = useState(false)
   const [modalHistory, setModalHistory] = useState(false)
   const [active, setActive] = useState('FirstPage')
-
-  const [addCheckbox, setAddCheckbox] = useState(false)
-  const [checkboxBonus, setCheckboxBonus] = useState(false)
-  const [checkboxAdvance, setCheckboxAdvance] = useState(false)
-
-  const [deducCheckbox, setDeducCheckbox] = useState(false)
-  const [checkboxSss, setCheckboxSss] = useState(false)
-  const [checkboxPh, setCheckboxPh] = useState(false)
-  const [checkboxPi, setCheckboxPi] = useState(false)
   const [checkboxRa, setCheckboxRa] = useState(false)
+  const [checkedValues, setCheckedValues] = useState([])
+  // const [deducValues, setDeducValues] = useState([])
+  const [checkAdvance, setCheckAdvance] = useState(false)
+  const [checkBonus, setCheckBonus] = useState(false)
 
-  const queryClient = useQueryClient()
+  // ref
+  // const advancePayRef = useRef(null)
+  // const bonusPayRef = useRef(null)
 
-  const handleAddCheckboxChange = () => {
-    setAddCheckbox(!addCheckbox)
-    setCheckboxAdvance(!addCheckbox)
-    setCheckboxBonus(!addCheckbox)
+  const totalDeduct = deducValues.reduce((acc, cur) => {
+    return acc + parseInt(cur)
+  }, 0)
+
+  const debouncedAdvance = useDebounce(payrollObject.advance, 500)
+  const debouncedBonus = useDebounce(payrollObject.bonus, 500)
+
+  const netpayF =
+    parseInt(payrollObject.grossPay) +
+    (advancePayRef.current?.checked
+      ? parseFloat(payrollObject.advance ? payrollObject.advance : 0)
+      : 0) +
+    (bonusPayRef.current?.checked
+      ? parseFloat(payrollObject.bonus ? payrollObject.bonus : 0)
+      : 0) +
+    -totalDeduct
+
+  useEffect(() => {
+    setPayrollObject({
+      ...payrollObject,
+      netPay: netpayF ? netpayF : 0,
+    })
+  }, [
+    checkedValues,
+    deducValues,
+    payrollObject.employeeId,
+    debouncedAdvance,
+    debouncedBonus,
+    checkAdvance,
+    checkBonus,
+  ])
+
+  const handleCheckAdvance = () => {
+    setCheckAdvance((prev) => !prev)
+  }
+  const handleBonusAdvance = () => {
+    setCheckBonus((prev) => !prev)
   }
 
-  const handleDeducCheckboxChange = () => {
-    setDeducCheckbox(!deducCheckbox)
-    setCheckboxSss(!deducCheckbox)
-    setCheckboxPh(!deducCheckbox)
-    setCheckboxPi(!deducCheckbox)
-    setCheckboxRa(!deducCheckbox)
+  const handleDeductions = (e) => {
+    const { checked, value } = e.target
+    if (checked) {
+      setDeducValues([...deducValues, payrollObject.netPay * 0.05])
+    } else {
+      const newArray = [...deducValues]
+      newArray.pop()
+      setDeducValues(newArray)
+    }
   }
 
   const handleSubmit = () => {
@@ -89,16 +129,6 @@ const Payroll = () => {
             >
               Additions
             </button>
-            {/* <button
-              className={
-                active === 'ThirdPage'
-                  ? 'bg-[#ac7238] text-gray-50 font-bold py-2 px-4 rounded-r'
-                  : 'bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r'
-              }
-              onClick={() => setActive('ThirdPage')}
-            >
-              Deductions
-            </button> */}
           </div>
           <div className='w-full  bg-[#F3F3F3] mt-2 py-5 px-3 h-full'>
             {active === 'FirstPage' && <NewPay />}
@@ -180,7 +210,7 @@ const Payroll = () => {
 
                   <td className='p-2 md:p-4 border border-[#010100]'>
                     {formatPrice(
-                      payrollObject.grosspay ? payrollObject.grosspay : 0
+                      payrollObject.grossPay ? payrollObject.grossPay : 0
                     )}
                   </td>
                 </tr>
@@ -190,15 +220,6 @@ const Payroll = () => {
                     colSpan={4}
                     className='p-2 md:p-4 border border-[#010100] bg-black text-center'
                   >
-                    <input
-                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded focus:ring-0'
-                      type='checkbox'
-                      id='forAdd'
-                      name='forAdd'
-                      value=''
-                      checked={addCheckbox}
-                      onChange={handleAddCheckboxChange}
-                    />
                     <span className='text-xs text-gray-50 uppercase font-bold'>
                       Additions
                     </span>
@@ -214,15 +235,16 @@ const Payroll = () => {
                       type='checkbox'
                       id='forAdvance'
                       name='forAdvance'
-                      value=''
-                      checked={checkboxAdvance}
-                      onChange={handleAdvanceValues}
+                      ref={advancePayRef}
+                      onChange={handleCheckAdvance}
                     />
                     <span>Advance</span>
                   </td>
 
                   <td className='p-2 md:p-4 border border-[#010100]'>
-                    {payrollObject.advance}
+                    {formatPrice(
+                      payrollObject.advance ? payrollObject.advance : 0
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -235,15 +257,14 @@ const Payroll = () => {
                       type='checkbox'
                       id='forBonus'
                       name='forBonus'
-                      value=''
-                      checked={checkboxBonus}
-                      onChange={() => setCheckboxBonus((prev) => !prev)}
+                      ref={bonusPayRef}
+                      onChange={handleBonusAdvance}
                     />
                     <span>Bonus</span>
                   </td>
 
                   <td className='p-2 md:p-4 border border-[#010100]'>
-                    {payrollObject.bonus}
+                    {formatPrice(payrollObject.bonus ? payrollObject.bonus : 0)}
                   </td>
                 </tr>
                 {/* Deductions */}
@@ -252,15 +273,6 @@ const Payroll = () => {
                     colSpan={4}
                     className='p-2 md:p-4 border border-[#010100] bg-black text-center'
                   >
-                    <input
-                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
-                      type='checkbox'
-                      id='forDeduc'
-                      name='forDeduc'
-                      value=''
-                      checked={deducCheckbox}
-                      onChange={handleDeducCheckboxChange}
-                    />
                     <span className='text-xs text-gray-50 uppercase font-bold'>
                       Deductions
                     </span>
@@ -277,8 +289,7 @@ const Payroll = () => {
                       id='forSss'
                       name='forSss'
                       value=''
-                      checked={checkboxSss}
-                      onChange={() => setCheckboxSss(!checkboxSss)}
+                      onChange={handleDeductions}
                     />
                     <span>SSS</span>
                   </td>
@@ -296,8 +307,7 @@ const Payroll = () => {
                       id='forPhilhealth'
                       name='forPhilhealth'
                       value=''
-                      checked={checkboxPh}
-                      onChange={() => setCheckboxPh(!checkboxPh)}
+                      onChange={handleDeductions}
                     />
                     <span>PhilHealth</span>
                   </td>
@@ -315,8 +325,7 @@ const Payroll = () => {
                       id='forPagibig'
                       name='forPagibig'
                       value=''
-                      checked={checkboxPi}
-                      onChange={() => setCheckboxPi(!checkboxPi)}
+                      onChange={handleDeductions}
                     />
                     <span>Pagibig</span>
                   </td>
