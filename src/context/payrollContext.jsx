@@ -1,11 +1,16 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useRef, useState } from 'react'
 import { getDateToday } from '../utils/formatTime'
 
 const PayrollContext = createContext()
 
 export const PayrollContextProvider = ({ children }) => {
+  // refs
+  const advancePayRef = useRef(null)
+  const bonusPayRef = useRef(null)
+
+  const [deducValues, setDeducValues] = useState([])
   const [payrollObject, setPayrollObject] = useState({
-    employeeId: null,
+    employeeId: 0,
     payDate: getDateToday(),
     startingDate: '',
     endingDate: '',
@@ -20,9 +25,9 @@ export const PayrollContextProvider = ({ children }) => {
       total: 0,
     },
     perCupCommision: {
-      unit: 100,
+      unit: 0,
       rate: 5,
-      total: 500,
+      total: 0,
     },
     grossPay: 0,
     advance: 0,
@@ -39,6 +44,10 @@ export const PayrollContextProvider = ({ children }) => {
       value={{
         payrollObject,
         setPayrollObject,
+        advancePayRef,
+        bonusPayRef,
+        deducValues,
+        setDeducValues,
       }}
     >
       {children}
