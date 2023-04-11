@@ -48,8 +48,8 @@ const AttendanceCard = ({ item }) => {
         </div>
 
         <h1 className='font-bold'>Name: {item.fullname}</h1>
-        <div className=' overflow-y-auto h-[269px] '>
-          <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
+        <div className=' overflow-y-auto h-[270px] '>
+          <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[512px]'>
             <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
               <tr className='py-10 text-center'>
                 <th className='p-4 md:p-4'>DAY</th>

@@ -379,7 +379,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
               </div>
             </div>
             <div className='px-3 flex justify-center w-full items-start flex-col'>
-              <div>WORK SCHEDULE</div>
+              <div className='font-bold'>WORK SCHEDULE</div>
               <div className='flex items-center'>
                 <select
                   className='mr-2'
@@ -387,11 +387,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((days, i) => (
-                    <option
-                      key={i}
-                      value={days}
-                      className='text-center'
-                    >
+                    <option key={i} value={days} className='text-center'>
                       {days}
                     </option>
                   ))}

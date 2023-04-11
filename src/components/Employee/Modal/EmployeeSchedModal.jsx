@@ -52,15 +52,12 @@ const EmployeeSchedModal = ({ item, setModalSched }) => {
           View Schedule
         </h1>
         <div className='relative overflow-x-auto'>
-          <h1 className='font-bold'>{item.fullname}</h1>
+          <h1 className='font-bold'>Name: {item.fullname}</h1>
           <table className='w-full text-sm text-center text-gray-900 border border-gray-900'>
             <thead className='text-xs text-gray-50 uppercase bg-gray-900'>
               <tr>
                 {daysOfWeek.map((item, i) => (
-                  <th
-                    key={i}
-                    className='p-2 md:p-4'
-                  >
+                  <th key={i} className='p-2 md:p-4'>
                     {item}
                   </th>
                 ))}
@@ -69,10 +66,7 @@ const EmployeeSchedModal = ({ item, setModalSched }) => {
             <tbody>
               <tr>
                 {daysOfWeek.map((item, i) => (
-                  <td
-                    key={i}
-                    className='p-4 border border-gray-500'
-                  >
+                  <td key={i} className='p-4 border border-gray-500'>
                     <span className='flex justify-center items-start'>
                       {schedule
                         ?.filter((data) => data.day === item)
@@ -85,10 +79,7 @@ const EmployeeSchedModal = ({ item, setModalSched }) => {
                       {schedule?.filter((data) => data.day === item).length ? (
                         ''
                       ) : (
-                        <BsFillXCircleFill
-                          size={30}
-                          color='#ac7238'
-                        />
+                        <BsFillXCircleFill size={30} color='#ac7238' />
                       )}
                     </span>
                   </td>

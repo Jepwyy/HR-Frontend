@@ -8,6 +8,7 @@ import { useMutation } from 'react-query'
 import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { formatPosition } from '../utils/colParser'
 const Topbar = ({ open, setOpen }) => {
   const { token, userData } = UserAuth()
   const [isOpen, setIsOpen] = useState(false)
@@ -72,7 +73,7 @@ const Topbar = ({ open, setOpen }) => {
           <motion.button
             whileTap={{ scale: 0.8 }}
             onClick={toggleDropdown}
-            className=' flex z-auto items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818] py-3 px-4'
+            className=' flex z-auto items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818]  py-[.7rem] px-4'
           >
             <img
               className='h-10 mr-2 rounded-full aspect-square shadow-gray-500 shadow '
@@ -82,7 +83,7 @@ const Topbar = ({ open, setOpen }) => {
             <div className='hidden md:inline'>
               <h1 className='font-semibold'>{userData.fullname}</h1>
               <p className='leading-3 font-meduim text-xs uppercase'>
-                {userData.role}
+                {formatPosition(userData.role)}
               </p>
             </div>
           </motion.button>
@@ -92,7 +93,7 @@ const Topbar = ({ open, setOpen }) => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className='items-center absolute border border-t-0 rounded-b-lg shadow-lg  bg-white p-2 md:w-[11.7rem] w-[5.1rem] '
+              className='items-center absolute border border-t-0 rounded-b-lg shadow-lg  bg-white p-2 md:w-[10.4rem] w-[5.1rem] '
             >
               <button className=' px-0 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'>
                 Edit Profile

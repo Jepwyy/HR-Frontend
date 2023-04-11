@@ -74,7 +74,7 @@ const EmployeeLeave = () => {
           {active === 'ThirdPage' && <LeaveForm />} */}
           <div className='h-[310px] mb-2'>
             <h1 className='font-semibold text-2xl text-center mb-2 text-black'>
-              Employee's On Leave
+              Employees' On Leave
             </h1>
             <div className='overflow-x-auto max-h-[270px] border-4 border-[#010100] mb-1'>
               <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100]  overflow-y-auto '>
