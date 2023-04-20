@@ -378,7 +378,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                 </div>
               </div>
             </div>
-            <div className='px-3 flex justify-center w-full items-start flex-col'>
+            <div className='px-3 mt-3 flex justify-center w-full items-start flex-col'>
               <div className='font-bold'>WORK SCHEDULE</div>
               <div className='flex items-center'>
                 <select
@@ -444,7 +444,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                 type='submit'
                 className='px-6 py-2 bg-[#ac7238] text-white rounded-xl'
               >
-                Edit
+                Save
               </button>
             </div>
           </form>

@@ -15,7 +15,7 @@ const Backup = () => {
           Database Backup
         </h1>
       </div>
-      <div className='flex flex-row mt-10 gap-1'>
+      <div className='flex flex-row mt-10 gap-5'>
         <div className='h-full w-[20%] flex flex-col justify-center items-center gap-1'>
           <div className='bg-[#F3F3F3] w-full h-60 rounded-lg flex flex-col shadow-md p-4'>
             <div className='flex justify-center'>

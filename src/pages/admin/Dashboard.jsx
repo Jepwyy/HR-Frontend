@@ -60,7 +60,7 @@ const Dashboard = () => {
           {active === 'FirstChart' && (
             <>
               <h1 className='text-center text-4xl font-bold mb-4'>
-                Employee Monthly Reports
+                Employee Attendance Monthly Reports
               </h1>
               <div className='flex flex-col md:flex-row justify-between w-full'>
                 <div className='w-1/2'>

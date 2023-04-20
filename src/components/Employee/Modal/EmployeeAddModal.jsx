@@ -87,6 +87,10 @@ const EmployeeAddModal = ({ setModalAdd }) => {
             display: 'CASHIER',
             position: 'sales_cashier',
           },
+          {
+            display: 'REPRESENTATIVE',
+            position: 'sales_representative',
+          },
         ])
         break
       case 'warehouse':
@@ -365,10 +369,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                     required
                   >
                     {position.map((item, i) => (
-                      <option
-                        key={i}
-                        value={item.position}
-                      >
+                      <option key={i} value={item.position}>
                         {item.display}
                       </option>
                     ))}
@@ -419,8 +420,8 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                 </div>
               </div>
             </div>
-            <div className='px-4 flex justify-center w-full items-center flex-col'>
-              <div>WORK SCHEDULE</div>
+            <div className='px-4 mt-3 flex justify-center w-full items-start flex-col'>
+              <div className='font-bold'>WORK SCHEDULE</div>
               <div className='flex items-center'>
                 <select
                   className='mr-2'
@@ -428,11 +429,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((item, i) => (
-                    <option
-                      key={i}
-                      value={item}
-                      className='text-center'
-                    >
+                    <option key={i} value={item} className='text-center'>
                       {item}
                     </option>
                   ))}

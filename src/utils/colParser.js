@@ -6,6 +6,9 @@ export const formatPosition = (text) => {
     case 'sales_cashier':
       return 'Sales Cashier'
       break
+    case 'sales_representative':
+      return 'Sales Representative'
+      break
     case 'hr_manager':
       return 'HR Manager'
       break
