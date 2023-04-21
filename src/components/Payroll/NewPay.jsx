@@ -32,7 +32,11 @@ const NewPay = () => {
     try {
       const data = await axios.get(`/payroll/get/${id}`)
       setMinDate(
-        formatMinDate(data.data[0].enddate ? data.data[0].enddate : '')
+        formatMinDate(
+          data.data[data.data.length - 1].enddate
+            ? data.data[data.data.length - 1].enddate
+            : ''
+        )
       )
     } catch (error) {
       setMinDate('')
@@ -124,7 +128,7 @@ const NewPay = () => {
       endDateRef.current.value = ''
       return Swal.fire('Error', 'Please select a Starting Date.', 'error')
     }
-    if (new Date(e.target.value) < new Date(payrollObject.startingDate)) {
+    if (new Date(e.target.value) <= new Date(payrollObject.startingDate)) {
       endDateRef.current.value = ''
       return Swal.fire(
         'Error',
