@@ -37,3 +37,12 @@ export function getDateToday() {
   const formattedDate = `${yearNow}-${month}-${day}`
   return formattedDate // Outputs something like "2023-03-27"
 }
+
+export function formatMinDate(date) {
+  const currentDate = new Date(date)
+  const yearNow = currentDate.getFullYear()
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0') // Add 1 to get the correct month index, and pad with 0 if needed
+  const day = currentDate.getDate().toString().padStart(2, '0') // Pad with 0 if needed
+  const formattedDate = `${yearNow}-${month}-${day}`
+  return formattedDate // Outputs something like "2023-03-27"
+}
