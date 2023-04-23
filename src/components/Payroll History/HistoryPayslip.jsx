@@ -1,38 +1,15 @@
 import React, { useRef } from 'react'
-import { useQuery } from 'react-query'
-import { BsBackspaceFill } from 'react-icons/bs'
 import { useReactToPrint } from 'react-to-print'
-import { UsePayroll } from '../../../context/payrollContext'
-import axios from '../../../api/api'
-import { formatPrice } from '../../../utils/priceFormatter'
-const PayslipModal = ({ setModalPayslip }) => {
-  const { payrollObject, setPayrollObject } = UsePayroll()
+import { BsBackspaceFill } from 'react-icons/bs'
+const HistoryPayslip = ({ setModalHistory }) => {
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   })
-  const {
-    data: employees,
-    isLoading,
-    isError,
-  } = useQuery('SingleLog', () =>
-    axios
-      .get(
-        `/users/logs/${payrollObject.employeeId}?startdate=${payrollObject.startingDate}&enddate=${payrollObject.endingDate}`
-      )
-      .then((res) => res.data[0])
-  )
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (isError) {
-    return <div>Error loading logs</div>
-  }
 
   return (
-    <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
-      <div className='bg-white p-2 rounded md:w-3/5 w-96 md:my-auto my-auto '>
+    <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto py-1'>
+      <div className='bg-white p-2 rounded md:w-3/5 w-96  md:my-auto my-auto '>
         <div className='flex justify-end '>
           <BsBackspaceFill
             size={40}
@@ -54,13 +31,13 @@ const PayslipModal = ({ setModalPayslip }) => {
           </h1>
           <div className='flex justify-between mt-2'>
             <h1 className='text-base font-bold leading-tight tracking-tight text-black md:text-base uppercase'>
-              Pay date: {payrollObject.payDate}
+              Pay date: 1/22/23
             </h1>
             <h1 className='text-base font-bold leading-tight tracking-tight text-black md:text-base uppercase'>
-              Start date: {payrollObject.startingDate}
+              Start date: 1/17/23
             </h1>
             <h1 className='text-base font-bold leading-tight tracking-tight text-black md:text-base uppercase'>
-              End date: {payrollObject.endingDate}
+              End date: 1/22/23
             </h1>
           </div>
 
@@ -68,10 +45,10 @@ const PayslipModal = ({ setModalPayslip }) => {
             Employee information
           </h1>
           <div className='grid grid-cols-2'>
-            <h1 className='place-self-start'>{employees?.fullname}</h1>
-            <h1 className='place-self-end'>{employees?.contact}</h1>
-            <h1 className='place-self-start'>{employees?.address}</h1>
-            <h1 className='place-self-end'>{employees?.email}</h1>
+            <h1 className='place-self-start'>Adbul </h1>
+            <h1 className='place-self-end'>09123123123</h1>
+            <h1 className='place-self-start'>Manresa, Quezon City</h1>
+            <h1 className='place-self-end'>abdul@gmail.com</h1>
           </div>
           <table className='mt-4 border-separate border-spacing-0 w-full text-sm text-left text-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
             <thead className='text-xs text-gray-50 border border-[#010100] bg-[#010100] uppercase'>
@@ -85,35 +62,21 @@ const PayslipModal = ({ setModalPayslip }) => {
             <tbody>
               <tr>
                 <td className='px-2 md:px-4 font-bold'>Hours Worked</td>
-                <td className='px-2 md:px-4'>
-                  {payrollObject.hoursWorked.unit}
-                </td>
-                <td className='px-2 md:px-4'>
-                  {payrollObject.hoursWorked.rate}
-                </td>
-                <td className='px-2 md:px-4'>
-                  {formatPrice(payrollObject.hoursWorked.total)}
-                </td>
+                <td className='px-2 md:px-4'>48</td>
+                <td className='px-2 md:px-4'>50</td>
+                <td className='px-2 md:px-4'>2,400</td>
               </tr>
               <tr>
                 <td className='px-2 md:px-4 font-bold'>Overtime</td>
-                <td className='px-2 md:px-4'>{payrollObject.overTime.unit}</td>
-                <td className='px-2 md:px-4'>{payrollObject.overTime.rate}</td>
-                <td className='px-2 md:px-4'>
-                  {formatPrice(payrollObject.overTime.total)}
-                </td>
+                <td className='px-2 md:px-4'>20</td>
+                <td className='px-2 md:px-4'>50</td>
+                <td className='px-2 md:px-4'>1,000</td>
               </tr>
               <tr>
-                <td className='px-2 md:px-4 font-bold'>Per Cup Commission</td>
-                <td className='px-2 md:px-4'>
-                  {payrollObject.perCupCommision.unit}
-                </td>
-                <td className='px-2 md:px-4'>
-                  {payrollObject.perCupCommision.rate}
-                </td>
-                <td className='px-2 md:px-4'>
-                  {formatPrice(payrollObject.perCupCommision.total)}
-                </td>
+                <td className='px-2 md:px-4 font-bold'>Per Cup Commision</td>
+                <td className='px-2 md:px-4'>100</td>
+                <td className='px-2 md:px-4'>5</td>
+                <td className='px-2 md:px-4'>500</td>
               </tr>
               <tr>
                 <td
@@ -123,9 +86,7 @@ const PayslipModal = ({ setModalPayslip }) => {
                   Gross Pay :
                 </td>
 
-                <td className='p-2 md:p-4'>
-                  {formatPrice(payrollObject.grossPay)}
-                </td>
+                <td className='p-2 md:p-4'>3900</td>
               </tr>
               {/* Addition */}
               <tr>
@@ -140,18 +101,14 @@ const PayslipModal = ({ setModalPayslip }) => {
                   <span>Advance</span>
                 </td>
 
-                <td className='px-2 md:px-4'>
-                  {formatPrice(payrollObject.advance)}
-                </td>
+                <td className='px-2 md:px-4'>1000</td>
               </tr>
               <tr>
                 <td colSpan={3} className='px-2 md:px-4 font-bold pb-3'>
                   <span>Bonus</span>
                 </td>
 
-                <td className='px-2 md:px-4'>
-                  {formatPrice(payrollObject.bonus)}
-                </td>
+                <td className='px-2 md:px-4'>1000</td>
               </tr>
 
               {/* Deductions */}
@@ -198,53 +155,11 @@ const PayslipModal = ({ setModalPayslip }) => {
                   Net Pay :
                 </td>
 
-                <td className='px-2 md:px-4 font-bold'>
-                  {formatPrice(payrollObject.netPay)}
-                </td>
+                <td className='px-2 md:px-4 font-bold'>₱ 5,415</td>
               </tr>
             </tbody>
           </table>
-          <div className='mt-8 pt-3 border-t-2  border-black'>
-            <h1 className='font-bold text-center text-2xl mb-3 uppercase'>
-              Logs
-            </h1>
-            <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
-              <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
-                <tr className='py-10'>
-                  <th className='text-center'>DAY</th>
-                  <th className='text-center'>DATE</th>
-                  <th className='text-center'>TIME IN</th>
-                  <th className='text-center'>TIME OUT</th>
-                  <th className='text-center'>TOTAL TIME</th>
-                </tr>
-              </thead>
-              <tbody>
-                {employees.logs.map((log, i) => (
-                  <tr className='text-center' key={i}>
-                    <td className=' border  border-[#010100]'>
-                      {new Date(log.log_date).toLocaleString('en-US', {
-                        weekday: 'long',
-                      })}
-                    </td>
-                    <td className=' border  border-[#010100]'>
-                      {new Date(log.log_date).toLocaleDateString()}
-                    </td>
-                    <td className=' border  border-[#010100]'>
-                      {new Date(log.time_in).toLocaleTimeString()}
-                    </td>
-                    <td className=' border  border-[#010100]'>
-                      {new Date(log.time_out).toLocaleTimeString()}
-                    </td>
-                    <td className='text-center border  border-[#010100]'>
-                      {log.totalhours}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
-
         <div className='my-5 px-5 flex justify-end gap-5'>
           <button
             onClick={handlePrint}
@@ -266,4 +181,4 @@ const PayslipModal = ({ setModalPayslip }) => {
   )
 }
 
-export default PayslipModal
+export default HistoryPayslip

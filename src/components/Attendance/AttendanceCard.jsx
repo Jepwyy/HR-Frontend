@@ -48,7 +48,7 @@ const AttendanceCard = ({ item }) => {
         </div>
 
         <h1 className='font-bold'>Name: {item.fullname}</h1>
-        <div className=' overflow-y-auto h-[270px] '>
+        <div className=' overflow-y-auto h-[268px] '>
           <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[512px]'>
             <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
               <tr className='py-10 text-center'>
@@ -62,21 +62,21 @@ const AttendanceCard = ({ item }) => {
             <tbody>
               {selectedUserLogs.map((log) => (
                 <tr className='text-center' key={log.id}>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
+                  <td className='p-2 md:py-4 md:px-1 border border-[#010100]'>
                     {new Date(log.log_date).toLocaleString('en-US', {
                       weekday: 'long',
                     })}
                   </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
+                  <td className='p-2 md:py-4 md:px-1 border border-[#010100]'>
                     {new Date(log.log_date).toLocaleDateString()}
                   </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
+                  <td className='p-2 md:py-4 md:px-1 border border-[#010100]'>
                     {new Date(log.time_in).toLocaleTimeString()}
                   </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
+                  <td className='p-2 md:py-4 md:px-1 border border-[#010100]'>
                     {new Date(log.time_out).toLocaleTimeString()}
                   </td>
-                  <td className='p-2 md:p-4 border text-center border-[#010100]'>
+                  <td className='p-2 md:py-4 md:px-1 border text-center border-[#010100]'>
                     {log.totalhours}
                   </td>
                 </tr>

@@ -17,6 +17,7 @@ import Attendance from './pages/admin/Attendance'
 import EmployeeLeave from './pages/admin/EmployeeLeave'
 import EmployeeList from './pages/admin/EmployeeList'
 import Payroll from './pages/admin/Payroll'
+import PayrollHistory from './pages/admin/PayrollHistory'
 import Error404 from './pages/Error404'
 import Unauthorized from './pages/Unauthorized'
 import PrivateRoute from './helpers/PrivateRoute'
@@ -42,44 +43,20 @@ function App() {
       <Router>
         <div className='App'>
           <Routes>
-            <Route
-              path='/'
-              element={<Login />}
-            />
-            <Route
-              path='/card'
-              element={<Card />}
-            />
-            <Route
-              path='*'
-              element={<Error404 />}
-            />
+            <Route path='/' element={<Login />} />
+            <Route path='/card' element={<Card />} />
+            <Route path='*' element={<Error404 />} />
             {/* private routes */}
             <Route element={<PersistLogin />}>
               <Route
                 element={<PrivateRoute allowedRoles={[ROLES.hr_manager]} />}
               >
                 <Route element={<Layout />}>
-                  <Route
-                    path='/archive'
-                    element={<Archive />}
-                  />
-                  <Route
-                    path='/attendance'
-                    element={<Attendance />}
-                  />
-                  <Route
-                    path='/dashboard'
-                    element={<Dashboard />}
-                  />
-                  <Route
-                    path='/employee-leave'
-                    element={<EmployeeLeave />}
-                  />
-                  <Route
-                    path='/employee-list'
-                    element={<EmployeeList />}
-                  />
+                  <Route path='/archive' element={<Archive />} />
+                  <Route path='/attendance' element={<Attendance />} />
+                  <Route path='/dashboard' element={<Dashboard />} />
+                  <Route path='/employee-leave' element={<EmployeeLeave />} />
+                  <Route path='/employee-list' element={<EmployeeList />} />
                   <Route
                     path='/payroll'
                     element={
@@ -88,22 +65,14 @@ function App() {
                       </PayrollContextProvider>
                     }
                   />
-                  <Route
-                    path='/audit-logs'
-                    element={<AuditLogs />}
-                  />
-                  <Route
-                    path='/backup'
-                    element={<Backup />}
-                  />
+                  <Route path='/payroll-history' element={<PayrollHistory />} />
+                  <Route path='/audit-logs' element={<AuditLogs />} />
+                  <Route path='/backup' element={<Backup />} />
                 </Route>
               </Route>
             </Route>
 
-            <Route
-              path='/unauthorize'
-              element={<Unauthorized />}
-            />
+            <Route path='/unauthorize' element={<Unauthorized />} />
           </Routes>
         </div>
       </Router>

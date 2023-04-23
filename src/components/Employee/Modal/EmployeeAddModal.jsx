@@ -32,6 +32,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     birthdate: '',
     address: '',
     email: '',
+    type: 'fulltime',
     contact: '',
     rfid: 0,
     schedule: [],
@@ -400,6 +401,20 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                     onChange={handleChange}
                     required
                   />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Employee Type:
+                  </label>
+                  <select
+                    className='border-2 border-black w-full'
+                    name='type'
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value='fulltime'>FULL-TIME</option>
+                    <option value='parttime'>PART-TIME</option>
+                  </select>
                 </div>
                 <div className='mb-2'>
                   <label className='flex items-center text-gray-700 text-sm font-bold mb-1'>

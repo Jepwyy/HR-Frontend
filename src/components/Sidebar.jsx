@@ -5,6 +5,7 @@ import { AiFillSchedule } from 'react-icons/ai'
 import { MdOutlineDashboard, MdArchive } from 'react-icons/md'
 import { RiHealthBookFill } from 'react-icons/ri'
 import { TbReportMoney } from 'react-icons/tb'
+import { FaMoneyCheckAlt } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import { FcAcceptDatabase, FcOvertime, FcLeave } from 'react-icons/fc'
 // pages
@@ -23,6 +24,11 @@ const Sidebar = ({ open, setOpen }) => {
       icon: RiHealthBookFill,
     },
     { name: 'Payroll', link: '/payroll', icon: TbReportMoney },
+    {
+      name: 'Payroll History',
+      link: '/payroll-history',
+      icon: FaMoneyCheckAlt,
+    },
     { name: 'Archive', link: '/archive', icon: MdArchive },
     { name: 'Audit Logs', link: '/audit-logs', icon: FcOvertime },
     { name: 'Backup', link: '/backup', icon: FcAcceptDatabase },
