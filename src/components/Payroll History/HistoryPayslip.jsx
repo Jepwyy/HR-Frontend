@@ -159,6 +159,31 @@ const HistoryPayslip = ({ setModalHistory }) => {
               </tr>
             </tbody>
           </table>
+          <div className='mt-8 pt-3 border-t-2  border-black'>
+            <h1 className='font-bold text-center text-2xl mb-3 uppercase'>
+              Logs
+            </h1>
+            <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
+              <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
+                <tr className='py-10'>
+                  <th className='text-center'>DAY</th>
+                  <th className='text-center'>DATE</th>
+                  <th className='text-center'>TIME IN</th>
+                  <th className='text-center'>TIME OUT</th>
+                  <th className='text-center'>TOTAL TIME</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className='text-center'>
+                  <td className=' border  border-[#010100]'></td>
+                  <td className=' border  border-[#010100]'></td>
+                  <td className=' border  border-[#010100]'></td>
+                  <td className=' border  border-[#010100]'></td>
+                  <td className=' border  border-[#010100]'></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className='my-5 px-5 flex justify-end gap-5'>
           <button
@@ -167,14 +192,14 @@ const HistoryPayslip = ({ setModalHistory }) => {
           >
             Export
           </button>
-          <button
+          {/* <button
             onClick={() => {
               setModalPayslip(false)
             }}
             className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
           >
             Done
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

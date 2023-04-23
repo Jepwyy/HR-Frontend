@@ -363,14 +363,14 @@ const Payroll = () => {
             </table>
           </div>
           <div className='mt-5 flex justify-end gap-5 pr-7'>
-            <button
+            {/* <button
               onClick={() => {
                 setModalHistory(true)
               }}
               className='rounded-full bg-[#ac7238] py-2 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
             >
               Payroll History
-            </button>
+            </button> */}
             <button
               onClick={handleSubmit}
               className='rounded-full bg-[#ac7238] py-2 px-6  font-sans md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
