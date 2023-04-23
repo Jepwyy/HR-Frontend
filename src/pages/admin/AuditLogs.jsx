@@ -1,6 +1,17 @@
 import React from 'react'
 import { BiSearch } from 'react-icons/bi'
+import { useQuery } from 'react-query'
+import axios from '../../api/api'
+import { parseISO, format } from 'date-fns'
 const AuditLogs = () => {
+  const {
+    data: users,
+    isLoading,
+    isError,
+  } = useQuery('audit_logs', () =>
+    axios.get('/logs/get').then((res) => res.data)
+  )
+
   return (
     <div className='p-4 md:p-12'>
       <div className='flex flex-col-reverse md:flex-row justify-between md:mt-10 mb-4'>
@@ -36,86 +47,32 @@ const AuditLogs = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
-            <tr>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>
-                John Mark Familgan Added an Employee.
-              </td>
-              <td className='p-2 md:p-4 border border-[#010100]'>1/1/2023</td>
-              <td className='p-2 md:p-4 border border-[#010100]'>11:23 PM</td>
-            </tr>
+            {isLoading && (
+              <tr>
+                <td colSpan={4}>Loading...</td>
+              </tr>
+            )}
+            {isError && (
+              <tr>
+                <td colSpan={4}>Error</td>
+              </tr>
+            )}
+            {users?.map((item, index) => (
+              <tr key={index}>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {item.fullname}
+                </td>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {item.activity}
+                </td>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {format(parseISO(item.actiondate), 'M/d/yyyy')}
+                </td>
+                <td className='p-2 md:p-4 border border-[#010100]'>
+                  {item.created_at}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

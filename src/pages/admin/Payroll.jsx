@@ -8,6 +8,7 @@ import { useDebounce } from '../../hooks/useDebounce'
 import { useQueryClient } from 'react-query'
 import Swal from 'sweetalert2'
 import { formatPrice } from '../../utils/priceFormatter'
+import { ToastContainer } from 'react-toastify'
 
 const Payroll = () => {
   const {
@@ -71,8 +72,17 @@ const Payroll = () => {
     setCheckBonus((prev) => !prev)
   }
 
+  const handleOpenDeductions = (e) => {
+    const { checked } = e.target
+    if (checked) {
+      setOpenDeduction(true)
+    } else {
+      setOpenDeduction(false)
+    }
+  }
+
   const handleDeductions = (e) => {
-    const { checked, value } = e.target
+    const { checked } = e.target
     if (checked) {
       setDeducValues([...deducValues, payrollObject.netPay * 0.05])
     } else {
@@ -85,6 +95,7 @@ const Payroll = () => {
   const handleSubmit = () => {
     if (!payrollObject.employeeId)
       return Swal.fire('Error?', 'Please select an Employee.', 'error')
+    if (!payrollObject.netPay) return
     queryClient.invalidateQueries({ queryKey: 'SingleLog' })
     setModalPayslip(true)
   }
@@ -182,24 +193,7 @@ const Payroll = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
-                    Per Cup Commision
-                  </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
-                    {payrollObject.perCupCommision.unit}
-                  </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
-                    {payrollObject.perCupCommision.rate}
-                  </td>
-                  <td className='p-2 md:p-4 border border-[#010100]'>
-                    {formatPrice(
-                      payrollObject.perCupCommision.total
-                        ? payrollObject.perCupCommision.total
-                        : 0
-                    )}
-                  </td>
-                </tr>
+
                 <tr>
                   <td
                     colSpan={3}
@@ -278,6 +272,7 @@ const Payroll = () => {
                     </span>
                   </td>
                 </tr>
+
                 <tr>
                   <td
                     colSpan={3}
@@ -351,6 +346,7 @@ const Payroll = () => {
 
                   <td className='p-2 md:p-4 border border-[#010100]'>500</td>
                 </tr>
+
                 <tr className='bg-[#ac7238] sticky -bottom-[1px]  border-4 border-[#010100]'>
                   <td
                     colSpan={3}
@@ -388,6 +384,18 @@ const Payroll = () => {
       {modalHistory && (
         <PayrollHistoryModal setModalHistory={setModalHistory} />
       )}
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   )
 }

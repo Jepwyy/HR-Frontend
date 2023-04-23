@@ -6,12 +6,12 @@ const ArchHeader = ({ setQuery }) => {
       {/* sort */}
       <div className='flex items-end mb-2'>
         <h1 className='hidden md:block mr-4 text-4xl font-bold'>Archive</h1>
-        <select
+        {/* <select
           name='sortby'
           className='w-40 text-center h-8 font-semibold border-2 border-black bg-white'
         >
           <option value='...'>SORT BY</option>
-        </select>
+        </select> */}
       </div>
       {/* search */}
       <div className='flex items-end mb-2'>

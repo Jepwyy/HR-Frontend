@@ -3,6 +3,7 @@ import { UsePayroll } from '../../context/payrollContext'
 import axios from '../../api/api'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2'
+import { formatMinDate } from '../../utils/formatTime'
 const NewPay = () => {
   const endDateRef = useRef()
   const {
@@ -22,9 +23,25 @@ const NewPay = () => {
     deducValues,
   } = UsePayroll()
 
+  const [minDate, setMinDate] = useState('')
+
   const totalDeduct = deducValues.reduce((acc, cur) => {
     return acc + parseInt(cur)
   }, 0)
+  const getMinDate = async (id) => {
+    try {
+      const data = await axios.get(`/payroll/get/${id}`)
+      setMinDate(
+        formatMinDate(
+          data.data[data.data.length - 1].enddate
+            ? data.data[data.data.length - 1].enddate
+            : ''
+        )
+      )
+    } catch (error) {
+      setMinDate('')
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -53,10 +70,15 @@ const NewPay = () => {
     }, 0)
 
     const totalOvertime = employees?.logs.reduce((acc, cur) => {
+      return acc + parseInt(cur.overtimestatus === 0 ? 0 : cur.overtime)
+    }, 0)
+
+    const invalidOverTime = employees?.logs.reduce((acc, cur) => {
       return acc + parseInt(cur.overtime)
     }, 0)
 
-    const totalF = totalCost - totalOvertime * employees?.rateperhour
+    const totalF = totalCost - invalidOverTime * employees?.rateperhour
+
     const grospayF = totalF + employees?.rateperhour * 1.5 * totalOvertime
     const netpayF =
       parseInt(grospayF) +
@@ -71,7 +93,10 @@ const NewPay = () => {
     setPayrollObject({
       ...payrollObject,
       hoursWorked: {
-        unit: totalHours - totalOvertime,
+        unit:
+          totalHours - invalidOverTime - totalOvertime
+            ? totalHours - invalidOverTime - totalOvertime
+            : 0,
         rate: employees?.rateperhour,
         total: totalF ? totalF : 0,
       },
@@ -91,6 +116,7 @@ const NewPay = () => {
       payrollObject.startingDate,
       payrollObject.endingDate
     )
+    getMinDate(payrollObject.employeeId)
   }, [
     payrollObject.employeeId,
     payrollObject.startingDate,
@@ -102,7 +128,7 @@ const NewPay = () => {
       endDateRef.current.value = ''
       return Swal.fire('Error', 'Please select a Starting Date.', 'error')
     }
-    if (new Date(e.target.value) < new Date(payrollObject.startingDate)) {
+    if (new Date(e.target.value) <= new Date(payrollObject.startingDate)) {
       endDateRef.current.value = ''
       return Swal.fire(
         'Error',
@@ -175,7 +201,7 @@ const NewPay = () => {
             name='startingDate'
             required
             onChange={handleChange}
-            min={employees}
+            min={minDate}
             defaultValue={payrollObject.startingDate}
           />
         </div>
@@ -189,6 +215,7 @@ const NewPay = () => {
             name='endingDate'
             required
             ref={endDateRef}
+            min={minDate}
             onChange={handleEndDate}
             defaultValue={payrollObject.endingDate}
           />

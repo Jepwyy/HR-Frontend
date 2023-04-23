@@ -91,7 +91,7 @@ const TimeInForm = () => {
           title: 'Error',
           text: `${error.response.data.message}`,
           icon: 'error',
-          timer: 2000,
+          // timer: 2000,
           // allowOutsideClick: false,
           showConfirmButton: false,
         })

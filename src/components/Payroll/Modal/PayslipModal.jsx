@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation } from 'react-query'
+import { toast } from 'react-toastify'
 import { BsBackspaceFill } from 'react-icons/bs'
 import { useReactToPrint } from 'react-to-print'
 import { UsePayroll } from '../../../context/payrollContext'
@@ -7,6 +8,53 @@ import axios from '../../../api/api'
 import { formatPrice } from '../../../utils/priceFormatter'
 const PayslipModal = ({ setModalPayslip }) => {
   const { payrollObject, setPayrollObject } = UsePayroll()
+  const mutation = useMutation({
+    mutationFn: (payroll) => axios.post('/payroll/create', payroll),
+    onError: (error) => {
+      // setErrorMessage(error.response.data.message);
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+    onSuccess: () => {
+      setModalPayslip(false)
+      toast.success(`Payroll created`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+  })
+
+  const handleSubmit = () => {
+    mutation.mutate({
+      employeeid: payrollObject.employeeId,
+      paydate: payrollObject.payDate,
+      startdate: payrollObject.startingDate,
+      enddate: payrollObject.endingDate,
+      hoursworked: payrollObject.hoursWorked,
+      overtime: payrollObject.overTime,
+      grosspay: payrollObject.grossPay,
+      advance: payrollObject.advance,
+      bonus: payrollObject.bonus,
+      sss: payrollObject.sss,
+      philhealth: payrollObject.philhealth,
+      pagibig: payrollObject.pagibig,
+      recentadvance: payrollObject.recentAdvance,
+      netpay: payrollObject.netPay,
+    })
+  }
+
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -32,6 +80,7 @@ const PayslipModal = ({ setModalPayslip }) => {
 
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto'>
+      {mutation.isLoading && <>test</>}
       <div className='bg-white p-2 rounded md:w-3/5 w-96 md:my-auto my-auto '>
         <div className='flex justify-end '>
           <BsBackspaceFill
@@ -101,18 +150,6 @@ const PayslipModal = ({ setModalPayslip }) => {
                 <td className='px-2 md:px-4'>{payrollObject.overTime.rate}</td>
                 <td className='px-2 md:px-4'>
                   {formatPrice(payrollObject.overTime.total)}
-                </td>
-              </tr>
-              <tr>
-                <td className='px-2 md:px-4 font-bold'>Per Cup Commission</td>
-                <td className='px-2 md:px-4'>
-                  {payrollObject.perCupCommision.unit}
-                </td>
-                <td className='px-2 md:px-4'>
-                  {payrollObject.perCupCommision.rate}
-                </td>
-                <td className='px-2 md:px-4'>
-                  {formatPrice(payrollObject.perCupCommision.total)}
                 </td>
               </tr>
               <tr>
@@ -219,7 +256,7 @@ const PayslipModal = ({ setModalPayslip }) => {
                 </tr>
               </thead>
               <tbody>
-                {employees.logs.map((log, i) => (
+                {employees?.logs?.map((log, i) => (
                   <tr className='text-center' key={i}>
                     <td className=' border  border-[#010100]'>
                       {new Date(log.log_date).toLocaleString('en-US', {
@@ -253,10 +290,8 @@ const PayslipModal = ({ setModalPayslip }) => {
             Export
           </button>
           <button
-            onClick={() => {
-              setModalPayslip(false)
-            }}
             className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+            onClick={handleSubmit}
           >
             Done
           </button>
