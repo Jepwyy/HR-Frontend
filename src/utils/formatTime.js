@@ -46,3 +46,4 @@ export function formatMinDate(date) {
   const formattedDate = `${yearNow}-${month}-${day}`
   return formattedDate // Outputs something like "2023-03-27"
 }
+

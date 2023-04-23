@@ -33,7 +33,10 @@ const Archive = () => {
                 )
               })
               .map((item, index) => (
-                <ArchiveList key={index} item={item} />
+                <ArchiveList
+                  key={index}
+                  item={item}
+                />
               ))}
           </tbody>
         </table>

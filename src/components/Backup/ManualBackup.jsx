@@ -1,6 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useMutation } from 'react-query'
+import axios from '../../api/api'
+import { format } from 'date-fns'
+import { ToastContainer, toast } from 'react-toastify'
 
 const ManualBackup = () => {
+  const [table, setTable] = useState('')
+
+  const mutation = useMutation({
+    mutationFn: (table) => axios.post('/backup/export', table),
+    onSuccess: (data) => {
+      const jsonData = data.data
+      const blob = new Blob([JSON.stringify(jsonData)], {
+        type: 'application/json',
+      })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.download = `${format(new Date(), 'yyyy-MM-dd')}-data.json`
+      link.href = url
+      link.click()
+    },
+    onError: (error) => {
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+  })
+
+  const exportData = () => {
+    if (!table)
+      return toast.error('Please Select a field', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+
+    mutation.mutate({ table: table })
+  }
   return (
     <div className='w-full h-full flex flex-col justify-center items-center'>
       <div className='mb-3 w-1/2 flex justify-center'>
@@ -11,16 +57,35 @@ const ManualBackup = () => {
           className='border-2 border-black w-3/6'
           name='employeeId'
           required
+          onChange={(e) => setTable(e.target.value)}
         >
-          <option className='text-center' value=''>
+          <option
+            className='text-center'
+            value=''
+          >
             --Select Table--
           </option>
-          <option value=''>Employees` Table</option>
+          <option value='hr_employee_logs'>Employees` Attendance</option>
         </select>
       </div>
-      <button className='bg-[#ac7238] text-gray-50 font-bold py-2 px-10 rounded-lg'>
+      <button
+        className='bg-[#ac7238] text-gray-50 font-bold py-2 px-10 rounded-lg'
+        onClick={exportData}
+      >
         Export
       </button>
+      <div>{mutation.isLoading && 'Loading'}</div>
+      <ToastContainer
+        position='top-center'
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   )
 }

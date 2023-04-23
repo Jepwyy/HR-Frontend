@@ -61,7 +61,10 @@ const AttendanceCard = ({ item }) => {
             </thead>
             <tbody>
               {selectedUserLogs.map((log) => (
-                <tr className='text-center' key={log.id}>
+                <tr
+                  className='text-center'
+                  key={log.id}
+                >
                   <td className='p-2 md:p-4 border border-[#010100]'>
                     {new Date(log.log_date).toLocaleString('en-US', {
                       weekday: 'long',
