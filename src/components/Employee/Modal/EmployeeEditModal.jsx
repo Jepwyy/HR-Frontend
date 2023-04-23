@@ -37,7 +37,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
     imgurl: '',
     schedule: [],
   })
-
+  console.log(employee)
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -101,7 +101,6 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
         setEmployee((prev) => {
           return {
             ...prev,
-            ...prev.schedule,
             schedule: [...prev.schedule, newScheduleItem],
           }
         })
@@ -125,7 +124,6 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
           setEmployee((prev) => {
             return {
               ...prev,
-              ...prev.schedule,
               schedule: [...prev.schedule, newScheduleItem],
             }
           })
@@ -135,11 +133,12 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
   }
 
   const removeSchedule = (day) => {
-    setEmployee((prev) => ({
-      ...prev,
-      ...prev.schedule,
-      schedule: prev.schedule.filter((item) => item.day !== day),
-    }))
+    setEmployee((prev) => {
+      return {
+        ...prev,
+        schedule: prev.schedule.filter((item) => item.day !== day),
+      }
+    })
   }
 
   const mutation = useMutation({
@@ -387,7 +386,11 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((days, i) => (
-                    <option key={i} value={days} className='text-center'>
+                    <option
+                      key={i}
+                      value={days}
+                      className='text-center'
+                    >
                       {days}
                     </option>
                   ))}

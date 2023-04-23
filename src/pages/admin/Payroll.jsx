@@ -267,12 +267,7 @@ const Payroll = () => {
                     colSpan={4}
                     className='p-2 md:p-4 border border-[#010100] bg-black text-center'
                   >
-                    <span className='flex items-center gap-2 text-xs text-gray-50 uppercase font-bold'>
-                      <input
-                        type='checkbox'
-                        className='w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
-                        onChange={handleOpenDeductions}
-                      />
+                    <span className='text-xs text-gray-50 uppercase font-bold'>
                       Deductions
                     </span>
                   </td>
