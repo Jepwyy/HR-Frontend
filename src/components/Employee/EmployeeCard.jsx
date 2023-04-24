@@ -19,10 +19,12 @@ import { TiArrowForward } from 'react-icons/ti'
 import { formatPosition, formatDepartment } from '../../utils/colParser'
 import EmployeeEditModal from './Modal/EmployeeEditModal'
 import EmployeeSchedModal from './Modal/EmployeeSchedModal'
+import SuspendModal from './Modal/SuspendModal'
 import { motion } from 'framer-motion'
 const EmployeeCard = ({ item, setDetails }) => {
   const queryClient = useQueryClient()
   const [modalEdit, setModalEdit] = useState(false)
+  const [modalSuspend, setModalSuspend] = useState(false)
   const [modalSched, setModalSched] = useState(false)
   const mutation = useMutation({
     mutationFn: (user) => axios.put(`/users/archive/${user}`),
@@ -78,7 +80,12 @@ const EmployeeCard = ({ item, setDetails }) => {
       className='py-5 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'
     >
       <div className='flex mb-2 justify-between'>
-        <button className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'>
+        <button
+          onClick={() => {
+            setModalSuspend(true)
+          }}
+          className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+        >
           Suspend
         </button>
         <button
@@ -88,58 +95,79 @@ const EmployeeCard = ({ item, setDetails }) => {
           <TiArrowForward size={23} /> Export ID
         </button>
       </div>
-      <div
+      <motion.div
+        key={item.id} // add a key prop that changes when the state updates
         ref={componentRef}
         className='flex justify-center items-center bg-idbg bg-no-repeat bg-cover h-96 w-full px-5'
       >
         <div className='w-[60%]'>
-          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2 mt-20 '>
-            <MdEmail
-              size='20'
-              color='black'
-            />{' '}
-            {item.email}
-          </h1>
-          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
-            <IoLocation
-              size='20'
-              color='black'
-            />{' '}
-            {item.address}
-          </h1>
-          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
-            <FaBirthdayCake
-              size='20'
-              color='black'
-            />{' '}
+          <motion.div
+            className='pl-2 group flex items-center text-sm gap-3 font-medium py-2 mt-20'
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <MdEmail size='20' color='black' /> {item.email}
+          </motion.div>
+          <motion.div
+            className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <IoLocation size='20' color='black' /> {item.address}
+          </motion.div>
+          <motion.div
+            className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <FaBirthdayCake size='20' color='black' />{' '}
             {new Date(item.birthdate).toLocaleDateString()}
-          </h1>
-          <h1 className='pl-2 group flex items-center text-sm  gap-3 font-medium py-2'>
-            <BsTelephoneFill
-              size='20'
-              color='black'
-            />{' '}
-            {item.contact}
-          </h1>
+          </motion.div>
+          <motion.div
+            className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <BsTelephoneFill size='20' color='black' /> {item.contact}
+          </motion.div>
           <h1 className='mr-2 bg-[#ac7238] font-semibold text-white text-center uppercase'>
             {formatDepartment(item.department)}
           </h1>
         </div>
         <div className='w-[40%]  flex flex-col '>
-          <div className='flex justify-center items-start'>
+          <motion.div
+            className='flex justify-center items-start'
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <img
               className='border-4 border-black rounded-full aspect-square h-44 w-44 mb-4 '
               src={item.imgurl ? item.imgurl : profile}
             />
-          </div>
-          <h2 className='font-bold text-2xl mb-2 text-center'>
+          </motion.div>
+          <motion.div
+            className='font-bold text-2xl mb-2 text-center'
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             {item.fullname}
-          </h2>
-          <span className='font-semibold text-center'>
+          </motion.div>
+          <motion.div
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className='font-semibold text-center'
+          >
             {formatPosition(item.role)}
-          </span>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
       {/* buttons */}
       <div className='flex justify-center text-white mt-5'>
         <button
@@ -173,11 +201,9 @@ const EmployeeCard = ({ item, setDetails }) => {
         />
       )}
       {modalSched && (
-        <EmployeeSchedModal
-          item={item}
-          setModalSched={setModalSched}
-        />
+        <EmployeeSchedModal item={item} setModalSched={setModalSched} />
       )}
+      {modalSuspend && <SuspendModal setModalSuspend={setModalSuspend} />}
       <ToastContainer
         position='top-center'
         autoClose={5000}

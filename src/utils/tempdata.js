@@ -64,13 +64,23 @@ const UserData = [
 const PieData = [
   {
     id: 1,
-    gender: 'Male',
-    count: 5,
+    department: 'SALES',
+    count: 10,
   },
   {
     id: 2,
-    gender: 'Female',
+    department: 'HR',
+    count: 3,
+  },
+  {
+    id: 3,
+    department: 'WAREHOUSE',
     count: 6,
+  },
+  {
+    id: 4,
+    department: 'PURCHASING',
+    count: 7,
   },
 ]
 
