@@ -1,11 +1,32 @@
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { BsBackspaceFill } from 'react-icons/bs'
-const HistoryPayslip = ({ setModalHistory }) => {
+import { useQuery, useQueryClient } from 'react-query'
+import axios from '../../api/api'
+import AdminLoader from '../AdminLoader'
+import { format, parseISO } from 'date-fns'
+import { formatPrice } from '../../utils/priceFormatter'
+
+const HistoryPayslip = ({ setModalHistory, id }) => {
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   })
+
+  const { data, isLoading, isError } = useQuery(['payrollSingle', id], () =>
+    axios.get(`/payroll/display/${id}`).then((res) => res.data[0])
+  )
+
+  const queryClient = useQueryClient()
+
+  if (isLoading) return <AdminLoader />
+  if (isError) return <div>Error...</div>
+  if (!data) return <div>No Data</div>
+
+  const closeModal = () => {
+    setModalHistory(false)
+    queryClient.invalidateQueries({ queryKey: ['payrollSingle'] })
+  }
 
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center overflow-auto py-1'>
@@ -14,9 +35,7 @@ const HistoryPayslip = ({ setModalHistory }) => {
           <BsBackspaceFill
             size={40}
             className='cursor-pointer'
-            onClick={() => {
-              setModalHistory(false)
-            }}
+            onClick={closeModal}
           />
         </div>
         <div
@@ -31,13 +50,13 @@ const HistoryPayslip = ({ setModalHistory }) => {
           </h1>
           <div className='flex justify-between mt-2'>
             <h1 className='text-base font-bold leading-tight tracking-tight text-black md:text-base uppercase'>
-              Pay date: 1/22/23
+              Pay date: {format(parseISO(data.paydate), 'M/dd/yyyy')}
             </h1>
             <h1 className='text-base font-bold leading-tight tracking-tight text-black md:text-base uppercase'>
-              Start date: 1/17/23
+              Start date: {format(parseISO(data.startdate), 'M/dd/yyyy')}
             </h1>
             <h1 className='text-base font-bold leading-tight tracking-tight text-black md:text-base uppercase'>
-              End date: 1/22/23
+              End date: {format(parseISO(data.enddate), 'M/dd/yyyy')}
             </h1>
           </div>
 
@@ -45,10 +64,10 @@ const HistoryPayslip = ({ setModalHistory }) => {
             Employee information
           </h1>
           <div className='grid grid-cols-2'>
-            <h1 className='place-self-start'>Adbul </h1>
-            <h1 className='place-self-end'>09123123123</h1>
-            <h1 className='place-self-start'>Manresa, Quezon City</h1>
-            <h1 className='place-self-end'>abdul@gmail.com</h1>
+            <h1 className='place-self-start'>{data.fullname}</h1>
+            <h1 className='place-self-end'>{data.contact}</h1>
+            <h1 className='place-self-start'>{data.address}</h1>
+            <h1 className='place-self-end'>{data.email}</h1>
           </div>
           <table className='mt-4 border-separate border-spacing-0 w-full text-sm text-left text-[#010100] overflow-y-auto overflow-x-auto max-h-[500px]'>
             <thead className='text-xs text-gray-50 border border-[#010100] bg-[#010100] uppercase'>
@@ -62,21 +81,19 @@ const HistoryPayslip = ({ setModalHistory }) => {
             <tbody>
               <tr>
                 <td className='px-2 md:px-4 font-bold'>Hours Worked</td>
-                <td className='px-2 md:px-4'>48</td>
-                <td className='px-2 md:px-4'>50</td>
-                <td className='px-2 md:px-4'>2,400</td>
+                <td className='px-2 md:px-4'>{data.hoursworked.unit}</td>
+                <td className='px-2 md:px-4'>{data.hoursworked.rate}</td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(data.hoursworked.total)}
+                </td>
               </tr>
               <tr>
-                <td className='px-2 md:px-4 font-bold'>Overtime</td>
-                <td className='px-2 md:px-4'>20</td>
-                <td className='px-2 md:px-4'>50</td>
-                <td className='px-2 md:px-4'>1,000</td>
-              </tr>
-              <tr>
-                <td className='px-2 md:px-4 font-bold'>Per Cup Commision</td>
-                <td className='px-2 md:px-4'>100</td>
-                <td className='px-2 md:px-4'>5</td>
-                <td className='px-2 md:px-4'>500</td>
+                <td className='px-2 md:px-4 font-bold'>Hours Worked</td>
+                <td className='px-2 md:px-4'>{data.overtime.unit}</td>
+                <td className='px-2 md:px-4'>{data.overtime.rate}</td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(data.overtime.total)}
+                </td>
               </tr>
               <tr>
                 <td
@@ -86,62 +103,86 @@ const HistoryPayslip = ({ setModalHistory }) => {
                   Gross Pay :
                 </td>
 
-                <td className='p-2 md:p-4'>3900</td>
+                <td className='p-2 md:p-4'>{formatPrice(data.grosspay)}</td>
               </tr>
               {/* Addition */}
               <tr>
-                <td colSpan={4} className='px-2 md:px-4 bg-black text-start'>
+                <td
+                  colSpan={4}
+                  className='px-2 md:px-4 bg-black text-start'
+                >
                   <span className='text-xs text-gray-50 uppercase font-bold'>
                     Additions
                   </span>
                 </td>
               </tr>
               <tr>
-                <td colSpan={3} className='px-2 md:px-4 font-bold'>
+                <td
+                  colSpan={3}
+                  className='px-2 md:px-4 font-bold'
+                >
                   <span>Advance</span>
                 </td>
 
-                <td className='px-2 md:px-4'>1000</td>
+                <td className='px-2 md:px-4'>{formatPrice(data.advance)}</td>
               </tr>
               <tr>
-                <td colSpan={3} className='px-2 md:px-4 font-bold pb-3'>
+                <td
+                  colSpan={3}
+                  className='px-2 md:px-4 font-bold pb-3'
+                >
                   <span>Bonus</span>
                 </td>
 
-                <td className='px-2 md:px-4'>1000</td>
+                <td className='px-2 md:px-4'>{formatPrice(data.bonus)}</td>
               </tr>
 
               {/* Deductions */}
               <tr>
-                <td colSpan={4} className='px-2 md:px-4  bg-black text-start'>
+                <td
+                  colSpan={4}
+                  className='px-2 md:px-4  bg-black text-start'
+                >
                   <span className='text-xs text-gray-50 uppercase font-bold'>
                     Deductions
                   </span>
                 </td>
               </tr>
               <tr>
-                <td colSpan={3} className='px-2 md:px-4 font-bold'>
+                <td
+                  colSpan={3}
+                  className='px-2 md:px-4 font-bold'
+                >
                   <span>SSS</span>
                 </td>
 
                 <td className='px-2 md:px-4'>5%</td>
               </tr>
               <tr>
-                <td colSpan={3} className='px-2 md:px-4 font-bold'>
+                <td
+                  colSpan={3}
+                  className='px-2 md:px-4 font-bold'
+                >
                   <span>PhilHealth</span>
                 </td>
 
                 <td className='px-2 md:px-4'>5%</td>
               </tr>
               <tr>
-                <td colSpan={3} className='px-2 md:px-4 font-bold'>
+                <td
+                  colSpan={3}
+                  className='px-2 md:px-4 font-bold'
+                >
                   <span>Pagibig</span>
                 </td>
 
                 <td className='px-2 md:px-4'>5%</td>
               </tr>
               <tr>
-                <td colSpan={3} className='px-2 md:px-4 font-bold pb-3'>
+                <td
+                  colSpan={3}
+                  className='px-2 md:px-4 font-bold pb-3'
+                >
                   <span>Recent Advance</span>
                 </td>
 
@@ -155,7 +196,9 @@ const HistoryPayslip = ({ setModalHistory }) => {
                   Net Pay :
                 </td>
 
-                <td className='px-2 md:px-4 font-bold'>₱ 5,415</td>
+                <td className='px-2 md:px-4 font-bold'>
+                  {formatPrice(data.netpay)}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -174,13 +217,28 @@ const HistoryPayslip = ({ setModalHistory }) => {
                 </tr>
               </thead>
               <tbody>
-                <tr className='text-center'>
-                  <td className=' border  border-[#010100]'></td>
-                  <td className=' border  border-[#010100]'></td>
-                  <td className=' border  border-[#010100]'></td>
-                  <td className=' border  border-[#010100]'></td>
-                  <td className=' border  border-[#010100]'></td>
-                </tr>
+                {data.logs.map((item, index) => (
+                  <tr
+                    className='text-center'
+                    key={index}
+                  >
+                    <td className=' border  border-[#010100]'>
+                      {format(parseISO(item.log_date), 'EEEE')}
+                    </td>
+                    <td className=' border  border-[#010100]'>
+                      {format(parseISO(item.log_date), 'M/dd/yyyy')}
+                    </td>
+                    <td className=' border  border-[#010100]'>
+                      {new Date(item.time_in).toLocaleTimeString()}
+                    </td>
+                    <td className=' border  border-[#010100]'>
+                      {new Date(item.time_out).toLocaleTimeString()}
+                    </td>
+                    <td className=' border  border-[#010100]'>
+                      {item.totalhours}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
