@@ -3,6 +3,7 @@ import { useMutation } from 'react-query'
 import axios from '../../api/api'
 import { format } from 'date-fns'
 import { ToastContainer, toast } from 'react-toastify'
+import { motion } from 'framer-motion'
 
 const ManualBackup = () => {
   const [table, setTable] = useState('')
@@ -48,7 +49,13 @@ const ManualBackup = () => {
     mutation.mutate({ table: table })
   }
   return (
-    <div className='w-full h-full flex flex-col justify-center items-center'>
+    <motion.div
+      initial={{ x: 20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -20, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className='w-full h-full flex flex-col justify-center items-center'
+    >
       <div className='mb-3 w-1/2 flex justify-center'>
         <label className=' text-gray-700 text-lg font-bold mr-2 uppercase'>
           Select Table :
@@ -59,10 +66,7 @@ const ManualBackup = () => {
           required
           onChange={(e) => setTable(e.target.value)}
         >
-          <option
-            className='text-center'
-            value=''
-          >
+          <option className='text-center' value=''>
             --Select Table--
           </option>
           <option value='hr_employee_logs'>Employees` Attendance</option>
@@ -86,7 +90,7 @@ const ManualBackup = () => {
         pauseOnHover
         theme='light'
       />
-    </div>
+    </motion.div>
   )
 }
 

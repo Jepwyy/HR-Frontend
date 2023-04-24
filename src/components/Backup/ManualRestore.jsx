@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
-
+import { motion } from 'framer-motion'
 const ManualRestore = () => {
   const [file, setFile] = useState('')
   return (
-    <div className='w-full h-full flex flex-row justify-center items-center px-5 py-12 gap-7 '>
+    <motion.div
+      initial={{ x: -20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 20, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className='w-full h-full flex flex-row justify-center items-center px-5 py-12 gap-7 '
+    >
       <div className='w-1/2 flex flex-col justify-center items-center h-full border-r-2 border-gray-300 border-dashed'>
         <div className='w-full flex justify-center mb-3'>
           <label className=' text-gray-700 text-lg font-bold mr-2 uppercase'>
@@ -61,7 +67,7 @@ const ManualRestore = () => {
           />
         </label>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

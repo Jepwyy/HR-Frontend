@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { TiArrowForward } from 'react-icons/ti'
+import Spinner from '../../components/AdminLoader'
 import { BiSearch } from 'react-icons/bi'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
@@ -27,6 +28,7 @@ const AuditLogs = () => {
             Audit Logs
           </h1>
         </div>
+        {isLoading && <Spinner />}
         {/* search */}
         <div className='flex items-end mb-2'>
           <div className='relative'>
@@ -56,11 +58,6 @@ const AuditLogs = () => {
             </tr>
           </thead>
           <tbody>
-            {isLoading && (
-              <tr>
-                <td colSpan={4}>Loading...</td>
-              </tr>
-            )}
             {isError && (
               <tr>
                 <td colSpan={4}>Error</td>

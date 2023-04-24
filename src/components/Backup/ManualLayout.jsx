@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import ManualBackup from './ManualBackup'
 import ManualRestore from './ManualRestore'
+import { motion } from 'framer-motion'
 const ManualLayout = () => {
   const [active, setActive] = useState('FirstPage')
   return (
-    <div>
+    <motion.div
+      initial={{ x: 30, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 30, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className=' w-full h-[27.2rem]'>
         <div className='flex gap-[1px]'>
           <button
@@ -33,7 +39,7 @@ const ManualLayout = () => {
           {active === 'SecondPage' && <ManualRestore />}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

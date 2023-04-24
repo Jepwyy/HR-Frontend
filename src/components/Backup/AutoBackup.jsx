@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
-
+import { motion } from 'framer-motion'
 const Table = ({ table }) => {
   const { data, isLoading, isError } = useQuery(['backup', table], () =>
     axios.get(`/backup/list?table=${table}`).then((res) => res.data.files)
@@ -46,7 +46,12 @@ const Table = ({ table }) => {
 const AutoBackup = () => {
   const [table, setTable] = useState('logs')
   return (
-    <div>
+    <motion.div
+      initial={{ x: 30, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 30, opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className='mb-3'>
         <label className=' text-gray-700 text-lg font-bold mr-2'>
           Select Table :
@@ -68,7 +73,7 @@ const AutoBackup = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
