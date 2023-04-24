@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { useReactToPrint } from 'react-to-print'
+import { TiArrowForward } from 'react-icons/ti'
 import { BiSearch } from 'react-icons/bi'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
 import { parseISO, format } from 'date-fns'
 const AuditLogs = () => {
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  })
   const {
     data: users,
     isLoading,
@@ -37,7 +43,10 @@ const AuditLogs = () => {
         </div>
       </div>
       <div className='overflow-x-auto max-h-[425px] border-4 border-[#010100] mb-4'>
-        <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100]  overflow-y-auto overflow-x-auto max-h-[500px]'>
+        <table
+          ref={componentRef}
+          className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100]  overflow-y-auto overflow-x-auto max-h-[500px]'
+        >
           <thead className='text-xs text-gray-50 uppercase border-2 border-[#010100] bg-[#010100] sticky -top-[0.10rem]'>
             <tr>
               <th className='p-2 md:p-4'>EMPLOYEE</th>
@@ -77,8 +86,11 @@ const AuditLogs = () => {
         </table>
       </div>
       <div className='flex justify-end'>
-        <button className='py-2 px-4 rounded-lg bg-green-500 text-white'>
-          Print
+        <button
+          onClick={handlePrint}
+          className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+        >
+          <TiArrowForward size={23} /> Export
         </button>
       </div>
     </div>

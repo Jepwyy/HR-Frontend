@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
 import { motion } from 'framer-motion'
+import { useReactToPrint } from 'react-to-print'
 //icons
 import { TiArrowForward } from 'react-icons/ti'
 const AttendanceCard = ({ item }) => {
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  })
   const {
     data: users,
     isLoading,
@@ -49,7 +54,10 @@ const AttendanceCard = ({ item }) => {
 
         <h1 className='font-bold'>Name: {item.fullname}</h1>
         <div className=' overflow-y-auto h-[268px] '>
-          <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[512px]'>
+          <table
+            ref={componentRef}
+            className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100] border border-[#010100] overflow-y-auto overflow-x-auto max-h-[512px]'
+          >
             <thead className=' text-gray-50 text-sm uppercase bg-[#010100] sticky -top-[0.10rem]'>
               <tr className='py-10 text-center'>
                 <th className='p-4 md:p-4'>DAY</th>
@@ -84,8 +92,12 @@ const AttendanceCard = ({ item }) => {
             </tbody>
           </table>
         </div>
+
         <div className='mt-2 '>
-          <button className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'>
+          <button
+            onClick={handlePrint}
+            className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+          >
             <TiArrowForward size={23} /> Export
           </button>
         </div>
