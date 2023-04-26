@@ -55,6 +55,10 @@ const EmployeeAddModal = ({ setModalAdd }) => {
       display: 'CASHIER',
       position: 'sales_cashier',
     },
+    {
+      display: 'REPRESENTATIVE',
+      position: 'sales_representative',
+    },
   ])
 
   const daysOfWeek = [
@@ -103,6 +107,30 @@ const EmployeeAddModal = ({ setModalAdd }) => {
           {
             display: 'WAREHOUSE STAFF',
             position: 'warehouse_staff',
+          },
+        ])
+        break
+      case 'purchasing':
+        setPosition([
+          {
+            display: 'PURCHASING MANAGER',
+            position: 'purchasing_manager',
+          },
+          {
+            display: 'PURCHASING STAFF',
+            position: 'purchasing_staff',
+          },
+        ])
+        break
+      case 'hr':
+        setPosition([
+          {
+            display: 'HR MANAGER',
+            position: 'hr_manager',
+          },
+          {
+            display: 'HR ASSISTANT',
+            position: 'hr_assistant',
           },
         ])
         break
@@ -356,6 +384,8 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   >
                     <option value='sales'>SALES</option>
                     <option value='warehouse'>WAREHOUSE</option>
+                    <option value='hr'>HR</option>
+                    <option value='purchasing'>PURCHASING</option>
                     {/* <option value='po'>PURCHASING</option> */}
                   </select>
                 </div>

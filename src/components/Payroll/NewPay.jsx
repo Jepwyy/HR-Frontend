@@ -3,6 +3,7 @@ import { UsePayroll } from '../../context/payrollContext'
 import axios from '../../api/api'
 import { useQuery } from 'react-query'
 import Swal from 'sweetalert2'
+import Spinner from '../../components/AdminLoader'
 import { formatMinDate } from '../../utils/formatTime'
 const NewPay = () => {
   const endDateRef = useRef()
@@ -144,7 +145,7 @@ const NewPay = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Spinner />
   }
 
   if (isError) {
@@ -169,10 +170,7 @@ const NewPay = () => {
           >
             <option value=''>--Select Employee--</option>
             {employees.map((item, i) => (
-              <option
-                key={i}
-                value={item.id}
-              >
+              <option key={i} value={item.id}>
                 {item.fullname}
               </option>
             ))}

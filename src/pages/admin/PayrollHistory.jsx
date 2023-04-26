@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import HistoryPayslip from '../../components/Payroll History/HistoryPayslip'
 import HistoryHeader from '../../components/Payroll History/HistoryHeader'
+import Spinner from '../../components/AdminLoader'
 import axios from '../../api/api'
 import { useQuery } from 'react-query'
 import { formatDepartment, formatPosition } from '../../utils/colParser'
@@ -12,12 +13,7 @@ const Table = ({ handleModal }) => {
     axios.get('/payroll/get').then((res) => res.data)
   )
 
-  if (isLoading)
-    return (
-      <tr>
-        <td colSpan={7}>Loading...</td>
-      </tr>
-    )
+  if (isLoading) return <Spinner />
   if (isError)
     return (
       <tr>
@@ -99,10 +95,7 @@ const PayrollHistory = () => {
         </table>
       </div>
       {modalHistory && (
-        <HistoryPayslip
-          setModalHistory={setModalHistory}
-          id={id}
-        />
+        <HistoryPayslip setModalHistory={setModalHistory} id={id} />
       )}
     </div>
   )
