@@ -55,7 +55,7 @@ const LineChart = ({ chartOptions }) => {
   const currentYear = new Date().getFullYear()
   const years = Array.from(
     new Array(currentYear - 2020),
-    (val, index) => 2021 + index
+    (val, index) => 2023 + index
   )
 
   return (
