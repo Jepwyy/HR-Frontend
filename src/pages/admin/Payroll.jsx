@@ -108,12 +108,12 @@ const Payroll = () => {
             Payroll
           </h1>
 
-          <select
+          {/* <select
             name='sortby'
             className='w-40 text-center h-8 font-semibold border-2 border-black bg-white'
           >
             <option value='...'>SORT BY</option>
-          </select>
+          </select> */}
         </div>
         {/* search */}
       </div>
