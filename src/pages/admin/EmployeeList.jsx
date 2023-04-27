@@ -78,7 +78,6 @@ const EmployeeList = () => {
                       .includes(query.toLowerCase())
                   )
                 })
-                .filter((item) => item.department !== 'hr')
                 .map((item, i) => (
                   <EmployeeListItems
                     key={i}
@@ -93,7 +92,10 @@ const EmployeeList = () => {
         </div>
         {/* card */}
         <div className='flex-1'>
-          <EmployeeCard item={details} setDetails={setDetails} />
+          <EmployeeCard
+            item={details}
+            setDetails={setDetails}
+          />
         </div>
       </div>
     </div>

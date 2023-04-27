@@ -55,7 +55,7 @@ const Topbar = ({ open, setOpen }) => {
       }
     })
   }
-  console.log(userData.fullname)
+
   return (
     <>
       <div className='bg-[#010100] h-16 px-4 flex items-center border-b border-gray-200 justify-between text-white'>
@@ -77,7 +77,7 @@ const Topbar = ({ open, setOpen }) => {
           >
             <img
               className='h-10 mr-2 rounded-full aspect-square shadow-gray-500 shadow '
-              src={profile}
+              src={userData.imgurl}
             />
 
             <div className='hidden md:inline'>
