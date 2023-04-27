@@ -1,8 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { motion } from 'framer-motion'
+import { useQuery } from 'react-query'
+import axios from '../../api/api'
 
-function BarChart({ userData, chartOptions }) {
+const ChartData = ({ chartOptions, employee, year }) => {
+  const { data, isLoading, isError } = useQuery(
+    ['barchartData', employee, year],
+    () =>
+      axios
+        .get(`report/barchart?employee=${employee}&year=${year}`)
+        .then((res) => res.data)
+  )
+
+  let userData
+
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error...</div>
+  if (data)
+    userData = {
+      labels: Object.keys(data),
+      datasets: [
+        {
+          label: 'Employee Attendance',
+          data: Object.values(data),
+          backgroundColor: ['#ac7238'],
+          borderColor: '#462e16',
+          borderWidth: 2,
+        },
+      ],
+    }
+  return (
+    <Bar
+      data={userData}
+      options={chartOptions}
+    />
+  )
+}
+
+function BarChart({ chartOptions }) {
+  const [employee, setEmployee] = useState(0)
+  const [year, setYear] = useState(new Date().getFullYear())
+
+  const { data, isLoading, isError } = useQuery(['userOptions'], () =>
+    axios.get('users/get').then((res) => res.data)
+  )
+  if (isLoading) return <div>Loading...</div>
+  if (isError) return <div>Error...</div>
+
+  const handleEmployees = (e) => {
+    setEmployee(e.target.value)
+  }
+
+  const currentYear = new Date().getFullYear()
+  const years = Array.from(
+    new Array(currentYear - 2020),
+    (val, index) => 2023 + index
+  )
+
   return (
     <motion.span
       initial={{ y: 20, opacity: 0 }}
@@ -22,20 +77,46 @@ function BarChart({ userData, chartOptions }) {
             className='border-2 border-black md:w-3/4 w-full'
             name='employeeId'
             required
+            onChange={handleEmployees}
           >
-            <option value=''>--Select Employee--</option>
-            <option value=''>Kenneth Collado</option>
+            <option value='0'>All Employees</option>
+            {data?.map((item, index) => (
+              <option
+                key={index}
+                value={item.id}
+              >
+                {item.fullname}
+              </option>
+            ))}
           </select>
         </div>
         <div className='w-1/2 flex md:justify-end'>
           <label className=' text-gray-700 text-lg font-bold mr-2 '>
             Year :
           </label>
-          <input className='border-2 border-black w-3/6' type='month' />
+          <select
+            className='border-2 border-black md:w-3/4 w-full'
+            required
+            onChange={(e) => setYear(e.target.value)}
+          >
+            <option value='2023'>CURRENT YEAR</option>
+            {years.map((year, index) => (
+              <option
+                key={index}
+                value={year}
+              >
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className='h-[75%]'>
-        <Bar data={userData} options={chartOptions} />
+        <ChartData
+          chartOptions={chartOptions}
+          employee={employee}
+          year={year}
+        />
       </div>
     </motion.span>
   )
