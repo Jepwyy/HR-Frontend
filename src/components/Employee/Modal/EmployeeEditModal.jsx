@@ -359,6 +359,19 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   />
                 </div>
                 <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Employee Type:
+                  </label>
+                  <select
+                    className='border-2 border-black w-full'
+                    name='type'
+                    required
+                  >
+                    <option value='fulltime'>FULL-TIME</option>
+                    <option value='parttime'>PART-TIME</option>
+                  </select>
+                </div>
+                <div className='mb-2'>
                   <label className='flex items-center text-gray-700 text-sm font-bold mb-1'>
                     Register RFID{' '}
                     <span className='mx-2'>
@@ -386,11 +399,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((days, i) => (
-                    <option
-                      key={i}
-                      value={days}
-                      className='text-center'
-                    >
+                    <option key={i} value={days} className='text-center'>
                       {days}
                     </option>
                   ))}
