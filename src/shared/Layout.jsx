@@ -6,11 +6,11 @@ import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
   const variants = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: { opacity: 0, x: -5 },
     visible: { opacity: 1, x: 0 },
   }
   const variantsTop = {
-    hidden: { opacity: 0, y: -20 },
+    hidden: { opacity: 0, y: -5 },
     visible: { opacity: 1, y: 0 },
   }
   const [open, setOpen] = useState(true)
@@ -20,7 +20,7 @@ const Layout = () => {
         initial='hidden'
         animate='visible'
         variants={variants}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
         className=''
       >
         <Sidebar open={open} setOpen={setOpen} />
@@ -31,7 +31,7 @@ const Layout = () => {
           initial='hidden'
           animate='visible'
           variants={variantsTop}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
           className='flex flex-col flex-1 w-full'
         >
           <Topbar open={open} setOpen={setOpen} />

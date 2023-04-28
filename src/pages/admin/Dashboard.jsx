@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
+import Spinner from '../../components/AdminLoader'
+
 //icons
 import { ImUsers } from 'react-icons/im'
 import { GoCalendar } from 'react-icons/go'
@@ -26,7 +28,7 @@ const Dashboard = () => {
 
   const [active, setActive] = useState('FirstChart')
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
   if (isError) return <div>Error...</div>
 
   const chartOptions = {

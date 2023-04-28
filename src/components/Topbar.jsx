@@ -71,11 +71,11 @@ const Topbar = ({ open, setOpen }) => {
             onClick={() => setOpen(!open)}
           />
         </div>
-        <div className='relative z-10'>
+        <div className='relative z-10 w-auto'>
           <motion.button
             whileTap={{ scale: 0.8 }}
             onClick={toggleDropdown}
-            className=' flex z-auto items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818]  py-[.7rem] px-4'
+            className='flex z-auto items-center cursor-pointer text-sm text-blue bg-[#010100] rounded-t-xl hover:bg-[#181818] py-[.6rem] px-4 w-full'
           >
             <img
               className='h-10 mr-2 rounded-full aspect-square shadow-gray-500 shadow '
@@ -95,18 +95,18 @@ const Topbar = ({ open, setOpen }) => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className='items-center absolute border border-t-0 rounded-b-lg shadow-lg  bg-white p-2 md:w-[10.4rem] w-[5.1rem] '
+              className='items-center absolute border border-t-0 rounded-b-lg shadow-lg bg-white p-2 w-full'
             >
               <button
                 onClick={() => {
                   setProfileModal(true)
                 }}
-                className=' px-0 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'
+                className='px-0 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'
               >
                 Edit Profile
               </button>
               <button
-                className='px-0 py-2 block bg-white w-[100%] font-semibold text-start text-black hover:text-[#ac7238]'
+                className='px-0 py-2 block bg-white w-full font-semibold text-start text-black hover:text-[#ac7238]'
                 onClick={logout}
               >
                 Logout

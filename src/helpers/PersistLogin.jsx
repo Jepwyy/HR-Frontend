@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import useRefresh from '../hooks/useRefresh'
 import { UserAuth } from '../context/authContext'
-import Spinner from '../components/AdminLoader'
+import Spinner from '../components/Blank'
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true)
   const refresh = useRefresh()
