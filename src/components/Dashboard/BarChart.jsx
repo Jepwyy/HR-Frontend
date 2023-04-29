@@ -3,6 +3,7 @@ import { Bar } from 'react-chartjs-2'
 import { motion } from 'framer-motion'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
+import { useEmployees } from '../../hooks/useEmployees'
 
 const ChartData = ({ chartOptions, employee, year }) => {
   const { data, isLoading, isError } = useQuery(
@@ -42,11 +43,10 @@ function BarChart({ chartOptions }) {
   const [employee, setEmployee] = useState(0)
   const [year, setYear] = useState(new Date().getFullYear())
 
-  const { data, isLoading, isError } = useQuery(['userOptions'], () =>
-    axios.get('users/get').then((res) => res.data)
-  )
+  const { isLoading, error, data } = useEmployees()
+
   if (isLoading) return <div>Loading...</div>
-  if (isError) return <div>Error...</div>
+  if (error) return <div>Error...</div>
 
   const handleEmployees = (e) => {
     setEmployee(e.target.value)
