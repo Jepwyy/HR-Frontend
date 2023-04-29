@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-
+import Spinner from '../../components/AdminLoader'
 import { Doughnut } from 'react-chartjs-2'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
@@ -10,7 +10,7 @@ const DoughnutChart = ({ chartOptions }) => {
     axios.get('/report/piechart').then((res) => res.data)
   )
   let chartData
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
   if (isError) return <div>Error...</div>
   if (data)
     chartData = {
@@ -36,10 +36,7 @@ const DoughnutChart = ({ chartOptions }) => {
         Total Employees
       </h1>
       <div className='h-[85%]'>
-        <Doughnut
-          data={chartData}
-          options={chartOptions}
-        />
+        <Doughnut data={chartData} options={chartOptions} />
       </div>
     </motion.span>
   )

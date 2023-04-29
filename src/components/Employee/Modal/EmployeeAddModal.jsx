@@ -185,7 +185,6 @@ const EmployeeAddModal = ({ setModalAdd }) => {
           setEmployee((prev) => {
             return {
               ...prev,
-              ...prev.schedule,
               schedule: [...prev.schedule, newScheduleItem],
             }
           })
@@ -195,9 +194,12 @@ const EmployeeAddModal = ({ setModalAdd }) => {
   }
 
   const removeSchedule = (day) => {
-    setEmployee((prev) => ({
-      schedule: prev.schedule.filter((item) => item.day !== day),
-    }))
+    setEmployee((prev) => {
+      return {
+        ...prev,
+        schedule: prev.schedule.filter((item) => item.day !== day),
+      }
+    })
   }
 
   const mutation = useMutation({
@@ -253,6 +255,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
 
     mutation.mutate(formData)
   }
+  console.log(employee)
   return (
     <motion.div
       animate={{ y: 0, opacity: 1 }}
@@ -400,7 +403,10 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                     required
                   >
                     {position.map((item, i) => (
-                      <option key={i} value={item.position}>
+                      <option
+                        key={i}
+                        value={item.position}
+                      >
                         {item.display}
                       </option>
                     ))}
@@ -474,7 +480,11 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((item, i) => (
-                    <option key={i} value={item} className='text-center'>
+                    <option
+                      key={i}
+                      value={item}
+                      className='text-center'
+                    >
                       {item}
                     </option>
                   ))}

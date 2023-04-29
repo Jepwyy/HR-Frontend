@@ -8,7 +8,7 @@ import { formatDepartment, formatPosition } from '../../utils/colParser'
 import { format, parseISO } from 'date-fns'
 import { formatPrice } from '../../utils/priceFormatter'
 
-const Table = ({ handleModal }) => {
+const Table = ({ handleModal, sort, order, query }) => {
   const { data, isLoading, isError } = useQuery('payrollList', () =>
     axios.get('/payroll/get').then((res) => res.data)
   )
@@ -29,36 +29,61 @@ const Table = ({ handleModal }) => {
     )
   return (
     <>
-      {data?.map((item, index) => (
-        <tr key={index}>
-          <td className='p-2 md:p-3 border border-[#010100]'>
-            {item.fullname}
-          </td>
-          <td className='p-2 md:p-3 border border-[#010100]'>
-            {formatDepartment(item.department)}
-          </td>
-          <td className='p-2 md:p-3 border border-[#010100]'>
-            {formatPosition(item.role)}
-          </td>
-          <td className='p-2 md:p-3 border border-[#010100]'>
-            {format(parseISO(item.paydate), 'M/d/yyyy')}
-          </td>
-          <td className='p-2 md:p-3 border border-[#010100]'>
-            {formatPrice(item.grosspay)}
-          </td>
-          <td className='p-2 md:p-3 border border-[#010100]'>
-            {formatPrice(item.netpay)}
-          </td>
-          <td className='p-2 md:p-3 border border-[#010100] text-center'>
-            <button
-              onClick={() => handleModal(item.id)}
-              className='rounded-full bg-[#ac7238] py-1 px-6  font-sans text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
-            >
-              Payslip
-            </button>
-          </td>
-        </tr>
-      ))}
+      {data
+        ?.sort((a, b) => {
+          if (order) {
+            if (a[sort] < b[sort]) {
+              return -1
+            }
+            if (a[sort] > b[sort]) {
+              return 1
+            }
+            return 0
+          } else {
+            if (a[sort] < b[sort]) {
+              return 1
+            }
+            if (a[sort] > b[sort]) {
+              return -1
+            }
+            return 0
+          }
+        })
+        .filter((item) => {
+          return Object.keys(item).some((key) =>
+            item[key]?.toString().toLowerCase().includes(query.toLowerCase())
+          )
+        })
+        .map((item, index) => (
+          <tr key={index}>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {item.fullname}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {formatDepartment(item.department)}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {formatPosition(item.role)}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {format(parseISO(item.paydate), 'M/d/yyyy')}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {formatPrice(item.grosspay)}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {formatPrice(item.netpay)}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100] text-center'>
+              <button
+                onClick={() => handleModal(item.id)}
+                className='rounded-full bg-[#ac7238] py-1 px-6  font-sans text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
+              >
+                Payslip
+              </button>
+            </td>
+          </tr>
+        ))}
     </>
   )
 }
@@ -66,6 +91,9 @@ const Table = ({ handleModal }) => {
 const PayrollHistory = () => {
   const [modalHistory, setModalHistory] = useState(false)
   const [id, setID] = useState(0)
+  const [query, setQuery] = useState('')
+  const [sort, setSort] = useState(id)
+  const [order, setOrder] = useState(true)
 
   const handleModal = (id) => {
     setID(id)
@@ -74,7 +102,11 @@ const PayrollHistory = () => {
 
   return (
     <div className='p-4 md:p-12'>
-      <HistoryHeader />
+      <HistoryHeader
+        setSort={setSort}
+        setOrder={setOrder}
+        setQuery={setQuery}
+      />
       <div className='overflow-x-auto max-h-[400px]'>
         <table className='border-separate border-spacing-0 w-full text-sm text-left text-[#010100]  overflow-y-auto '>
           <thead className='text-xs text-gray-50 uppercase border-2 border-[#010100] bg-[#010100] sticky -top-[0.10rem]'>
@@ -90,12 +122,20 @@ const PayrollHistory = () => {
             </tr>
           </thead>
           <tbody>
-            <Table handleModal={handleModal} />
+            <Table
+              handleModal={handleModal}
+              order={order}
+              sort={sort}
+              query={query}
+            />
           </tbody>
         </table>
       </div>
       {modalHistory && (
-        <HistoryPayslip setModalHistory={setModalHistory} id={id} />
+        <HistoryPayslip
+          setModalHistory={setModalHistory}
+          id={id}
+        />
       )}
     </div>
   )

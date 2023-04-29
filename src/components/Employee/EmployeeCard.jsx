@@ -7,7 +7,7 @@ import {
 import { useMutation, useQueryClient } from 'react-query'
 import { toast, ToastContainer } from 'react-toastify'
 import Swal from 'sweetalert2'
-import profile from '../../assets/images/dp.jpg'
+import profile from '../../assets/images/default.png'
 import axios from '../../api/api'
 //icons
 import { MdEmail } from 'react-icons/md'
@@ -107,11 +107,7 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <MdEmail
-              size='20'
-              color='black'
-            />{' '}
-            {item.email}
+            <MdEmail size='20' color='black' /> {item.email}
           </motion.div>
           <motion.div
             className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
@@ -119,11 +115,7 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <IoLocation
-              size='20'
-              color='black'
-            />{' '}
-            {item.address}
+            <IoLocation size='20' color='black' /> {item.address}
           </motion.div>
           <motion.div
             className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
@@ -131,10 +123,7 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <FaBirthdayCake
-              size='20'
-              color='black'
-            />{' '}
+            <FaBirthdayCake size='20' color='black' />{' '}
             {new Date(item.birthdate).toLocaleDateString()}
           </motion.div>
           <motion.div
@@ -143,11 +132,7 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <BsTelephoneFill
-              size='20'
-              color='black'
-            />{' '}
-            {item.contact}
+            <BsTelephoneFill size='20' color='black' /> {item.contact}
           </motion.div>
           <h1 className='mr-2 bg-[#ac7238] font-semibold text-white text-center uppercase'>
             {formatDepartment(item.department)}
@@ -216,10 +201,7 @@ const EmployeeCard = ({ item, setDetails }) => {
         />
       )}
       {modalSched && (
-        <EmployeeSchedModal
-          item={item}
-          setModalSched={setModalSched}
-        />
+        <EmployeeSchedModal item={item} setModalSched={setModalSched} />
       )}
       {modalSuspend && <SuspendModal setModalSuspend={setModalSuspend} />}
       <ToastContainer

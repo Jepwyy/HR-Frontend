@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import EmployeeListItems from '../../components/Employee/EmployeeListItems'
 import Spinner from '../../components/AdminLoader'
-import { useEmployees } from '../../hooks/useEmployees'
 import AttendanceCard from '../../components/Attendance/AttendanceCard'
 import AttendanceHeader from '../../components/Attendance/AttendanceHeader'
+import { useEmployees } from '../../hooks/useEmployees'
 
 const Attendance = () => {
   const { isLoading, error, data } = useEmployees()
+
   const [query, setQuery] = useState('')
   const [details, setDetails] = useState({})
   const [active, setActive] = useState(false)
+  const [sort, setSort] = useState('id')
+  const [order, setOrder] = useState(true)
 
   const toggle = (i) => {
     if (open === i) {
@@ -20,7 +23,11 @@ const Attendance = () => {
   }
   return (
     <div className='p-4 md:p-12'>
-      <AttendanceHeader setQuery={setQuery} />
+      <AttendanceHeader
+        setQuery={setQuery}
+        setOrder={setOrder}
+        setSort={setSort}
+      />
       <div className='flex flex-col lg:flex-row md:mb-0 mb-40'>
         {/* table */}
 
@@ -44,7 +51,26 @@ const Attendance = () => {
                 </tr>
               )}
               {data
-                ?.filter((item) => {
+                ?.sort((a, b) => {
+                  if (order) {
+                    if (a[sort] < b[sort]) {
+                      return -1
+                    }
+                    if (a[sort] > b[sort]) {
+                      return 1
+                    }
+                    return 0
+                  } else {
+                    if (a[sort] < b[sort]) {
+                      return 1
+                    }
+                    if (a[sort] > b[sort]) {
+                      return -1
+                    }
+                    return 0
+                  }
+                })
+                .filter((item) => {
                   return Object.keys(item).some((key) =>
                     item[key]
                       ?.toString()

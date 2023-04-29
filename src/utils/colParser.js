@@ -25,7 +25,7 @@ export const formatPosition = (text) => {
       return 'Barista'
       break
     case 'hr_assistant':
-      return 'HR Assistant'
+      return 'Assistant Manager'
       break
     default:
       break

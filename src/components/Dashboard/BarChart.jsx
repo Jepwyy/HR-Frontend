@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
 import { useEmployees } from '../../hooks/useEmployees'
+import Spinner from '../../components/Spinner'
 
 const ChartData = ({ chartOptions, employee, year }) => {
   const { data, isLoading, isError } = useQuery(
@@ -16,7 +17,7 @@ const ChartData = ({ chartOptions, employee, year }) => {
 
   let userData
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
   if (isError) return <div>Error...</div>
   if (data)
     userData = {
@@ -45,7 +46,7 @@ function BarChart({ chartOptions }) {
 
   const { isLoading, error, data } = useEmployees()
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
   if (error) return <div>Error...</div>
 
   const handleEmployees = (e) => {

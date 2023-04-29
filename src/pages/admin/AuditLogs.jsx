@@ -6,6 +6,7 @@ import { BiSearch } from 'react-icons/bi'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
 import { parseISO, format } from 'date-fns'
+import '../../style/print.css'
 const AuditLogs = () => {
   const componentRef = useRef()
   const handlePrint = useReactToPrint({

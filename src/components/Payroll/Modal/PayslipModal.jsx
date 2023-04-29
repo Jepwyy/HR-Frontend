@@ -43,15 +43,15 @@ const PayslipModal = ({ setModalPayslip }) => {
 
   const handleSubmit = () => {
     mutation.mutate({
-      employeeid: payrollObject.employeeId,
+      employeeid: parseInt(payrollObject.employeeId),
       paydate: payrollObject.payDate,
       startdate: payrollObject.startingDate,
       enddate: payrollObject.endingDate,
       hoursworked: payrollObject.hoursWorked,
       overtime: payrollObject.overTime,
       grosspay: payrollObject.grossPay,
-      advance: payrollObject.advance,
-      bonus: payrollObject.bonus,
+      advance: parseInt(payrollObject.advance),
+      bonus: parseInt(payrollObject.bonus),
       sss: payrollObject.sss,
       philhealth: payrollObject.philhealth,
       pagibig: payrollObject.pagibig,
