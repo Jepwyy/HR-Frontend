@@ -1,34 +1,35 @@
-import React, { useRef } from 'react'
-import { useQuery } from 'react-query'
-import axios from '../../api/api'
+import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useReactToPrint } from 'react-to-print'
 //icons
 import { TiArrowForward } from 'react-icons/ti'
+import { useQuery } from 'react-query'
+import axios from '../../api/api'
+
 const AttendanceCard = ({ item }) => {
   const componentRef = useRef()
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   })
-  const {
-    data: users,
-    isLoading,
-    isError,
-  } = useQuery('users', () => axios.get('/users/logs').then((res) => res.data))
+  const [range, setRange] = useState('week')
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (isError) {
-    return <div>Error loading logs</div>
-  }
-
-  const selectedUser = users.find(
-    (user) => user.id === (!item.id ? 1 : item.id)
+  const { data, isLoading, isError } = useQuery(
+    ['userlogssingle', item.id, range],
+    () =>
+      axios
+        .get(`/users/logs?range=${range}&id=${item.id || 0}`)
+        .then((res) => res.data[0])
   )
+  // sort attendance
+  const attendance = data?.logs?.sort((a, b) => {
+    return new Date(a.log_date) - new Date(b.log_date)
+  })
 
-  const selectedUserLogs = selectedUser.logs
+  const handleRange = (e) => {
+    setRange(e.target.value)
+  }
+
+  console.log(attendance)
 
   return Object.keys(item).length === 0 ? (
     <></>
@@ -46,9 +47,11 @@ const AttendanceCard = ({ item }) => {
           <select
             name='sortby'
             className='w-40 text-center h-8 font-semibold border-2 border-[#010100] bg-white'
+            onChange={handleRange}
           >
-            <option value='...'>THIS WEEK</option>
-            <option value='...'>THIS MONTH</option>
+            <option value='week'>THIS WEEK</option>
+            <option value='month'>THIS MONTH</option>
+            <option value='year'>THIS YEAR</option>
           </select>
         </div>
 
@@ -68,8 +71,41 @@ const AttendanceCard = ({ item }) => {
               </tr>
             </thead>
             <tbody>
-              {selectedUserLogs.map((log) => (
-                <tr className='text-center' key={log.id}>
+              {isLoading && (
+                <tr className='text-center'>
+                  <td
+                    colSpan={5}
+                    className='p-2 md:py-4 md:px-1 border border-[#010100]'
+                  >
+                    Loading
+                  </td>
+                </tr>
+              )}
+              {isError && (
+                <tr className='text-center'>
+                  <td
+                    colSpan={5}
+                    className='p-2 md:py-4 md:px-1 border border-[#010100]'
+                  >
+                    Error
+                  </td>
+                </tr>
+              )}
+              {attendance?.length <= 0 && (
+                <tr className='text-center'>
+                  <td
+                    colSpan={5}
+                    className='p-2 md:py-4 md:px-1 border border-[#010100]'
+                  >
+                    No Attendance
+                  </td>
+                </tr>
+              )}
+              {attendance?.map((log) => (
+                <tr
+                  className='text-center'
+                  key={log.id}
+                >
                   <td className='p-2 md:py-4 md:px-1 border border-[#010100]'>
                     {new Date(log.log_date).toLocaleString('en-US', {
                       weekday: 'long',
@@ -82,7 +118,9 @@ const AttendanceCard = ({ item }) => {
                     {new Date(log.time_in).toLocaleTimeString()}
                   </td>
                   <td className='p-2 md:py-4 md:px-1 border border-[#010100]'>
-                    {new Date(log.time_out).toLocaleTimeString()}
+                    {log.time_out
+                      ? new Date(log.time_out).toLocaleTimeString()
+                      : '--'}
                   </td>
                   <td className='p-2 md:py-4 md:px-1 border text-center border-[#010100]'>
                     {log.totalhours}

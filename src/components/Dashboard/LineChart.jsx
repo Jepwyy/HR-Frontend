@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2'
 import Spinner from '../../components/AdminLoader'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
+import { useEmployees } from '../../hooks/useEmployees'
 
 const ChartData = ({ chartOptions, employee, year }) => {
   const { data, isLoading, isError } = useQuery(
@@ -31,18 +32,22 @@ const ChartData = ({ chartOptions, employee, year }) => {
         },
       ],
     }
-  return <Line data={chartData} options={chartOptions} />
+  return (
+    <Line
+      data={chartData}
+      options={chartOptions}
+    />
+  )
 }
 
 const LineChart = ({ chartOptions }) => {
   const [employee, setEmployee] = useState(0)
   const [year, setYear] = useState(new Date().getFullYear())
 
-  const { data, isLoading, isError } = useQuery(['userOptions'], () =>
-    axios.get('users/get').then((res) => res.data)
-  )
+  const { isLoading, error, data } = useEmployees()
+
   if (isLoading) return <Spinner />
-  if (isError) return <div>Error...</div>
+  if (error) return <div>Error...</div>
 
   const handleEmployees = (e) => {
     setEmployee(e.target.value)
@@ -76,7 +81,10 @@ const LineChart = ({ chartOptions }) => {
           >
             <option value='0'>ALL EMPLOYEES</option>
             {data?.map((item, index) => (
-              <option key={index} value={item.id}>
+              <option
+                key={index}
+                value={item.id}
+              >
                 {item.fullname}
               </option>
             ))}
@@ -93,7 +101,10 @@ const LineChart = ({ chartOptions }) => {
           >
             <option value='2023'>CURRENT YEAR</option>
             {years.map((year, index) => (
-              <option key={index} value={year}>
+              <option
+                key={index}
+                value={year}
+              >
                 {year}
               </option>
             ))}

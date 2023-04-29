@@ -3,7 +3,9 @@ import { Bar } from 'react-chartjs-2'
 import { motion } from 'framer-motion'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
-import Spinner from '../../components/AdminLoader'
+import { useEmployees } from '../../hooks/useEmployees'
+import Spinner from '../../components/Spinner'
+
 const ChartData = ({ chartOptions, employee, year }) => {
   const { data, isLoading, isError } = useQuery(
     ['barchartData', employee, year],
@@ -30,18 +32,22 @@ const ChartData = ({ chartOptions, employee, year }) => {
         },
       ],
     }
-  return <Bar data={userData} options={chartOptions} />
+  return (
+    <Bar
+      data={userData}
+      options={chartOptions}
+    />
+  )
 }
 
 function BarChart({ chartOptions }) {
   const [employee, setEmployee] = useState(0)
   const [year, setYear] = useState(new Date().getFullYear())
 
-  const { data, isLoading, isError } = useQuery(['userOptions'], () =>
-    axios.get('users/get').then((res) => res.data)
-  )
+  const { isLoading, error, data } = useEmployees()
+
   if (isLoading) return <Spinner />
-  if (isError) return <div>Error...</div>
+  if (error) return <div>Error...</div>
 
   const handleEmployees = (e) => {
     setEmployee(e.target.value)
@@ -76,7 +82,10 @@ function BarChart({ chartOptions }) {
           >
             <option value='0'>All Employees</option>
             {data?.map((item, index) => (
-              <option key={index} value={item.id}>
+              <option
+                key={index}
+                value={item.id}
+              >
                 {item.fullname}
               </option>
             ))}
@@ -93,7 +102,10 @@ function BarChart({ chartOptions }) {
           >
             <option value='2023'>CURRENT YEAR</option>
             {years.map((year, index) => (
-              <option key={index} value={year}>
+              <option
+                key={index}
+                value={year}
+              >
                 {year}
               </option>
             ))}
