@@ -9,7 +9,7 @@ const LogoLoader = () => {
           <img className='mb-2 h-28 ' src={logo} />
         </div>
 
-        <div class='dots ml-[12px]'></div>
+        <div className='dots ml-[12px]'></div>
       </div>
     </div>
   )
