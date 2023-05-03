@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useQuery } from 'react-query'
 import axios from '../../api/api'
 import { useEmployees } from '../../hooks/useEmployees'
-import Spinner from '../../components/Spinner'
+import Spinner from '../../components/AdminLoader'
 
 const ChartData = ({ chartOptions, employee, year }) => {
   const { data, isLoading, isError } = useQuery(

@@ -86,6 +86,14 @@ const TimeInForm = () => {
             inputRef.current.focus()
           }
         })
+      } else if (error.response.data.suspended) {
+        Swal.fire({
+          title: 'You are suspended',
+          text: `Reason: ${error.response.data.message}`,
+          icon: 'error',
+          timer: 2000,
+          showConfirmButton: false,
+        })
       } else {
         Swal.fire({
           title: 'Error',

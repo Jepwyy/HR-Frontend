@@ -70,7 +70,7 @@ const AuditLogs = () => {
                   {item.fullname}
                 </td>
                 <td className='p-2 md:p-4 border border-[#010100]'>
-                  {item.activity}
+                  {item.log_activity}
                 </td>
                 <td className='p-2 md:p-4 border border-[#010100]'>
                   {format(parseISO(item.actiondate), 'M/d/yyyy')}

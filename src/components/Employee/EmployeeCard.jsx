@@ -21,6 +21,7 @@ import EmployeeEditModal from './Modal/EmployeeEditModal'
 import EmployeeSchedModal from './Modal/EmployeeSchedModal'
 import SuspendModal from './Modal/SuspendModal'
 import { motion } from 'framer-motion'
+import { format, parseISO } from 'date-fns'
 const EmployeeCard = ({ item, setDetails }) => {
   const queryClient = useQueryClient()
   const [modalEdit, setModalEdit] = useState(false)
@@ -54,6 +55,78 @@ const EmployeeCard = ({ item, setDetails }) => {
       })
     },
   })
+
+  const resetMutation = useMutation({
+    mutationFn: (user) => axios.put(`/users/reset-password/${user}`),
+    onError: (error) => {
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['Employees'] })
+      Swal.fire({
+        icon: 'success',
+        title: 'New Password',
+        text: `New password is ${data.data.password}`,
+      })
+    },
+  })
+
+  const suspendMutation = useMutation({
+    mutationFn: (user) =>
+      axios.put(`/users/suspend/${user.id}`, {
+        validuntil: user.validuntil,
+        message: user.message,
+      }),
+    onError: (error) => {
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['Employees'] })
+      setDetails({})
+      setModalSuspend(false)
+      toast.success(`${data.data.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+  })
+
+  const suspendEmployee = (validuntil, message) => {
+    Swal.fire({
+      icon: 'warning',
+      title: `Are you sure you want to suspend Employee ${item.fullname} ?`,
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#919294',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        suspendMutation.mutate({ id: item.id, validuntil, message })
+      }
+    })
+  }
+
   const archiveEmployee = () => {
     Swal.fire({
       icon: 'warning',
@@ -68,6 +141,22 @@ const EmployeeCard = ({ item, setDetails }) => {
       }
     })
   }
+
+  const resetPassword = () => {
+    Swal.fire({
+      icon: 'warning',
+      title: `Reset Password for ${item.fullname} ?`,
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#919294',
+      confirmButtonText: 'Yes',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        resetMutation.mutate(item.id)
+      }
+    })
+  }
+
   const componentRef = useRef()
   return Object.keys(item).length === 0 ? (
     <></>
@@ -80,20 +169,39 @@ const EmployeeCard = ({ item, setDetails }) => {
       className='py-5 px-5 h-full flex flex-col justify-between bg-[#F3F3F3]'
     >
       <div className='flex mb-2 justify-between'>
-        <button
-          onClick={() => {
-            setModalSuspend(true)
-          }}
-          className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
-        >
-          Suspend
-        </button>
-        <button
-          onClick={() => exportComponentAsPNG(componentRef)}
-          className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
-        >
-          <TiArrowForward size={23} /> Export ID
-        </button>
+        {item.active !== 2 ? (
+          <button
+            onClick={() => {
+              setModalSuspend(true)
+            }}
+            className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+          >
+            Suspend
+          </button>
+        ) : (
+          <div>
+            <button className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'>
+              Suspended
+            </button>
+            {item.validuntil && (
+              <>Valid Until {format(parseISO(item.validuntil), 'MM-dd-yyyy')}</>
+            )}
+          </div>
+        )}
+        <div className='flex'>
+          <button
+            className='bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold'
+            onClick={resetPassword}
+          >
+            Reset Password
+          </button>
+          <button
+            onClick={() => exportComponentAsPNG(componentRef)}
+            className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+          >
+            <TiArrowForward size={23} /> Export ID
+          </button>
+        </div>
       </div>
       <motion.div
         key={item.id} // add a key prop that changes when the state updates
@@ -107,7 +215,11 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <MdEmail size='20' color='black' /> {item.email}
+            <MdEmail
+              size='20'
+              color='black'
+            />{' '}
+            {item.email}
           </motion.div>
           <motion.div
             className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
@@ -115,7 +227,11 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <IoLocation size='20' color='black' /> {item.address}
+            <IoLocation
+              size='20'
+              color='black'
+            />{' '}
+            {item.address}
           </motion.div>
           <motion.div
             className='pl-2 group flex items-center text-sm gap-3 font-medium py-2'
@@ -123,7 +239,10 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <FaBirthdayCake size='20' color='black' />{' '}
+            <FaBirthdayCake
+              size='20'
+              color='black'
+            />{' '}
             {new Date(item.birthdate).toLocaleDateString()}
           </motion.div>
           <motion.div
@@ -132,7 +251,11 @@ const EmployeeCard = ({ item, setDetails }) => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <BsTelephoneFill size='20' color='black' /> {item.contact}
+            <BsTelephoneFill
+              size='20'
+              color='black'
+            />{' '}
+            {item.contact}
           </motion.div>
           <h1 className='mr-2 bg-[#ac7238] font-semibold text-white text-center uppercase'>
             {formatDepartment(item.department)}
@@ -201,9 +324,17 @@ const EmployeeCard = ({ item, setDetails }) => {
         />
       )}
       {modalSched && (
-        <EmployeeSchedModal item={item} setModalSched={setModalSched} />
+        <EmployeeSchedModal
+          item={item}
+          setModalSched={setModalSched}
+        />
       )}
-      {modalSuspend && <SuspendModal setModalSuspend={setModalSuspend} />}
+      {modalSuspend && (
+        <SuspendModal
+          setModalSuspend={setModalSuspend}
+          suspendEmployee={suspendEmployee}
+        />
+      )}
       <ToastContainer
         position='top-center'
         autoClose={5000}
