@@ -18,7 +18,7 @@ export const useSingleEmployee = (id) => {
     queryFn: async () => {
       const response = await axios.get(`/users/get/${id}`)
       return response.data
-    },
+  },
   })
   return { isLoading, error, data }
 }

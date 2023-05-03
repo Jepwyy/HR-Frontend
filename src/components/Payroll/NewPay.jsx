@@ -95,9 +95,9 @@ const NewPay = () => {
       ...payrollObject,
       hoursWorked: {
         unit:
-          totalHours - invalidOverTime - totalOvertime
+          totalOvertime && totalOvertime > 0
             ? totalHours - invalidOverTime - totalOvertime
-            : 0,
+            : totalHours - invalidOverTime,
         rate: employees?.rateperhour,
         total: totalF ? totalF : 0,
       },
@@ -170,7 +170,10 @@ const NewPay = () => {
           >
             <option value=''>--Select Employee--</option>
             {employees.map((item, i) => (
-              <option key={i} value={item.id}>
+              <option
+                key={i}
+                value={item.id}
+              >
                 {item.fullname}
               </option>
             ))}

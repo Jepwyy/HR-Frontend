@@ -16,7 +16,7 @@ const LoginRfid = () => {
   const [message, setMessage] = useState('')
   const formRef = useRef(null)
   const inputRef = useRef(null)
-  
+
   const { setUserData, setToken } = UserAuth()
   const navigate = useNavigate()
   const passwordRef = useRef(null)
@@ -61,7 +61,7 @@ const LoginRfid = () => {
     onSuccess: (data) => {
       setUserData(data.data.user[0])
       setToken(true)
-      navigate('/employee-list')
+      navigate('/dashboard')
     },
   })
 
@@ -102,7 +102,10 @@ const LoginRfid = () => {
           
         </div> */}
         <div className='flex flex-col justify-center pt-7'>
-          <img className='h-[19.2rem]' src={TapCard} />
+          <img
+            className='h-[19.2rem]'
+            src={TapCard}
+          />
           <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl border-b-4 border-black mx-16'>
             TAP YOUR CARD
           </h1>
