@@ -26,6 +26,7 @@ const ProfileModal = ({ setProfileModal }) => {
   const [employee, setEmployee] = useState({
     role: '',
     username: '',
+    password: '',
     department: '',
     rateperhour: '',
     status: 'active',
@@ -40,6 +41,8 @@ const ProfileModal = ({ setProfileModal }) => {
     schedule: [],
   })
 
+  console.log(employee)
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -49,6 +52,7 @@ const ProfileModal = ({ setProfileModal }) => {
           ...employee,
           role: data.role,
           username: data.username,
+
           department: data.department,
           rateperhour: data.rateperhour,
           status: data.status,
@@ -205,7 +209,7 @@ const ProfileModal = ({ setProfileModal }) => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className='relative bg-white p-2 rounded md:w-[40rem] w-96 md:my-auto mt-auto mb-2 overflow-y-auto'
+        className='relative bg-white p-2 rounded md:w-[50%] w-96 md:my-auto mt-auto mb-2 overflow-y-auto'
       >
         <div className='flex justify-end '>
           <BsBackspaceFill
@@ -226,7 +230,7 @@ const ProfileModal = ({ setProfileModal }) => {
         <div className='flex justify-center'>
           <form onSubmit={handleSubmit}>
             <div className='flex flex-col md:flex-row px-3 md:gap-10'>
-              <div className='  md:w-1/2 w-full'>
+              <div className='  md:w-1/2 md:px-0 px-5'>
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
                     Username
@@ -239,6 +243,19 @@ const ProfileModal = ({ setProfileModal }) => {
                     onChange={handleChange}
                     required
                   />
+                </div>
+                <div className='mb-2'>
+                  <label className='block text-gray-700 text-sm font-bold'>
+                    Password
+                  </label>
+                  <div className='flex items-center'>
+                    <input
+                      className='border-2 border-black w-full'
+                      type='password'
+                      name='password'
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
@@ -293,7 +310,7 @@ const ProfileModal = ({ setProfileModal }) => {
                   />
                 </div>
               </div>
-              <div className='md:w-1/2 w-full'>
+              <div className=' md:w-1/2 md:px-0 px-5'>
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
                     Profile Photo

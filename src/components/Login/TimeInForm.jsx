@@ -9,7 +9,7 @@ import TapCard from '../../assets/images/TapCard.png'
 // styles
 // images
 
-import Spinner from '../Spinner'
+import Spinner from '../InfiniteLoader'
 import { format, parseISO } from 'date-fns'
 import { toast } from 'react-toastify'
 
@@ -149,17 +149,13 @@ const TimeInForm = () => {
   }
   return (
     <div className='relative'>
+      {mutation.isLoading && <Spinner />}
       <h1 className='flex justify-start text-sm font-semibold leading-tight tracking-tight text-gray-900 md:text-xl'>
-        Time In
+        Time In / Time Out
       </h1>
-      <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
-        {mutation.isLoading && <Spinner />}
-      </div>
+      <div className='flex items-center justify-center m-auto left-0 right-0 absolute'></div>
       <div className='flex flex-col justify-center'>
-        <img
-          className='h-[19.2rem]'
-          src={TapCard}
-        />
+        <img className='h-[19.2rem]' src={TapCard} />
         <h1 className='flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-4xl border-b-4 border-black mx-16'>
           TAP YOUR CARD
         </h1>
@@ -176,11 +172,7 @@ const TimeInForm = () => {
           className='text-white outline-none'
           onChange={(e) => setRFID(e.target.value)}
         />
-        <button
-          type='submit'
-          className='hidden'
-          disabled={mutation.isLoading}
-        >
+        <button type='submit' className='hidden' disabled={mutation.isLoading}>
           test
         </button>
       </form>

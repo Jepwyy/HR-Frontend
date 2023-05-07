@@ -203,7 +203,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className='relative bg-white p-2 rounded md:w-[40rem] w-96 md:my-auto mt-auto mb-2 overflow-y-auto'
+        className='relative bg-white p-2 rounded md:w-[50%] w-96 md:my-auto mt-auto mb-2 overflow-y-auto'
       >
         <div className='flex justify-end '>
           <BsBackspaceFill

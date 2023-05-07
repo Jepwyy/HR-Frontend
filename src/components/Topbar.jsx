@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Swal from 'sweetalert2'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import profile from '../assets/images/default.png'
@@ -17,8 +17,27 @@ const Topbar = ({ open, setOpen }) => {
   const navigate = useNavigate()
   const { setUserData, setToken } = UserAuth()
   const toggleDropdown = () => {
-    setIsOpen(!isOpen)
+    setIsOpen(true)
   }
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   const mutation = useMutation({
     mutationFn: () =>
@@ -93,8 +112,9 @@ const Topbar = ({ open, setOpen }) => {
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
+              exit={{ y: -10, opacity: 0 }}
               transition={{ duration: 0.3 }}
+              ref={modalRef}
               className='items-center absolute border border-t-0 rounded-b-lg shadow-lg bg-white p-2 w-full'
             >
               <button

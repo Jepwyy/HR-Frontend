@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { IoIosAdd } from 'react-icons/io'
 import { BiSearch } from 'react-icons/bi'
 import { TiArrowUnsorted } from 'react-icons/ti'
-
+import { BsFillCreditCard2BackFill } from 'react-icons/bs'
 import EmployeeAddModal from './Modal/EmployeeAddModal'
+import SearchCardModal from './Modal/SearchCardModal'
 import { AnimatePresence } from 'framer-motion'
 const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
   const [modalAdd, setModalAdd] = useState(false)
+  const [cardModal, setCardModal] = useState(false)
 
   const handleSort = (e) => {
     setSort(e.target.value)
@@ -43,6 +45,13 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
             setModalAdd(true)
           }}
         />
+        <BsFillCreditCard2BackFill
+          size={40}
+          className='mr-2 text-[#ac7238]'
+          onClick={() => {
+            setCardModal(true)
+          }}
+        />
         <div className='relative'>
           <input
             className='w-full text-white py-2 px-4 pr-10 border border-white bg-[#ac7238] rounded-lg shadow-sm placeholder-white'
@@ -58,6 +67,7 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
       </div>
       <AnimatePresence>
         {modalAdd && <EmployeeAddModal setModalAdd={setModalAdd} />}
+        {cardModal && <SearchCardModal setCardModal={setCardModal} />}
       </AnimatePresence>
     </div>
   )
