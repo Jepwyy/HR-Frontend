@@ -10,15 +10,16 @@ import TapCard from '../../assets/images/TapCard.png'
 // images
 
 import Spinner from '../Spinner'
+import { format, parseISO } from 'date-fns'
 
 const TimeInForm = () => {
   const [message, setMessage] = useState('')
   const formRef = useRef(null)
   const inputRef = useRef(null)
   const [rfid, setRFID] = useState(null)
-  const { setUserData, setToken } = UserAuth()
-  const navigate = useNavigate()
-  const passwordRef = useRef(null)
+  // const { setUserData, setToken } = UserAuth()
+  // const navigate = useNavigate()
+  // const passwordRef = useRef(null)
 
   useEffect(() => {
     inputRef.current.focus()
@@ -89,9 +90,14 @@ const TimeInForm = () => {
       } else if (error.response.data.suspended) {
         Swal.fire({
           title: 'You are suspended',
-          text: `Reason: ${error.response.data.message}`,
+          html: `Reason: ${
+            error.response.data.message
+          } <br> Valid Until: ${format(
+            parseISO(error.response.data.validuntil),
+            'MM/dd/yyyy'
+          )}`,
           icon: 'error',
-          timer: 2000,
+          timer: 3000,
           showConfirmButton: false,
         })
       } else {

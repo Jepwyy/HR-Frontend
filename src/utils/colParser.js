@@ -27,6 +27,9 @@ export const formatPosition = (text) => {
     case 'hr_assistant':
       return 'Assistant Manager'
       break
+    case 'purchasing_manager':
+      return 'Purchasing Manager'
+      break
     default:
       break
   }
@@ -36,13 +39,12 @@ export const formatDepartment = (text) => {
   switch (text) {
     case 'sales':
       return 'Sales'
-      break
     case 'hr':
       return 'HR'
-      break
     case 'warehouse':
       return 'Warehouse'
-      break
+    case 'purchasing':
+      return 'Purchasing'
     default:
       break
   }

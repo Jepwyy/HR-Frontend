@@ -157,6 +157,18 @@ const EmployeeCard = ({ item, setDetails }) => {
     })
   }
 
+  const showSuspensionMessage = () => {
+    Swal.fire({
+      icon: 'info',
+      title: `Suspended`,
+      html: `Reason: <br /> ${item.message} <br /> Valid Until: ${format(
+        parseISO(item.validuntil),
+        'MM-dd-yyyy'
+      )}`,
+      confirmButtonColor: '#d33',
+    })
+  }
+
   const componentRef = useRef()
   return Object.keys(item).length === 0 ? (
     <></>
@@ -180,7 +192,10 @@ const EmployeeCard = ({ item, setDetails }) => {
           </button>
         ) : (
           <div>
-            <button className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'>
+            <button
+              className='mx-1 bg-[#ac7238] h-8 px-5 gap-1 text-white rounded-full font-semibold group flex items-center'
+              onClick={showSuspensionMessage}
+            >
               Suspended
             </button>
             {item.validuntil && (
@@ -309,12 +324,14 @@ const EmployeeCard = ({ item, setDetails }) => {
         >
           Edit
         </button>
-        <button
-          className='mx-2 bg-[#ac7238] h-10 px-12 rounded-full font-semibold'
-          onClick={archiveEmployee}
-        >
-          Archive
-        </button>
+        {item.active !== 2 && (
+          <button
+            className='mx-2 bg-[#ac7238] h-10 px-12 rounded-full font-semibold'
+            onClick={archiveEmployee}
+          >
+            Archive
+          </button>
+        )}
       </div>
       {modalEdit && (
         <EmployeeEditModal

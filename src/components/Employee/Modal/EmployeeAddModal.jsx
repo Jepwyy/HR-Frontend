@@ -7,9 +7,11 @@ import ScanRfidModal from './ScanRfidModal'
 import { ToastContainer, toast } from 'react-toastify'
 import { FcOk } from 'react-icons/fc'
 import { IoMdAddCircleOutline } from 'react-icons/io'
-import { BsFillXCircleFill } from 'react-icons/bs'
+import { BsFillXCircleFill, BsFillLockFill } from 'react-icons/bs'
 import { formatLocalTime } from '../../../utils/formatTime'
 import { motion } from 'framer-motion'
+import { generatePassword } from '../../../utils/passwordGenerator'
+
 const EmployeeAddModal = ({ setModalAdd }) => {
   const [modalScanner, setModalScanner] = useState(false)
   const queryClient = useQueryClient()
@@ -26,7 +28,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     department: 'sales',
     scheduletype: 'morning',
     rateperhour: '',
-    status: 'active',
+    status: 'temporary',
     active: 1,
     fullname: '',
     birthdate: '',
@@ -246,6 +248,11 @@ const EmployeeAddModal = ({ setModalAdd }) => {
     })
   }
 
+  const generateUserPassword = () => {
+    const password = generatePassword()
+    setEmployee((prev) => ({ ...prev, password: password }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData()
@@ -255,7 +262,7 @@ const EmployeeAddModal = ({ setModalAdd }) => {
 
     mutation.mutate(formData)
   }
-  console.log(employee)
+
   return (
     <motion.div
       animate={{ y: 0, opacity: 1 }}
@@ -305,13 +312,22 @@ const EmployeeAddModal = ({ setModalAdd }) => {
                   <label className='block text-gray-700 text-sm font-bold'>
                     Password
                   </label>
-                  <input
-                    className='border-2 border-black w-full'
-                    type='password'
-                    name='password'
-                    onChange={handleChange}
-                    required
-                  />
+                  <div className='flex items-center'>
+                    <input
+                      className='border-2 border-black w-full'
+                      type='text'
+                      name='password'
+                      defaultValue={employee.password}
+                      required
+                      readOnly
+                    />
+                    <span
+                      onClick={generateUserPassword}
+                      className=' cursor-pointer'
+                    >
+                      <BsFillLockFill size={25} />
+                    </span>
+                  </div>
                 </div>
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
