@@ -27,6 +27,7 @@ const ProfileModal = ({ setProfileModal }) => {
     role: '',
     username: '',
     password: '',
+    newpassword: '',
     department: '',
     rateperhour: '',
     status: 'active',
@@ -52,7 +53,7 @@ const ProfileModal = ({ setProfileModal }) => {
           ...employee,
           role: data.role,
           username: data.username,
-
+          password: data.password,
           department: data.department,
           rateperhour: data.rateperhour,
           status: data.status,
@@ -252,7 +253,7 @@ const ProfileModal = ({ setProfileModal }) => {
                     <input
                       className='border-2 border-black w-full'
                       type='password'
-                      name='password'
+                      name='newpassword'
                       onChange={handleChange}
                     />
                   </div>
@@ -418,7 +419,11 @@ const ProfileModal = ({ setProfileModal }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((days, i) => (
-                    <option key={i} value={days} className='text-center'>
+                    <option
+                      key={i}
+                      value={days}
+                      className='text-center'
+                    >
                       {days}
                     </option>
                   ))}

@@ -36,8 +36,8 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
     rfid: 0,
     imgurl: '',
     schedule: [],
+    type: '',
   })
-  console.log(employee)
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -59,6 +59,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
           rfid: data.rfid,
           imgurl: data.imgurl,
           schedule: data.schedule || [],
+          type: data.type,
         })
       } catch (error) {
         console.log(error)
@@ -310,13 +311,15 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   <select
                     className='border-2 border-black w-full'
                     name='department'
-                    defaultValue={employee.department}
+                    // defaultValue={employee.department}
+                    value={employee.department}
                     onChange={handleChange}
                     required
                   >
                     <option value='sales'>SALES</option>
                     <option value='warehouse'>WAREHOUSE</option>
-                    {/* <option value='po'>PURCHASING</option> */}
+                    <option value='hr'>HR</option>
+                    <option value='purchasing'>PURCHASING</option>
                   </select>
                 </div>
                 <div className='mb-2'>
@@ -366,6 +369,8 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                     className='border-2 border-black w-full'
                     name='type'
                     required
+                    value={employee.type}
+                    onChange={handleChange}
                   >
                     <option value='fulltime'>FULL-TIME</option>
                     <option value='parttime'>PART-TIME</option>
@@ -399,7 +404,11 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                   onChange={(e) => setScheduleDay(e.target.value)}
                 >
                   {daysOfWeek.map((days, i) => (
-                    <option key={i} value={days} className='text-center'>
+                    <option
+                      key={i}
+                      value={days}
+                      className='text-center'
+                    >
                       {days}
                     </option>
                   ))}

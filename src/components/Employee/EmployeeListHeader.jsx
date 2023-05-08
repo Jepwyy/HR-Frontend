@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { IoIosAdd } from 'react-icons/io'
 import { BiSearch } from 'react-icons/bi'
 import { TiArrowUnsorted } from 'react-icons/ti'
 import { BsFillCreditCard2BackFill } from 'react-icons/bs'
+import { AiFillCloseSquare } from 'react-icons/ai'
 import EmployeeAddModal from './Modal/EmployeeAddModal'
 import SearchCardModal from './Modal/SearchCardModal'
 import { AnimatePresence } from 'framer-motion'
-const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
+const EmployeeListHeader = ({ setSort, setQuery, setOrder, query }) => {
+  const inputRef = useRef(null)
   const [modalAdd, setModalAdd] = useState(false)
   const [cardModal, setCardModal] = useState(false)
 
@@ -16,6 +18,11 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
 
   const handleOrder = () => {
     setOrder((prev) => !prev)
+  }
+
+  const handleCloseSearch = () => {
+    setQuery('')
+    inputRef.current.value = ''
   }
   return (
     <div className='flex flex-col-reverse md:flex-row justify-between md:mt-5 mb-3'>
@@ -33,7 +40,10 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
           <option value='fullname'>NAME</option>
         </select>
         <span className='ml-4 py-1 pt cursor-pointer'>
-          <TiArrowUnsorted size={28} onClick={handleOrder} />
+          <TiArrowUnsorted
+            size={28}
+            onClick={handleOrder}
+          />
         </span>
       </div>
       {/* search */}
@@ -45,18 +55,27 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
             setModalAdd(true)
           }}
         />
-        <BsFillCreditCard2BackFill
-          size={40}
-          className='mr-2 text-[#ac7238]'
-          onClick={() => {
-            setCardModal(true)
-          }}
-        />
+        {query === '' ? (
+          <BsFillCreditCard2BackFill
+            size={40}
+            className='mr-2 text-[#ac7238] cursor-pointer'
+            onClick={() => {
+              setCardModal(true)
+            }}
+          />
+        ) : (
+          <AiFillCloseSquare
+            size={40}
+            className='mr-2 text-red-700 cursor-pointer'
+            onClick={handleCloseSearch}
+          />
+        )}
         <div className='relative'>
           <input
             className='w-full text-white py-2 px-4 pr-10 border border-white bg-[#ac7238] rounded-lg shadow-sm placeholder-white'
             type='text'
             placeholder='Search'
+            ref={inputRef}
             onChange={(e) => setQuery(e.target.value)}
           />
           <BiSearch
@@ -67,7 +86,12 @@ const EmployeeListHeader = ({ setSort, setQuery, setOrder }) => {
       </div>
       <AnimatePresence>
         {modalAdd && <EmployeeAddModal setModalAdd={setModalAdd} />}
-        {cardModal && <SearchCardModal setCardModal={setCardModal} />}
+        {cardModal && (
+          <SearchCardModal
+            setCardModal={setCardModal}
+            setQuery={setQuery}
+          />
+        )}
       </AnimatePresence>
     </div>
   )

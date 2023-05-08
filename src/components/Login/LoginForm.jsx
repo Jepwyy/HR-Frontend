@@ -68,10 +68,16 @@ const LoginForm = () => {
       className='md:mx-5'
     >
       <div className='flex justify-center'>
-        <img className='h-[161px]' src={icon} />
+        <img
+          className='h-[161px]'
+          src={icon}
+        />
       </div>
       {mutation.isLoading && <Spinner />}
-      <form className=' space-y-4 md:space-y-5' onSubmit={handleSubmit}>
+      <form
+        className=' space-y-4 md:space-y-5'
+        onSubmit={handleSubmit}
+      >
         {/* <div className='flex items-center justify-center m-auto left-0 right-0 absolute'>
           
         </div> */}
@@ -117,12 +123,6 @@ const LoginForm = () => {
               <label className='text-gray-500 '>Show Password</label>
             </div>
           </div>
-          <a
-            href='#'
-            className='text-sm font-medium text-primary-600 hover:underline '
-          >
-            Forgot password?
-          </a>
         </div>
         <div className='flex justify-center'>
           <button

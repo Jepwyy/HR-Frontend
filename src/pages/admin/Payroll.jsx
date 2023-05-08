@@ -18,6 +18,7 @@ const Payroll = () => {
     bonusPayRef,
     deducValues,
     setDeducValues,
+    leave,
   } = UsePayroll()
   const queryClient = useQueryClient()
   const [modalPayslip, setModalPayslip] = useState(false)
@@ -84,7 +85,7 @@ const Payroll = () => {
   const handleDeductions = (e) => {
     const { checked } = e.target
     if (checked) {
-      setDeducValues([...deducValues, payrollObject.netPay * 0.05])
+      setDeducValues([...deducValues, payrollObject.netPay * 0.0125])
     } else {
       const newArray = [...deducValues]
       newArray.pop()
@@ -193,6 +194,26 @@ const Payroll = () => {
                     )}
                   </td>
                 </tr>
+                {leave.hours > 0 && (
+                  <>
+                    <tr>
+                      <td className='p-2 md:p-4 border border-[#010100]'>
+                        Paid Leave:
+                      </td>
+                      <td className='p-2 md:p-4 border border-[#010100]'>
+                        {leave.hours}
+                      </td>
+                      <td className='p-2 md:p-4 border border-[#010100]'>
+                        {payrollObject.overTime.rate}
+                      </td>
+                      <td className='p-2 md:p-4 border border-[#010100]'>
+                        {formatPrice(
+                          leave.hours * payrollObject.hoursWorked.rate
+                        )}
+                      </td>
+                    </tr>
+                  </>
+                )}
 
                 <tr>
                   <td
@@ -262,90 +283,95 @@ const Payroll = () => {
                   </td>
                 </tr>
                 {/* Deductions */}
-                <tr>
-                  <td
-                    colSpan={4}
-                    className='p-2 md:p-4 border border-[#010100] bg-black text-center'
-                  >
-                    <span className='text-xs text-gray-50 uppercase font-bold'>
-                      Deductions
-                    </span>
-                  </td>
-                </tr>
 
-                <tr>
-                  <td
-                    colSpan={3}
-                    className='p-2 md:p-4 border border-[#010100]'
-                  >
-                    <input
-                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
-                      type='checkbox'
-                      id='forSss'
-                      name='forSss'
-                      value=''
-                      onChange={handleDeductions}
-                    />
-                    <span>SSS</span>
-                  </td>
+                {payrollObject.type === 'fulltime' && (
+                  <>
+                    <tr>
+                      <td
+                        colSpan={4}
+                        className='p-2 md:p-4 border border-[#010100] bg-black text-center'
+                      >
+                        <span className='text-xs text-gray-50 uppercase font-bold'>
+                          Deductions
+                        </span>
+                      </td>
+                    </tr>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>5%</td>
-                </tr>
-                <tr>
-                  <td
-                    colSpan={3}
-                    className='p-2 md:p-4 border border-[#010100]'
-                  >
-                    <input
-                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
-                      type='checkbox'
-                      id='forPhilhealth'
-                      name='forPhilhealth'
-                      value=''
-                      onChange={handleDeductions}
-                    />
-                    <span>PhilHealth</span>
-                  </td>
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className='p-2 md:p-4 border border-[#010100]'
+                      >
+                        <input
+                          className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                          type='checkbox'
+                          id='forSss'
+                          name='forSss'
+                          value=''
+                          onChange={handleDeductions}
+                        />
+                        <span>SSS</span>
+                      </td>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>5%</td>
-                </tr>
-                <tr>
-                  <td
-                    colSpan={3}
-                    className='p-2 md:p-4 border border-[#010100]'
-                  >
-                    <input
-                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
-                      type='checkbox'
-                      id='forPagibig'
-                      name='forPagibig'
-                      value=''
-                      onChange={handleDeductions}
-                    />
-                    <span>Pagibig</span>
-                  </td>
+                      <td className='p-2 md:p-4 border border-[#010100]'>1%</td>
+                    </tr>
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className='p-2 md:p-4 border border-[#010100]'
+                      >
+                        <input
+                          className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                          type='checkbox'
+                          id='forPhilhealth'
+                          name='forPhilhealth'
+                          value=''
+                          onChange={handleDeductions}
+                        />
+                        <span>PhilHealth</span>
+                      </td>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>5%</td>
-                </tr>
-                <tr>
-                  <td
-                    colSpan={3}
-                    className='p-2 md:p-4 border border-[#010100]'
-                  >
-                    <input
-                      className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
-                      type='checkbox'
-                      id='forRadvance'
-                      name='forRadvance'
-                      value=''
-                      checked={checkboxRa}
-                      onChange={() => setCheckboxRa(!checkboxRa)}
-                    />
-                    <span>Recent Advance</span>
-                  </td>
+                      <td className='p-2 md:p-4 border border-[#010100]'>1%</td>
+                    </tr>
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className='p-2 md:p-4 border border-[#010100]'
+                      >
+                        <input
+                          className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                          type='checkbox'
+                          id='forPagibig'
+                          name='forPagibig'
+                          value=''
+                          onChange={handleDeductions}
+                        />
+                        <span>Pagibig</span>
+                      </td>
 
-                  <td className='p-2 md:p-4 border border-[#010100]'>500</td>
-                </tr>
+                      <td className='p-2 md:p-4 border border-[#010100]'>1%</td>
+                    </tr>
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className='p-2 md:p-4 border border-[#010100]'
+                      >
+                        <input
+                          className='float-left mr-2 w-5 h-5 bg-gray-100 border-gray-300 rounded  focus:ring-0'
+                          type='checkbox'
+                          id='forRadvance'
+                          name='forRadvance'
+                          value=''
+                          checked={checkboxRa}
+                          onChange={() => setCheckboxRa(!checkboxRa)}
+                        />
+                        <span>Recent Advance</span>
+                      </td>
+
+                      <td className='p-2 md:p-4 border border-[#010100]'>0</td>
+                    </tr>
+                  </>
+                )}
 
                 <tr className='bg-[#ac7238] sticky -bottom-[1px]  border-4 border-[#010100]'>
                   <td

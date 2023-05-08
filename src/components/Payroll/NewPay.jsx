@@ -5,6 +5,7 @@ import { useQuery } from 'react-query'
 import Swal from 'sweetalert2'
 import Spinner from '../../components/AdminLoader'
 import { formatMinDate } from '../../utils/formatTime'
+import { format, parseISO } from 'date-fns'
 const NewPay = () => {
   const endDateRef = useRef()
   const {
@@ -22,6 +23,8 @@ const NewPay = () => {
     advancePayRef,
     bonusPayRef,
     deducValues,
+    leave,
+    setLeave,
   } = UsePayroll()
 
   const [minDate, setMinDate] = useState('')
@@ -51,64 +54,151 @@ const NewPay = () => {
     })
   }
 
-  const handleEmployee = async (id, startdate = '', enddate = '') => {
-    let data
+  const calculateLeaveDays = (
+    startdate = '0000-00-00',
+    enddate = '0000-00-00',
+    rangestart = '0000-00-00',
+    rangeend = '0000-00-00',
+    schedule = []
+  ) => {
+    try {
+      const startDate = new Date(startdate)
+      const endDate = new Date(enddate)
+      const rangeStart = new Date(rangestart)
+      const rangeEnd = new Date(rangeend)
+      const datesInRange = []
 
-    if (startdate && enddate) {
-      data = await axios.get(
-        `/users/logs/${id}?startdate=${startdate}&enddate=${enddate}`
-      )
+      for (
+        let date = startDate;
+        date <= endDate;
+        date.setDate(date.getDate() + 1)
+      ) {
+        if (date >= rangeStart && date <= rangeEnd) {
+          const formattedDate = date.toISOString().split('T')[0]
+          const dayOfWeek = new Intl.DateTimeFormat('en-US', {
+            weekday: 'long',
+          }).format(date)
+          datesInRange.push({ date: formattedDate, day: dayOfWeek })
+        }
+      }
+
+      let totalHours = 0
+
+      for (const scheduleItem of schedule) {
+        for (const dateItem of datesInRange) {
+          if (scheduleItem.day === dateItem.day) {
+            const shiftStart = new Date(
+              `${dateItem.date} ${scheduleItem.shift_timein}`
+            )
+            const shiftEnd = new Date(
+              `${dateItem.date} ${scheduleItem.shift_timeout}`
+            )
+            const durationMs = shiftEnd - shiftStart
+            const durationHours = durationMs / (1000 * 60 * 60)
+            totalHours += durationHours
+          }
+        }
+      }
+
+      return {
+        days: datesInRange.length,
+        hours: totalHours,
+      }
+    } catch (error) {
+      return {
+        days: 0,
+        hours: 0,
+      }
     }
+  }
 
-    const employees = data?.data[0]
+  const handleEmployee = async (id, startdate = '', enddate = '') => {
+    try {
+      let data
 
-    const totalCost = employees?.logs.reduce((acc, cur) => {
-      return acc + parseInt(cur.total_cost)
-    }, 0)
+      if (startdate && enddate) {
+        data = await axios.get(
+          `/users/logs/${id}?startdate=${startdate}&enddate=${enddate}`
+        )
+      }
 
-    const totalHours = employees?.logs.reduce((acc, cur) => {
-      return acc + parseInt(cur.totalhours)
-    }, 0)
+      const employees = data?.data[0]
+      let leaveDays = 0
 
-    const totalOvertime = employees?.logs.reduce((acc, cur) => {
-      return acc + parseInt(cur.overtimestatus === 0 ? 0 : cur.overtime)
-    }, 0)
+      if (employees) {
+        leaveDays = calculateLeaveDays(
+          startdate,
+          enddate,
+          format(parseISO(employees.startdate), 'yyyy-MM-dd'),
+          format(parseISO(employees.enddate), 'yyyy-MM-dd'),
+          employees.schedule
+        )
+      }
 
-    const invalidOverTime = employees?.logs.reduce((acc, cur) => {
-      return acc + parseInt(cur.overtime)
-    }, 0)
+      const totalCost = employees?.logs.reduce((acc, cur) => {
+        return acc + parseInt(cur.total_cost)
+      }, 0)
 
-    const totalF = totalCost - invalidOverTime * employees?.rateperhour
+      const totalHours = employees?.logs.reduce((acc, cur) => {
+        return acc + parseInt(cur.totalhours)
+      }, 0)
 
-    const grospayF = totalF + employees?.rateperhour * 1.5 * totalOvertime
-    const netpayF =
-      parseInt(grospayF) +
-      (advancePayRef.current?.checked
-        ? parseFloat(payrollObject.advance ? payrollObject.advance : 0)
-        : 0) +
-      (bonusPayRef.current?.checked
-        ? parseFloat(payrollObject.bonus ? payrollObject.bonus : 0)
-        : 0) +
-      -totalDeduct
+      const totalOvertime = employees?.logs.reduce((acc, cur) => {
+        return acc + parseInt(cur.overtimestatus === 0 ? 0 : cur.overtime)
+      }, 0)
 
-    setPayrollObject({
-      ...payrollObject,
-      hoursWorked: {
-        unit:
-          totalOvertime && totalOvertime > 0
-            ? totalHours - invalidOverTime - totalOvertime
-            : totalHours - invalidOverTime,
-        rate: employees?.rateperhour,
-        total: totalF ? totalF : 0,
-      },
-      overTime: {
-        unit: totalOvertime,
-        rate: employees?.rateperhour,
-        total: employees?.rateperhour * 1.5 * totalOvertime,
-      },
-      grossPay: grospayF,
-      netPay: netpayF ? netpayF : 0,
-    })
+      const invalidOverTime = employees?.logs.reduce((acc, cur) => {
+        return acc + parseInt(cur.overtime)
+      }, 0)
+
+      const totalLeave = leaveDays?.hours * employees?.rateperhour
+      const totalF =
+        totalCost - invalidOverTime * employees?.rateperhour + totalLeave
+
+      const grospayF = totalF + employees?.rateperhour * 1.5 * totalOvertime
+
+      const netpayF =
+        parseInt(grospayF) +
+        (advancePayRef.current?.checked
+          ? parseFloat(payrollObject.advance ? payrollObject.advance : 0)
+          : 0) +
+        (bonusPayRef.current?.checked
+          ? parseFloat(payrollObject.bonus ? payrollObject.bonus : 0)
+          : 0) +
+        -totalDeduct
+
+      setLeave((prev) => ({
+        ...prev,
+        days: leaveDays.days ? leaveDays.days : 0,
+        hours: leaveDays.hours ? leaveDays.hours : 0,
+      }))
+
+      setPayrollObject({
+        ...payrollObject,
+        type: employees?.type,
+        hoursWorked: {
+          unit:
+            totalOvertime && totalOvertime > 0
+              ? totalHours - invalidOverTime - totalOvertime
+                ? totalHours - invalidOverTime - totalOvertime
+                : 0
+              : totalHours - invalidOverTime
+              ? totalHours - invalidOverTime - totalOvertime
+              : 0,
+          rate: employees?.rateperhour,
+          total: totalF ? totalF : 0,
+        },
+        overTime: {
+          unit: totalOvertime,
+          rate: employees?.rateperhour,
+          total: employees?.rateperhour * 1.5 * totalOvertime,
+        },
+        grossPay: grospayF,
+        netPay: netpayF ? netpayF : 0 + totalLeave,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -151,6 +241,7 @@ const NewPay = () => {
   if (isError) {
     return <div>Error loading logs</div>
   }
+  console.log(leave)
   return (
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>NewPay</h1>
@@ -192,35 +283,38 @@ const NewPay = () => {
             onChange={handleChange}
           />
         </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold '>
-            Starting Date :
-          </label>
-          <input
-            className='border-2 border-black w-3/6'
-            type='date'
-            name='startingDate'
-            required
-            onChange={handleChange}
-            min={minDate}
-            defaultValue={payrollObject.startingDate}
-          />
-        </div>
-        <div className='mb-3'>
-          <label className='block text-gray-700 text-lg font-bold '>
-            Ending Date :
-          </label>
-          <input
-            className='border-2 border-black w-3/6'
-            type='date'
-            name='endingDate'
-            required
-            ref={endDateRef}
-            min={minDate}
-            onChange={handleEndDate}
-            defaultValue={payrollObject.endingDate}
-          />
-        </div>
+        {payrollObject.employeeId > 0 && (
+          <>
+            <div className='mb-3'>
+              <label className='block text-gray-700 text-lg font-bold '>
+                Starting Date :
+              </label>
+              <input
+                className='border-2 border-black w-3/6'
+                type='date'
+                name='startingDate'
+                required
+                onChange={handleChange}
+                min={minDate}
+                defaultValue={payrollObject.startingDate}
+              />
+            </div>
+            <div className='mb-3'>
+              <label className='block text-gray-700 text-lg font-bold '>
+                Ending Date :
+              </label>
+              <input
+                className='border-2 border-black w-3/6'
+                type='date'
+                name='endingDate'
+                required
+                ref={endDateRef}
+                onChange={handleEndDate}
+                defaultValue={payrollObject.endingDate}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

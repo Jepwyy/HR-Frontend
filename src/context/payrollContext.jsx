@@ -1,5 +1,6 @@
 import { createContext, useContext, useRef, useState } from 'react'
 import { getDateToday } from '../utils/formatTime'
+import { endOfWeek, format, startOfWeek } from 'date-fns'
 
 const PayrollContext = createContext()
 
@@ -11,9 +12,10 @@ export const PayrollContextProvider = ({ children }) => {
   const [deducValues, setDeducValues] = useState([])
   const [payrollObject, setPayrollObject] = useState({
     employeeId: 0,
+    type: '',
     payDate: getDateToday(),
-    startingDate: '',
-    endingDate: '',
+    startingDate: format(startOfWeek(new Date()), 'yyyy-MM-dd'),
+    endingDate: format(endOfWeek(new Date()), 'yyyy-MM-dd'),
     hoursWorked: {
       unit: 0,
       rate: 0,
@@ -34,6 +36,11 @@ export const PayrollContextProvider = ({ children }) => {
     netPay: 0,
   })
 
+  const [leave, setLeave] = useState({
+    days: 0,
+    hours: 0,
+  })
+
   return (
     <PayrollContext.Provider
       value={{
@@ -43,6 +50,8 @@ export const PayrollContextProvider = ({ children }) => {
         bonusPayRef,
         deducValues,
         setDeducValues,
+        leave,
+        setLeave,
       }}
     >
       {children}
