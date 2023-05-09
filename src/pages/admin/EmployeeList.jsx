@@ -27,6 +27,7 @@ const EmployeeList = () => {
         setSort={setSort}
         setOrder={setOrder}
         setQuery={setQuery}
+        query={query}
       />
       <div className='flex flex-col lg:flex-row'>
         {/* table */}

@@ -30,6 +30,9 @@ export const formatPosition = (text) => {
     case 'purchasing_manager':
       return 'Purchasing Manager'
       break
+    case 'purchasing_staff':
+      return 'Purchasing Staff'
+      break
     default:
       break
   }
