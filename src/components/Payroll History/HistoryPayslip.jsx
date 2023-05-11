@@ -88,11 +88,19 @@ const HistoryPayslip = ({ setModalHistory, id }) => {
                 </td>
               </tr>
               <tr>
-                <td className='px-2 md:px-4 font-bold'>Hours Worked</td>
+                <td className='px-2 md:px-4 font-bold'>Overtime</td>
                 <td className='px-2 md:px-4'>{data.overtime.unit}</td>
                 <td className='px-2 md:px-4'>{data.overtime.rate}</td>
                 <td className='px-2 md:px-4'>
                   {formatPrice(data.overtime.total)}
+                </td>
+              </tr>
+              <tr>
+                <td className='px-2 md:px-4 font-bold'>Paid Leave</td>
+                <td className='px-2 md:px-4'>{data.paidleave.unit}</td>
+                <td className='px-2 md:px-4'>{data.paidleave.rate}</td>
+                <td className='px-2 md:px-4'>
+                  {formatPrice(data.paidleave.total)}
                 </td>
               </tr>
               <tr>
