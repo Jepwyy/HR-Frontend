@@ -1,6 +1,5 @@
 import { createContext, useContext, useRef, useState } from 'react'
 import { getDateToday } from '../utils/formatTime'
-import { endOfWeek, format, startOfWeek } from 'date-fns'
 
 const PayrollContext = createContext()
 
@@ -14,14 +13,19 @@ export const PayrollContextProvider = ({ children }) => {
     employeeId: 0,
     type: '',
     payDate: getDateToday(),
-    startingDate: format(startOfWeek(new Date()), 'yyyy-MM-dd'),
-    endingDate: format(endOfWeek(new Date()), 'yyyy-MM-dd'),
+    startingDate: '',
+    endingDate: '',
     hoursWorked: {
       unit: 0,
       rate: 0,
       total: 0,
     },
     overTime: {
+      unit: 0,
+      rate: 0,
+      total: 0,
+    },
+    paidleave: {
       unit: 0,
       rate: 0,
       total: 0,

@@ -322,7 +322,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                     <option value='purchasing'>PURCHASING</option>
                   </select>
                 </div>
-                <div className='mb-2'>
+                {/* <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
                     Position
                   </label>
@@ -332,7 +332,7 @@ const EmployeeEditModal = ({ item, setModalEdit, setDetails }) => {
                     defaultValue={formatPosition(employee.role)}
                     disabled
                   />
-                </div>
+                </div> */}
                 <div className='mb-2'>
                   <label className='block text-gray-700 text-sm font-bold'>
                     Contact No.

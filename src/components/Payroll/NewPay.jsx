@@ -152,10 +152,11 @@ const NewPay = () => {
       }, 0)
 
       const totalLeave = leaveDays?.hours * employees?.rateperhour
-      const totalF =
-        totalCost - invalidOverTime * employees?.rateperhour + totalLeave
+      const totalF = totalCost - invalidOverTime * employees?.rateperhour
 
-      const grospayF = totalF + employees?.rateperhour * 1.5 * totalOvertime
+      const grospayF =
+        totalF + employees?.rateperhour * 1.5 * totalOvertime + totalLeave
+      console.log(totalCost - invalidOverTime * employees?.rateperhour)
 
       const netpayF =
         parseInt(grospayF) +
@@ -195,6 +196,11 @@ const NewPay = () => {
         },
         grossPay: grospayF,
         netPay: netpayF ? netpayF : 0 + totalLeave,
+        paidleave: {
+          unit: leaveDays.hours ? leaveDays.hours : 0,
+          rate: employees?.rateperhour,
+          total: totalLeave,
+        },
       })
     } catch (error) {
       console.log(error)
@@ -241,7 +247,7 @@ const NewPay = () => {
   if (isError) {
     return <div>Error loading logs</div>
   }
-  console.log(leave)
+  console.log(payrollObject.paidleave)
   return (
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>NewPay</h1>

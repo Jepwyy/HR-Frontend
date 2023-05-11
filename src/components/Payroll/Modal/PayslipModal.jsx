@@ -9,7 +9,7 @@ import { formatPrice } from '../../../utils/priceFormatter'
 import { useNavigate } from 'react-router-dom'
 const PayslipModal = ({ setModalPayslip }) => {
   const navigate = useNavigate()
-  const { payrollObject, setPayrollObject } = UsePayroll()
+  const { payrollObject, setPayrollObject, leave } = UsePayroll()
   const mutation = useMutation({
     mutationFn: (payroll) => axios.post('/payroll/create', payroll),
     onError: (error) => {
@@ -57,13 +57,14 @@ const PayslipModal = ({ setModalPayslip }) => {
       pagibig: payrollObject.pagibig,
       recentadvance: payrollObject.recentAdvance,
       netpay: payrollObject.netPay,
+      paidleave: payrollObject.paidleave,
     })
   }
 
   const componentRef = useRef()
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  })
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  // })
   const {
     data: employees,
     isLoading,
@@ -157,6 +158,25 @@ const PayslipModal = ({ setModalPayslip }) => {
                   {formatPrice(payrollObject.overTime.total)}
                 </td>
               </tr>
+              {leave.hours > 0 && (
+                <>
+                  <tr>
+                    <td className='px-2 md:px-4 font-bold'>
+                      Paid Leave:{' '}
+                      {`(${leave.days} ${leave.days < 1 ? 'day' : 'days'})`}
+                    </td>
+                    <td className='px-2 md:px-4 '>{leave.hours}</td>
+                    <td className='px-2 md:px-4'>
+                      {payrollObject.overTime.rate}
+                    </td>
+                    <td className='px-2 md:px-4'>
+                      {formatPrice(
+                        leave.hours * payrollObject.hoursWorked.rate
+                      )}
+                    </td>
+                  </tr>
+                </>
+              )}
               <tr>
                 <td
                   colSpan={3}
@@ -224,7 +244,7 @@ const PayslipModal = ({ setModalPayslip }) => {
                   <span>SSS</span>
                 </td>
 
-                <td className='px-2 md:px-4'>5%</td>
+                <td className='px-2 md:px-4'>1%</td>
               </tr>
               <tr>
                 <td
@@ -234,7 +254,7 @@ const PayslipModal = ({ setModalPayslip }) => {
                   <span>PhilHealth</span>
                 </td>
 
-                <td className='px-2 md:px-4'>5%</td>
+                <td className='px-2 md:px-4'>1%</td>
               </tr>
               <tr>
                 <td
@@ -244,7 +264,7 @@ const PayslipModal = ({ setModalPayslip }) => {
                   <span>Pagibig</span>
                 </td>
 
-                <td className='px-2 md:px-4'>5%</td>
+                <td className='px-2 md:px-4'>1%</td>
               </tr>
               <tr>
                 <td
@@ -315,12 +335,12 @@ const PayslipModal = ({ setModalPayslip }) => {
         </div>
 
         <div className='my-5 px-5 flex justify-end gap-5'>
-          <button
+          {/* <button
             onClick={handlePrint}
             className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
           >
             Export
-          </button>
+          </button> */}
           <button
             className='rounded-full bg-[#ac7238] py-1 px-6  font-sans  md:text-base text-sm font-bold  text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-[#ac7238]/40 '
             onClick={handleSubmit}

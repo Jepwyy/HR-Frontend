@@ -198,7 +198,8 @@ const Payroll = () => {
                   <>
                     <tr>
                       <td className='p-2 md:p-4 border border-[#010100]'>
-                        Paid Leave:
+                        Paid Leave:{' '}
+                        {`(${leave.days} ${leave.days < 1 ? 'day' : 'days'})`}
                       </td>
                       <td className='p-2 md:p-4 border border-[#010100]'>
                         {leave.hours}
