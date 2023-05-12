@@ -199,7 +199,7 @@ const Payroll = () => {
                     <tr>
                       <td className='p-2 md:p-4 border border-[#010100]'>
                         Paid Leave:{' '}
-                        {`(${leave.days} ${leave.days < 1 ? 'day' : 'days'})`}
+                        {`(${leave.days} ${leave.days < 1 ? 'days' : 'day'})`}
                       </td>
                       <td className='p-2 md:p-4 border border-[#010100]'>
                         {leave.hours}

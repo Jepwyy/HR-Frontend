@@ -64,7 +64,10 @@ const Table = ({ query }) => {
               {format(parseISO(item.enddate), 'MM/dd/yyyy')}
             </td>
             <td className='p-2 md:p-3 border border-[#010100]'>
-              John Mark Familgan
+              {item.ispaid ? 'Yes' : 'No'}
+            </td>
+            <td className='p-2 md:p-3 border border-[#010100]'>
+              {item.approve_by}
             </td>
           </tr>
         ))}
@@ -156,6 +159,7 @@ const EmployeeLeave = () => {
                   <th className='p-2 md:p-3'>Position</th>
                   <th className='p-2 md:p-3'>Date Start</th>
                   <th className='p-2 md:p-3'>Date End</th>
+                  <th className='p-2 md:p-3'>Is Paid</th>
                   <th className='p-2 md:p-3'>Approved By</th>
                 </tr>
               </thead>

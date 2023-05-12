@@ -18,7 +18,7 @@ const ManualBackup = () => {
       })
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
-      link.download = `${format(new Date(), 'yyyy-MM-dd')}-data.json`
+      link.download = `${format(new Date(), 'yyyy-MM-dd')}-${table}-data.json`
       link.href = url
       link.click()
     },
@@ -49,6 +49,20 @@ const ManualBackup = () => {
 
     mutation.mutate({ table: table })
   }
+  const openModal = () => {
+    if (!table)
+      return toast.error('Please Select a field', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    setPassModal(true)
+  }
+
   return (
     <motion.div
       initial={{ x: 20, opacity: 0 }}
@@ -80,7 +94,7 @@ const ManualBackup = () => {
       <button
         className='bg-[#ac7238] text-gray-50 font-bold py-2 px-10 rounded-lg'
         // onClick={exportData}
-        onClick={() => setPassModal(true)}
+        onClick={openModal}
       >
         Export
       </button>

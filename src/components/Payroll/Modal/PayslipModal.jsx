@@ -93,7 +93,7 @@ const PayslipModal = ({ setModalPayslip }) => {
             size={40}
             className='cursor-pointer'
             onClick={() => {
-              setModalHistory(false)
+              setModalPayslip(false)
             }}
           />
         </div>
@@ -322,7 +322,9 @@ const PayslipModal = ({ setModalPayslip }) => {
                       {new Date(log.time_in).toLocaleTimeString()}
                     </td>
                     <td className=' border  border-[#010100]'>
-                      {new Date(log.time_out).toLocaleTimeString()}
+                      {log.time_out
+                        ? new Date(log.time_out).toLocaleTimeString()
+                        : '--'}
                     </td>
                     <td className='text-center border  border-[#010100]'>
                       {log.totalhours}

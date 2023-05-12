@@ -3,8 +3,10 @@ import { HiOutlineKey } from 'react-icons/hi'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { BsBackspaceFill } from 'react-icons/bs'
 import { UserAuth } from '../../../context/authContext'
-import bycrpt from 'bcrypt'
 import { toast } from 'react-toastify'
+import { useMutation } from 'react-query'
+import AdminLoader from '../../AdminLoader'
+import axios from '../../../api/api'
 
 const BackupPassModal = ({ setPassModal, exportData }) => {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -14,33 +16,42 @@ const BackupPassModal = ({ setPassModal, exportData }) => {
     setPasswordVisible(!passwordVisible)
   }
 
+  const mutation = useMutation({
+    mutationFn: (password) =>
+      axios.post('/backup/confirm', {
+        id: password.id,
+        password: password.password,
+      }),
+    onSuccess: () => {
+      exportData()
+      setPassModal(false)
+      toast.success('Backup Successfully', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+    onError: (error) => {
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+  })
+
   const handlePassword = async (e) => {
     try {
       e.preventDefault()
-      const compare = await bycrpt.compare(password, userData?.password)
-      if (compare) {
-        exportData()
-        setPassModal(false)
-        toast.success('Backup Sucessfully', {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: 'light',
-        })
-      } else {
-        toast.error('Wrong Password', {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-          theme: 'light',
-        })
-      }
+      mutation.mutate({ id: userData.id, password })
     } catch (error) {
       console.log(error)
     }
@@ -59,6 +70,7 @@ const BackupPassModal = ({ setPassModal, exportData }) => {
             }}
           />
         </div>
+        {mutation.isLoading && <AdminLoader />}
         <div className='mt-1 p-8'>
           <h1 className='text-4xl font-medium'>Confirm password</h1>
           <p className='text-slate-500'>Enter password to Backup</p>
