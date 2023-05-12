@@ -67,10 +67,14 @@ const ManualBackup = () => {
           required
           onChange={(e) => setTable(e.target.value)}
         >
-          <option className='text-center' value=''>
+          <option
+            className='text-center'
+            value=''
+          >
             --Select Table--
           </option>
           <option value='hr_employee_logs'>Employees` Attendance</option>
+          <option value='hr_payroll'>Employees` Payroll</option>
         </select>
       </div>
       <button
@@ -80,7 +84,12 @@ const ManualBackup = () => {
       >
         Export
       </button>
-      {passModal && <BackupPassModal setPassModal={setPassModal} />}
+      {passModal && (
+        <BackupPassModal
+          setPassModal={setPassModal}
+          exportData={exportData}
+        />
+      )}
       <div>{mutation.isLoading && 'Loading'}</div>
       <ToastContainer
         position='top-center'

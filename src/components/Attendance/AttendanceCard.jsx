@@ -22,14 +22,12 @@ const AttendanceCard = ({ item }) => {
   )
   // sort attendance
   const attendance = data?.logs?.sort((a, b) => {
-    return new Date(a.log_date) - new Date(b.log_date)
+    return new Date(b.log_date) - new Date(a.log_date)
   })
 
   const handleRange = (e) => {
     setRange(e.target.value)
   }
-
-  console.log(attendance)
 
   return Object.keys(item).length === 0 ? (
     <></>

@@ -6,6 +6,7 @@ import { UserAuth } from '../../context/authContext'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import TapCard from '../../assets/images/TapCard.png'
+import { toast } from 'react-toastify'
 import { motion } from 'framer-motion'
 // styles
 // images
