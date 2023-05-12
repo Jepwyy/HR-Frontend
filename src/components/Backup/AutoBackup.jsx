@@ -64,6 +64,7 @@ const AutoBackup = () => {
         >
           <option value=''>--Select--</option>
           <option value='logs'>Employees` Attendance</option>
+          <option value='payroll'>Employees` Payroll</option>
         </select>
       </div>
       <div className='overflow-x-auto max-h-[438px] border-4 border-[#010100] '>

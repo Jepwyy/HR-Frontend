@@ -115,30 +115,21 @@ const HistoryPayslip = ({ setModalHistory, id }) => {
               </tr>
               {/* Addition */}
               <tr>
-                <td
-                  colSpan={4}
-                  className='px-2 md:px-4 bg-black text-start'
-                >
+                <td colSpan={4} className='px-2 md:px-4 bg-black text-start'>
                   <span className='text-xs text-gray-50 uppercase font-bold'>
                     Additions
                   </span>
                 </td>
               </tr>
               <tr>
-                <td
-                  colSpan={3}
-                  className='px-2 md:px-4 font-bold'
-                >
+                <td colSpan={3} className='px-2 md:px-4 font-bold'>
                   <span>Advance</span>
                 </td>
 
                 <td className='px-2 md:px-4'>{formatPrice(data.advance)}</td>
               </tr>
               <tr>
-                <td
-                  colSpan={3}
-                  className='px-2 md:px-4 font-bold pb-3'
-                >
+                <td colSpan={3} className='px-2 md:px-4 font-bold pb-3'>
                   <span>Bonus</span>
                 </td>
 
@@ -147,54 +138,39 @@ const HistoryPayslip = ({ setModalHistory, id }) => {
 
               {/* Deductions */}
               <tr>
-                <td
-                  colSpan={4}
-                  className='px-2 md:px-4  bg-black text-start'
-                >
+                <td colSpan={4} className='px-2 md:px-4  bg-black text-start'>
                   <span className='text-xs text-gray-50 uppercase font-bold'>
                     Deductions
                   </span>
                 </td>
               </tr>
               <tr>
-                <td
-                  colSpan={3}
-                  className='px-2 md:px-4 font-bold'
-                >
+                <td colSpan={3} className='px-2 md:px-4 font-bold'>
                   <span>SSS</span>
                 </td>
 
-                <td className='px-2 md:px-4'>5%</td>
+                <td className='px-2 md:px-4'>1%</td>
               </tr>
               <tr>
-                <td
-                  colSpan={3}
-                  className='px-2 md:px-4 font-bold'
-                >
+                <td colSpan={3} className='px-2 md:px-4 font-bold'>
                   <span>PhilHealth</span>
                 </td>
 
-                <td className='px-2 md:px-4'>5%</td>
+                <td className='px-2 md:px-4'>1%</td>
               </tr>
               <tr>
-                <td
-                  colSpan={3}
-                  className='px-2 md:px-4 font-bold'
-                >
+                <td colSpan={3} className='px-2 md:px-4 font-bold'>
                   <span>Pagibig</span>
                 </td>
 
-                <td className='px-2 md:px-4'>5%</td>
+                <td className='px-2 md:px-4'>1%</td>
               </tr>
               <tr>
-                <td
-                  colSpan={3}
-                  className='px-2 md:px-4 font-bold pb-3'
-                >
+                <td colSpan={3} className='px-2 md:px-4 font-bold pb-3'>
                   <span>Recent Advance</span>
                 </td>
 
-                <td className='px-2 md:px-4'>500</td>
+                <td className='px-2 md:px-4'>0</td>
               </tr>
               <tr className=''>
                 <td
@@ -226,10 +202,7 @@ const HistoryPayslip = ({ setModalHistory, id }) => {
               </thead>
               <tbody>
                 {data.logs.map((item, index) => (
-                  <tr
-                    className='text-center'
-                    key={index}
-                  >
+                  <tr className='text-center' key={index}>
                     <td className=' border  border-[#010100]'>
                       {format(parseISO(item.log_date), 'EEEE')}
                     </td>

@@ -26,7 +26,8 @@ const ManualRestore = () => {
             <option className='text-center' value=''>
               --Select Table--
             </option>
-            <option value=''>Employees` Table</option>
+            <option value='hr_employee_logs'>Employees` Attendance</option>
+            <option value='hr_payroll'>Employees` Payroll</option>
           </select>
         </div>
         <button
