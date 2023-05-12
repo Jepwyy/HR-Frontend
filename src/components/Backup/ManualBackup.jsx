@@ -4,9 +4,10 @@ import axios from '../../api/api'
 import { format } from 'date-fns'
 import { ToastContainer, toast } from 'react-toastify'
 import { motion } from 'framer-motion'
-
+import BackupPassModal from './modal/BackupPassModal'
 const ManualBackup = () => {
   const [table, setTable] = useState('')
+  const [passModal, setPassModal] = useState(false)
 
   const mutation = useMutation({
     mutationFn: (table) => axios.post('/backup/export', table),
@@ -74,10 +75,12 @@ const ManualBackup = () => {
       </div>
       <button
         className='bg-[#ac7238] text-gray-50 font-bold py-2 px-10 rounded-lg'
-        onClick={exportData}
+        // onClick={exportData}
+        onClick={() => setPassModal(true)}
       >
         Export
       </button>
+      {passModal && <BackupPassModal setPassModal={setPassModal} />}
       <div>{mutation.isLoading && 'Loading'}</div>
       <ToastContainer
         position='top-center'
