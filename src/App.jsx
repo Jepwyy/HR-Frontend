@@ -98,6 +98,12 @@ function App() {
                     path='/payroll-history'
                     element={<PayrollHistory />}
                   />
+                </Route>
+              </Route>
+              <Route
+                element={<PrivateRoute allowedRoles={[ROLES.hr_manager]} />}
+              >
+                <Route element={<Layout />}>
                   <Route
                     path='/audit-logs'
                     element={<AuditLogs />}

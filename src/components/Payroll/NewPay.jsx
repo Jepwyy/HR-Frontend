@@ -99,7 +99,6 @@ const NewPay = () => {
           }
         }
       }
-
       return {
         days: datesInRange.length,
         hours: totalHours,
@@ -129,8 +128,12 @@ const NewPay = () => {
         leaveDays = calculateLeaveDays(
           startdate,
           enddate,
-          format(parseISO(employees.startdate), 'yyyy-MM-dd'),
-          format(parseISO(employees.enddate), 'yyyy-MM-dd'),
+          employees?.startdate
+            ? format(parseISO(employees?.startdate), 'yyyy-MM-dd')
+            : '0000-00-00',
+          employees?.startdate
+            ? format(parseISO(employees?.enddate), 'yyyy-MM-dd')
+            : '0000-00-00',
           employees.schedule
         )
       }
@@ -155,8 +158,7 @@ const NewPay = () => {
       const totalF = totalCost - invalidOverTime * employees?.rateperhour
 
       const grospayF =
-        totalF + employees?.rateperhour * 1.5 * totalOvertime + totalLeave
-      console.log(totalCost - invalidOverTime * employees?.rateperhour)
+        totalF + totalLeave + employees?.rateperhour * 1.5 * totalOvertime
 
       const netpayF =
         parseInt(grospayF) +
@@ -180,10 +182,10 @@ const NewPay = () => {
         hoursWorked: {
           unit:
             totalOvertime && totalOvertime > 0
-              ? totalHours - invalidOverTime - totalOvertime
-                ? totalHours - invalidOverTime - totalOvertime
+              ? totalHours - invalidOverTime
+                ? totalHours - invalidOverTime
                 : 0
-              : totalHours - invalidOverTime
+              : totalHours - invalidOverTime - totalOvertime
               ? totalHours - invalidOverTime - totalOvertime
               : 0,
           rate: employees?.rateperhour,
@@ -247,7 +249,6 @@ const NewPay = () => {
   if (isError) {
     return <div>Error loading logs</div>
   }
-  console.log(payrollObject.paidleave)
   return (
     <div>
       <h1 className='mb-3 text-lg font-bold uppercase'>NewPay</h1>

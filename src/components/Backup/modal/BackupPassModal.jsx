@@ -2,12 +2,62 @@ import React, { useState } from 'react'
 import { HiOutlineKey } from 'react-icons/hi'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { BsBackspaceFill } from 'react-icons/bs'
+import { UserAuth } from '../../../context/authContext'
+import { toast } from 'react-toastify'
+import { useMutation } from 'react-query'
+import AdminLoader from '../../AdminLoader'
+import axios from '../../../api/api'
 
-const BackupPassModal = ({ setPassModal }) => {
+const BackupPassModal = ({ setPassModal, exportData }) => {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [password, setPassword] = useState('')
+  const { userData } = UserAuth()
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible)
   }
+
+  const mutation = useMutation({
+    mutationFn: (password) =>
+      axios.post('/backup/confirm', {
+        id: password.id,
+        password: password.password,
+      }),
+    onSuccess: () => {
+      exportData()
+      setPassModal(false)
+      toast.success('Backup Successfully', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+    onError: (error) => {
+      toast.error(`${error.response.data.message}`, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    },
+  })
+
+  const handlePassword = async (e) => {
+    try {
+      e.preventDefault()
+      mutation.mutate({ id: userData.id, password })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  console.log(userData)
+
   return (
     <div className='fixed z-20 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center py-2 overflow-y-auto'>
       <div className='mx-auto  rounded-xl shadow bg-white shadow-slate-300'>
@@ -20,11 +70,15 @@ const BackupPassModal = ({ setPassModal }) => {
             }}
           />
         </div>
+        {mutation.isLoading && <AdminLoader />}
         <div className='mt-1 p-8'>
           <h1 className='text-4xl font-medium'>Confirm password</h1>
           <p className='text-slate-500'>Enter password to Backup</p>
 
-          <form className='my-5'>
+          <form
+            className='my-5'
+            onSubmit={handlePassword}
+          >
             <div className='flex flex-col space-y-5'>
               <label className='relative'>
                 <p className='font-medium text-slate-700 pb-2'>Password</p>
@@ -33,6 +87,8 @@ const BackupPassModal = ({ setPassModal }) => {
                   type={passwordVisible ? 'text' : 'password'}
                   className='w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
                   placeholder='Enter password'
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <span
                   className='absolute top-[70%] right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer'
@@ -46,7 +102,10 @@ const BackupPassModal = ({ setPassModal }) => {
                 </span>
               </label>
 
-              <button className='w-full py-3 font-medium text-white bg-[#ac7238f4] hover:bg-[#9c6732] rounded-lg  hover:shadow inline-flex space-x-2 items-center justify-center'>
+              <button
+                type='submit'
+                className='w-full py-3 font-medium text-white bg-[#ac7238f4] hover:bg-[#9c6732] rounded-lg  hover:shadow inline-flex space-x-2 items-center justify-center'
+              >
                 <HiOutlineKey size={22} />
                 <span>Confirm password</span>
               </button>
